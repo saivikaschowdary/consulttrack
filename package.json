@@ -1,0 +1,16 @@
+{
+  "name": "consulttrack",
+  "version": "1.0.0",
+  "description": "ConsultTrack Employee Management System — Local Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": ["consulttrack", "hr", "employee-management"],
+  "author": "ConsultTrack",
+  "license": "MIT"
+}
