@@ -164,22 +164,153 @@ select:focus{outline:none;border-color:var(--accent)}
 .spinner-dark{border-color:rgba(45,74,62,0.15);border-top-color:var(--accent)}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:880px){.sidebar{display:none}.metric-grid{grid-template-columns:1fr 1fr}}
+
+/* PORTAL (Employee Login) */
+.portal-shell{display:none;min-height:100vh;background:var(--surface-2);align-items:center;justify-content:center;flex-direction:column;padding:24px}
+.portal-shell.visible{display:flex}
+.portal-card{background:#fff;border-radius:20px;box-shadow:0 4px 32px rgba(15,14,12,0.1),0 1px 4px rgba(15,14,12,0.06);width:100%;max-width:420px;padding:40px 40px 36px;animation:slideUp 0.2s ease}
+.portal-logo{display:flex;align-items:baseline;gap:8px;margin-bottom:32px}
+.portal-logo h1{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);font-weight:400}
+.portal-logo span{font-size:0.68rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.1em}
+.portal-heading{font-family:'DM Serif Display',serif;font-size:1.6rem;font-weight:400;color:var(--ink);margin-bottom:6px;letter-spacing:-0.02em}
+.portal-sub{font-size:0.83rem;color:var(--ink-3);margin-bottom:28px;line-height:1.5}
+.portal-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.portal-field label{font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3)}
+.portal-field input{padding:11px 14px;border:1.5px solid var(--border-strong);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--ink);background:#fff;transition:border-color 0.15s}
+.portal-field input:focus{outline:none;border-color:var(--accent)}
+.portal-field input.error{border-color:var(--red)}
+.portal-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:background 0.15s;margin-top:6px}
+.portal-btn:hover{background:var(--accent-2)}
+.portal-btn:disabled{opacity:0.5;cursor:not-allowed}
+.portal-error{background:var(--red-light);border:1px solid rgba(163,48,48,0.2);border-radius:8px;padding:10px 13px;font-size:0.81rem;color:var(--red);margin-bottom:14px;display:none}
+.portal-error.visible{display:block}
+.portal-hint{font-size:0.78rem;color:var(--ink-3);text-align:center;margin-top:18px}
+.portal-hint a{color:var(--accent);cursor:pointer;font-weight:500;text-decoration:none}
+.portal-rule{display:flex;align-items:center;gap:8px;font-size:0.77rem;margin-bottom:5px}
+.portal-rule svg{flex-shrink:0;width:14px;height:14px}
+.portal-rule.ok{color:var(--accent)}
+.portal-rule.fail{color:var(--ink-3)}
+.portal-strength{height:3px;border-radius:2px;background:var(--surface-3);margin-top:8px;margin-bottom:12px;overflow:hidden}
+.portal-strength-fill{height:100%;border-radius:2px;transition:width 0.3s,background 0.3s}
+.portal-profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:0}
+.portal-profile-field{display:flex;flex-direction:column;gap:5px}
+.portal-profile-field.full{grid-column:1/-1}
+.portal-profile-field label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3)}
+.portal-profile-field input,.portal-profile-field textarea,.portal-profile-field select{padding:9px 12px;border:1.5px solid var(--border-strong);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.84rem;color:var(--ink);background:#fff}
+.portal-profile-field input:focus,.portal-profile-field textarea:focus,.portal-profile-field select:focus{outline:none;border-color:var(--accent)}
+.portal-section-label{grid-column:1/-1;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);padding-top:6px;border-top:1px solid var(--border);margin-top:4px}
+.portal-progress{display:flex;gap:6px;margin-bottom:28px}
+.portal-progress-step{flex:1;height:3px;border-radius:2px;background:var(--surface-3)}
+.portal-progress-step.done{background:var(--accent)}
+.portal-progress-step.active{background:var(--accent-2)}
+.hr-switch{position:fixed;bottom:20px;right:20px;z-index:999}
+
+/* BRIGHTSHARKS FEATURES */
+.view-toggle{display:flex;gap:4px;background:var(--surface-2);border-radius:8px;padding:3px}
+.view-toggle button{padding:5px 12px;border:none;background:transparent;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;color:var(--ink-3);transition:all 0.15s}
+.view-toggle button.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(15,14,12,0.1)}
+.emp-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.emp-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;transition:box-shadow 0.15s}
+.emp-card:hover{box-shadow:0 4px 16px rgba(15,14,12,0.08)}
+.emp-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
+.emp-card-name{font-weight:600;font-size:0.95rem;color:var(--ink)}
+.emp-card-role{font-size:0.75rem;color:var(--ink-3);margin-bottom:10px}
+.visa-badge-stem{background:#e8eef8;color:#2a4a7a;padding:3px 9px;border-radius:20px;font-size:0.7rem;font-weight:700;letter-spacing:0.04em;display:inline-flex;align-items:center}
+.visa-badge-h1b{background:#fdf3e3;color:#b8722a;padding:3px 9px;border-radius:20px;font-size:0.7rem;font-weight:700;letter-spacing:0.04em;display:inline-flex;align-items:center}
+.visa-badge-other{background:var(--surface-2);color:var(--ink-3);padding:3px 9px;border-radius:20px;font-size:0.7rem;font-weight:700;letter-spacing:0.04em;display:inline-flex;align-items:center}
+.milestones-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.milestone-item{background:var(--surface-2);border-radius:8px;padding:8px 10px}
+.milestone-period{font-size:0.67rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--blue);margin-bottom:2px}
+.milestone-date{font-size:0.82rem;font-weight:500;color:var(--ink)}
+.milestone-sub{font-size:0.71rem;color:var(--ink-3)}
+.milestone-sub.urgent{color:var(--red);font-weight:600}
+.milestone-sub.warn{color:var(--amber);font-weight:600}
+.card-meta{font-size:0.75rem;color:var(--ink-3);margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.card-meta strong{color:var(--ink-2)}
+.lca-duties{font-size:0.77rem;color:var(--ink-2);line-height:1.55;max-height:60px;overflow:hidden;text-overflow:ellipsis;margin-top:8px;padding:8px 10px;background:var(--surface);border-radius:6px;white-space:pre-wrap}
+.eval-star{color:var(--amber);font-size:0.85rem}
+.eval-stars{display:flex;align-items:center;gap:3px;margin-bottom:3px}
+.eval-stars span{font-size:0.75rem;color:var(--ink-3);margin-left:4px}
+.support-yes{background:#fce8e8;color:#a33030;padding:2px 8px;border-radius:20px;font-size:0.7rem;font-weight:700}
+.support-no{background:var(--surface-2);color:var(--ink-3);padding:2px 8px;border-radius:20px;font-size:0.7rem;font-weight:700}
+.eval-type-stem{background:#e8eef8;color:#2a4a7a;padding:2px 9px;border-radius:20px;font-size:0.72rem;font-weight:700}
+.eval-type-h1b{background:#fdf3e3;color:#b8722a;padding:2px 9px;border-radius:20px;font-size:0.72rem;font-weight:700}
+.eval-section-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:4px;margin-top:12px}
+.eval-content{font-size:0.83rem;color:var(--ink-2);line-height:1.6;padding:10px 12px;background:var(--surface);border-radius:8px}
+.support-banner{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#fce8e8;border:1px solid rgba(163,48,48,0.15);border-radius:8px;font-size:0.82rem;color:var(--red);font-weight:500;margin-top:10px}
+
+/* ── HR Admin Login Screen ── */
+.hr-login-screen{display:none;position:fixed;inset:0;z-index:9999;background:var(--ink);align-items:center;justify-content:center;flex-direction:column;gap:20px}
+.hr-login-screen.visible{display:flex}
+.hr-login-card{background:#fff;border-radius:20px;width:100%;max-width:400px;padding:40px;box-shadow:0 24px 80px rgba(0,0,0,0.5);animation:slideUp 0.25s ease}
+.hr-login-brand{display:flex;align-items:baseline;gap:10px;margin-bottom:32px}
+.hr-login-brand h1{font-family:'DM Serif Display',serif;font-size:1.4rem;font-weight:400;color:var(--ink)}
+.hr-login-brand span{font-size:0.7rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.12em}
+.hr-login-heading{font-family:'DM Serif Display',serif;font-size:1.5rem;font-weight:400;margin-bottom:4px}
+.hr-login-sub{font-size:0.82rem;color:var(--ink-3);margin-bottom:24px;line-height:1.5}
+.hr-login-error{background:var(--red-light);border:1px solid rgba(163,48,48,0.2);border-radius:8px;padding:10px 13px;font-size:0.81rem;color:var(--red);margin-bottom:14px;display:none}
+.hr-login-error.visible{display:block}
+.hr-login-field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.hr-login-field label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3)}
+.hr-login-field input{padding:11px 14px;border:1.5px solid var(--border-strong);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--ink);background:#fff;transition:border-color 0.15s}
+.hr-login-field input:focus{outline:none;border-color:var(--accent)}
+.hr-login-field input.err{border-color:var(--red)}
+.hr-login-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;margin-top:6px;transition:background 0.15s}
+.hr-login-btn:hover{background:var(--accent-2)}
+.hr-login-hint{font-size:0.75rem;color:rgba(255,255,255,0.3);text-align:center}
+.hr-login-hint a{color:rgba(255,255,255,0.55);cursor:pointer;text-decoration:underline}
 </style>
 </head>
 <body>
-<nav class="topnav">
+<!-- HR Admin Login Screen -->
+<div class="hr-login-screen visible" id="hr-login-screen">
+  <div class="hr-login-card">
+    <div class="hr-login-brand">
+      <h1>ConsultTrack</h1>
+      <span>HR Dashboard</span>
+    </div>
+    <h2 class="hr-login-heading">Admin Sign In</h2>
+    <p class="hr-login-sub">Enter your HR admin credentials to access the dashboard.</p>
+    <div class="hr-login-error" id="hr-login-error">Incorrect username or password.</div>
+    <div class="hr-login-field">
+      <label>Username</label>
+      <input type="text" id="hr-username" placeholder="admin" autocomplete="username" onkeydown="if(event.key==='Enter')doHRLogin()">
+    </div>
+    <div class="hr-login-field">
+      <label>Password</label>
+      <input type="password" id="hr-password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doHRLogin()">
+    </div>
+    <button class="hr-login-btn" onclick="doHRLogin()">Sign In to Dashboard</button>
+    <p style="font-size:0.74rem;color:var(--ink-3);text-align:center;margin-top:14px">
+      Employee? <span style="color:var(--accent);cursor:pointer;font-weight:500" onclick="showEmpPortalFromLogin()">Go to Employee Portal →</span>
+    </p>
+  </div>
+  <p class="hr-login-hint">Default credentials: <strong style="color:rgba(255,255,255,0.6)">admin / admin123</strong> &nbsp;·&nbsp; <a onclick="navigate('settings');hrLogout(false)">Change in Settings</a></p>
+</div>
+
+<nav class="topnav" id="hr-topnav">
   <div class="topnav-brand">
     <h1>ConsultTrack</h1>
     <span>Employee Database</span>
   </div>
   <div class="topnav-nav">
     <a onclick="navigate('dashboard')" id="nav-dashboard" class="active">Dashboard</a>
+    <a onclick="navigate('team')" id="nav-team">Team Overview</a>
     <a onclick="navigate('employees')" id="nav-employees">Employees</a>
     <a onclick="navigate('visas')" id="nav-visas">Visa Tracker</a>
-    <a onclick="navigate('reviews')" id="nav-reviews">Reviews</a>
+    <a onclick="navigate('projects')" id="nav-projects">Project Tracker</a>
+    <a onclick="navigate('reviews')" id="nav-reviews">Evaluations</a>
+    <a onclick="navigate('users')" id="nav-users">Manage Users</a>
     <a onclick="navigate('settings')" id="nav-settings">Settings</a>
   </div>
   <div class="topnav-actions">
+    <div id="update-badge" style="display:none">
+      <button onclick="applyUpdate()" style="padding:5px 12px;border-radius:6px;border:1px solid #f59e0b;background:#fef3c7;color:#92400e;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px">⚡ Update available</button>
+    </div>
+    <button class="btn btn-white btn-sm" onclick="switchToPortal()" title="Switch to Employee Portal view">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Employee Portal
+    </button>
     <button class="btn btn-white btn-sm" onclick="navigate('employees')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       Search
@@ -187,6 +318,10 @@ select:focus{outline:none;border-color:var(--accent)}
     <button class="btn btn-primary btn-sm" onclick="openAddEmployee()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>
       Add Employee
+    </button>
+    <button class="btn btn-ghost btn-sm" onclick="hrLogout(true)" title="Sign out" style="color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.15)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign Out
     </button>
   </div>
 </nav>
@@ -198,6 +333,10 @@ select:focus{outline:none;border-color:var(--accent)}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         Dashboard
       </div>
+      <div class="nav-item" onclick="navigate('team')" id="side-team">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Team Overview
+      </div>
       <div class="nav-item" onclick="navigate('employees')" id="side-employees">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Employees
@@ -206,9 +345,17 @@ select:focus{outline:none;border-color:var(--accent)}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
         Visa Tracker
       </div>
+      <div class="nav-item" onclick="navigate('projects')" id="side-projects">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8h2m4 0h4M7 12h4m4 0h2"/></svg>
+        Project Tracker
+      </div>
       <div class="nav-item" onclick="navigate('reviews')" id="side-reviews">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        Reviews
+        Evaluations
+      </div>
+      <div class="nav-item" onclick="navigate('users')" id="side-users">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Manage Users
       </div>
     </div>
     <div class="sidebar-divider"></div>
@@ -223,22 +370,309 @@ select:focus{outline:none;border-color:var(--accent)}
   <main class="main" id="main-content"></main>
 </div>
 <div id="modal-root"></div>
+
+<!-- EMPLOYEE PORTAL -->
+<div class="portal-shell" id="portal-shell">
+
+  <!-- Step 1: Login -->
+  <div id="portal-login" style="width:100%;max-width:420px">
+    <div class="portal-card">
+      <div class="portal-logo">
+        <h1>ConsultTrack</h1>
+        <span>Employee Portal</span>
+      </div>
+      <div style="background:var(--accent-light);border:1px solid rgba(45,74,62,0.2);border-radius:8px;padding:9px 12px;margin-bottom:20px;display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--accent)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        You're in the right place. Use the credentials from your HR welcome email.
+      </div>
+      <h2 class="portal-heading">Employee Sign In</h2>
+      <p class="portal-sub">Enter the username and temporary password from your HR welcome email.</p>
+      <div class="portal-error" id="login-error">Incorrect username or password. Please try again.</div>
+      <div class="portal-field">
+        <label>Username</label>
+        <input type="text" id="login-username" placeholder="e.g. jane.smith" autocomplete="username">
+      </div>
+      <div class="portal-field">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
+      </div>
+      <button class="portal-btn" onclick="doLogin()">Sign In</button>
+      <p class="portal-hint">Need help? Contact <a href="#">hr@acmeconsulting.com</a></p>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+        <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:8px">HR: Look up employee credentials</div>
+        <div style="display:flex;gap:8px">
+          <select id="cred-lookup" style="flex:1;padding:8px 10px;border:1px solid var(--border-strong);border-radius:8px;font-family:DM Sans,sans-serif;font-size:0.82rem;background:#fff;color:var(--ink)">
+            <option value="">Select employee...</option>
+          </select>
+          <button onclick="lookupCreds()" style="padding:8px 14px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-family:DM Sans,sans-serif;font-size:0.82rem;font-weight:500;cursor:pointer">Show</button>
+        </div>
+        <div id="cred-result" style="display:none;margin-top:10px;background:var(--surface-2);border-radius:8px;padding:12px 14px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div><div style="font-size:0.68rem;color:var(--ink-3);font-weight:600;margin-bottom:2px">USERNAME</div><div id="cr-user" style="font-family:monospace;font-size:0.88rem;font-weight:600;color:var(--ink)"></div></div>
+            <div><div style="font-size:0.68rem;color:var(--ink-3);font-weight:600;margin-bottom:2px">PASSWORD</div><div id="cr-pass" style="font-family:monospace;font-size:0.88rem;font-weight:600;color:var(--ink)"></div></div>
+          </div>
+          <div id="cr-status" style="margin-top:6px;font-size:0.75rem;color:var(--amber)"></div>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:16px;font-size:0.78rem;color:var(--ink-3)">HR admin? <a style="color:var(--accent);cursor:pointer;font-weight:500" onclick="switchToHR()">Back to HR Dashboard →</a></p>
+  </div>
+
+  <!-- Step 2: Set new password (first login) -->
+  <div id="portal-setpw" style="display:none;width:100%;max-width:420px">
+    <div class="portal-card">
+      <div class="portal-logo"><h1>ConsultTrack</h1><span>Employee Portal</span></div>
+      <div class="portal-progress">
+        <div class="portal-progress-step done"></div>
+        <div class="portal-progress-step active"></div>
+        <div class="portal-progress-step"></div>
+      </div>
+      <h2 class="portal-heading">Set your password</h2>
+      <p class="portal-sub">Your temporary password must be changed before you can continue. Choose a strong password you'll remember.</p>
+      <div class="portal-error" id="pw-error">Passwords do not match.</div>
+      <div class="portal-field">
+        <label>New Password</label>
+        <input type="password" id="new-pw" placeholder="Min. 8 characters" oninput="checkPwStrength()" autocomplete="new-password">
+        <div class="portal-strength"><div class="portal-strength-fill" id="pw-strength-bar" style="width:0%"></div></div>
+        <div id="pw-rules">
+          <div class="portal-rule fail" id="rule-len"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>At least 8 characters</div>
+          <div class="portal-rule fail" id="rule-upper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>One uppercase letter</div>
+          <div class="portal-rule fail" id="rule-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>One number</div>
+          <div class="portal-rule fail" id="rule-special"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>One special character (!@#$)</div>
+        </div>
+      </div>
+      <div class="portal-field">
+        <label>Confirm Password</label>
+        <input type="password" id="confirm-pw" placeholder="Re-enter your password" autocomplete="new-password">
+      </div>
+      <button class="portal-btn" id="setpw-btn" onclick="doSetPassword()">Set Password &amp; Continue</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Complete profile -->
+  <div id="portal-profile" style="display:none;width:100%;max-width:560px">
+    <div class="portal-card" style="max-width:560px">
+      <div class="portal-logo"><h1>ConsultTrack</h1><span>Employee Portal</span></div>
+      <div class="portal-progress">
+        <div class="portal-progress-step done"></div>
+        <div class="portal-progress-step done"></div>
+        <div class="portal-progress-step active"></div>
+      </div>
+      <h2 class="portal-heading">Complete your profile</h2>
+      <p class="portal-sub" style="margin-bottom:22px">Fill in the details below so your manager and team have everything they need. Fields marked * are required.</p>
+      <div class="portal-profile-grid">
+        <div class="portal-profile-field full portal-section-label" style="border:none;margin:0;padding:0">Personal Details</div>
+        <div class="portal-profile-field"><label>Preferred Name</label><input id="pp-nickname" placeholder="What should we call you?"></div>
+        <div class="portal-profile-field"><label>Date of Birth</label><input type="date" id="pp-dob"></div>
+        <div class="portal-profile-field full"><label>Biography</label><textarea id="pp-bio" rows="2" placeholder="A short intro about yourself..." style="resize:vertical"></textarea></div>
+        <div class="portal-profile-field full portal-section-label">Emergency Contact</div>
+        <div class="portal-profile-field"><label>Contact Name *</label><input id="pp-ecname" placeholder="Full name"></div>
+        <div class="portal-profile-field"><label>Relationship</label><input id="pp-ecrel" placeholder="e.g. Spouse, Parent"></div>
+        <div class="portal-profile-field full"><label>Contact Phone *</label><input id="pp-ecphone" placeholder="+1 000 000 0000"></div>
+        <div class="portal-profile-field full portal-section-label">Work Preferences</div>
+        <div class="portal-profile-field"><label>Preferred Working Hours</label><select id="pp-hours"><option>9am – 5pm</option><option>8am – 4pm</option><option>10am – 6pm</option><option>Flexible</option></select></div>
+        <div class="portal-profile-field"><label>Work Mode</label><select id="pp-mode"><option>Office</option><option>Hybrid</option><option>Remote</option></select></div>
+        <div class="portal-profile-field full"><label>Certifications</label><input id="pp-certs" placeholder="e.g. PMP, CFA, AWS Solutions Architect"></div>
+        <div class="portal-profile-field full"><label>Additional Skills</label><input id="pp-skills" placeholder="e.g. Python, Tableau, Spanish"></div>
+      </div>
+      <button class="portal-btn" style="margin-top:22px" onclick="doSaveProfile()">Save Profile &amp; Finish</button>
+    </div>
+  </div>
+
+  <!-- Step 4: Employee Dashboard (shown after login / profile complete) -->
+  <div id="portal-dashboard" style="display:none;width:100%;max-width:760px">
+
+    <!-- Employee nav -->
+    <div style="background:var(--ink);border-radius:14px;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="display:flex;align-items:baseline;gap:10px">
+        <span style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:#fff;font-weight:400">ConsultTrack</span>
+        <span style="font-size:0.68rem;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em">Employee Portal</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span id="emp-nav-name" style="font-size:0.82rem;color:rgba(255,255,255,0.6)"></span>
+        <button onclick="empLogout()" style="padding:5px 13px;border-radius:7px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.7);font-family:'DM Sans',sans-serif;font-size:0.78rem;cursor:pointer">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- Content area -->
+    <div id="emp-dash-content"></div>
+
+  </div>
+
+  <!-- Step 5: Edit Profile (from employee dashboard) -->
+  <div id="portal-edit-profile" style="display:none;width:100%;max-width:560px">
+    <div class="portal-card" style="max-width:560px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 class="portal-heading" style="margin-bottom:0">Edit Profile</h2>
+        <button onclick="showPortalStep('portal-dashboard');renderEmpDash()" style="font-size:0.8rem;color:var(--accent);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif">← Back</button>
+      </div>
+      <div class="portal-profile-grid">
+        <div class="portal-profile-field full portal-section-label" style="border:none;margin:0;padding:0">Personal Details</div>
+        <div class="portal-profile-field"><label>Preferred Name</label><input id="ep-nickname" placeholder="What should we call you?"></div>
+        <div class="portal-profile-field"><label>Date of Birth</label><input type="date" id="ep-dob"></div>
+        <div class="portal-profile-field full"><label>Biography</label><textarea id="ep-bio" rows="2" placeholder="A short intro about yourself..." style="resize:vertical"></textarea></div>
+        <div class="portal-profile-field full portal-section-label">Emergency Contact</div>
+        <div class="portal-profile-field"><label>Contact Name *</label><input id="ep-ecname" placeholder="Full name"></div>
+        <div class="portal-profile-field"><label>Relationship</label><input id="ep-ecrel" placeholder="e.g. Spouse, Parent"></div>
+        <div class="portal-profile-field full"><label>Contact Phone *</label><input id="ep-ecphone" placeholder="+1 000 000 0000"></div>
+        <div class="portal-profile-field full portal-section-label">Work Preferences</div>
+        <div class="portal-profile-field"><label>Preferred Working Hours</label><select id="ep-hours"><option>9am – 5pm</option><option>8am – 4pm</option><option>10am – 6pm</option><option>Flexible</option></select></div>
+        <div class="portal-profile-field"><label>Work Mode</label><select id="ep-mode"><option>Office</option><option>Hybrid</option><option>Remote</option></select></div>
+        <div class="portal-profile-field full"><label>Certifications</label><input id="ep-certs" placeholder="e.g. PMP, CFA, AWS Solutions Architect"></div>
+        <div class="portal-profile-field full"><label>Additional Skills</label><input id="ep-skills" placeholder="e.g. Python, Tableau, Spanish"></div>
+      </div>
+      <button class="portal-btn" style="margin-top:22px" onclick="doUpdateProfile()">Save Changes</button>
+    </div>
+  </div>
+
+  <!-- Step 6: Change Password -->
+  <div id="portal-changepw" style="display:none;width:100%;max-width:420px">
+    <div class="portal-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <h2 class="portal-heading" style="margin-bottom:0">Change Password</h2>
+        <button onclick="showPortalStep('portal-dashboard');renderEmpDash()" style="font-size:0.8rem;color:var(--accent);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif">← Back</button>
+      </div>
+      <div class="portal-error" id="cpw-error"></div>
+      <div class="portal-field"><label>Current Password</label><input type="password" id="cp-current" placeholder="Your current password"></div>
+      <div class="portal-field">
+        <label>New Password</label>
+        <input type="password" id="cp-new" placeholder="Min. 8 characters" oninput="checkCPwStrength()">
+        <div class="portal-strength"><div class="portal-strength-fill" id="cpw-strength-bar" style="width:0%"></div></div>
+      </div>
+      <div class="portal-field"><label>Confirm New Password</label><input type="password" id="cp-confirm" placeholder="Re-enter new password"></div>
+      <button class="portal-btn" onclick="doChangePassword()">Update Password</button>
+    </div>
+  </div>
+
+  <!-- Step 7: Self Review Form -->
+  <div id="portal-self-review" style="display:none;width:100%;max-width:660px">
+    <div class="portal-card" style="max-width:660px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <h2 class="portal-heading" style="margin-bottom:0">Submit Review</h2>
+        <button onclick="showPortalStep('portal-dashboard');renderEmpDash()" style="font-size:0.8rem;color:var(--accent);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif">← Back to Dashboard</button>
+      </div>
+      <p style="font-size:0.82rem;color:var(--ink-3);margin-bottom:22px">Share what you worked on, how it went, and any support you need from your manager.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+        <div class="portal-profile-field">
+          <label>Review Period</label>
+          <select id="sr-period"><option value="Weekly">Weekly</option><option value="Monthly">Monthly</option></select>
+        </div>
+        <div class="portal-profile-field">
+          <label>Period Ending Date</label>
+          <input type="date" id="sr-date">
+        </div>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;background:var(--surface)">
+        <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">📋 Tasks & Deliverables</div>
+        <div class="portal-profile-field" style="margin-bottom:10px">
+          <label>Tasks Assigned This Period</label>
+          <textarea id="sr-tasks-assigned" rows="3" placeholder="List tasks or goals assigned to you this week/month..." style="resize:vertical"></textarea>
+        </div>
+        <div class="portal-profile-field" style="margin-bottom:10px">
+          <label>Tasks Completed ✓</label>
+          <textarea id="sr-tasks-completed" rows="3" placeholder="Which tasks did you complete? What was the outcome?" style="resize:vertical"></textarea>
+        </div>
+        <div class="portal-profile-field">
+          <label>Tasks In Progress / Pending</label>
+          <textarea id="sr-tasks-pending" rows="2" placeholder="Tasks still in progress or carried to next period?" style="resize:vertical"></textarea>
+        </div>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;background:var(--surface)">
+        <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:14px">⭐ Self Rating (1 = Low · 5 = Excellent)</div>
+        <div style="margin-bottom:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px"><label style="font-size:0.82rem;font-weight:500;color:var(--ink-2)">Delivery</label><span id="sr-delivery-val" style="font-size:0.82rem;font-weight:700;color:var(--accent)">3</span></div>
+          <input type="range" id="sr-delivery" min="1" max="5" value="3" step="1" oninput="document.getElementById('sr-delivery-val').textContent=this.value" style="width:100%;accent-color:var(--accent);cursor:pointer">
+          <div style="display:flex;justify-content:space-between;font-size:0.67rem;color:var(--ink-3);margin-top:1px"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px"><label style="font-size:0.82rem;font-weight:500;color:var(--ink-2)">Communication</label><span id="sr-communication-val" style="font-size:0.82rem;font-weight:700;color:var(--accent)">3</span></div>
+          <input type="range" id="sr-communication" min="1" max="5" value="3" step="1" oninput="document.getElementById('sr-communication-val').textContent=this.value" style="width:100%;accent-color:var(--accent);cursor:pointer">
+          <div style="display:flex;justify-content:space-between;font-size:0.67rem;color:var(--ink-3);margin-top:1px"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px"><label style="font-size:0.82rem;font-weight:500;color:var(--ink-2)">Innovation</label><span id="sr-innovation-val" style="font-size:0.82rem;font-weight:700;color:var(--accent)">3</span></div>
+          <input type="range" id="sr-innovation" min="1" max="5" value="3" step="1" oninput="document.getElementById('sr-innovation-val').textContent=this.value" style="width:100%;accent-color:var(--accent);cursor:pointer">
+          <div style="display:flex;justify-content:space-between;font-size:0.67rem;color:var(--ink-3);margin-top:1px"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+        </div>
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px"><label style="font-size:0.82rem;font-weight:500;color:var(--ink-2)">Teamwork</label><span id="sr-teamwork-val" style="font-size:0.82rem;font-weight:700;color:var(--accent)">3</span></div>
+          <input type="range" id="sr-teamwork" min="1" max="5" value="3" step="1" oninput="document.getElementById('sr-teamwork-val').textContent=this.value" style="width:100%;accent-color:var(--accent);cursor:pointer">
+          <div style="display:flex;justify-content:space-between;font-size:0.67rem;color:var(--ink-3);margin-top:1px"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+        </div>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;background:var(--surface)">
+        <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">🏆 Highlights & Challenges</div>
+        <div class="portal-profile-field" style="margin-bottom:10px">
+          <label>Key Wins / Highlights</label>
+          <textarea id="sr-highlights" rows="2" placeholder="What went well? Any achievements or positive outcomes?" style="resize:vertical"></textarea>
+        </div>
+        <div class="portal-profile-field">
+          <label>Challenges Faced</label>
+          <textarea id="sr-challenges" rows="2" placeholder="What obstacles did you encounter? How did you handle them?" style="resize:vertical"></textarea>
+        </div>
+      </div>
+
+      <div style="border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:20px;background:var(--surface)">
+        <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">🙏 Support & Next Steps</div>
+        <div class="portal-profile-field" style="margin-bottom:10px">
+          <label>Support Needed from Manager / HR?</label>
+          <div style="display:flex;gap:10px;margin-top:4px">
+            <button type="button" id="sr-support-yes" onclick="toggleSupport(true)"
+              style="flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--border-strong);background:#fff;font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--ink-3);transition:all 0.15s">
+              👍 Yes, I need support
+            </button>
+            <button type="button" id="sr-support-no" onclick="toggleSupport(false)"
+              style="flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--accent);background:var(--accent-light);font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--accent);transition:all 0.15s">
+              ✓ No, all good
+            </button>
+          </div>
+          <input type="hidden" id="sr-support-val" value="no">
+          <div id="sr-support-detail" style="display:none;margin-top:10px">
+            <textarea id="sr-support" rows="2" placeholder="Describe the support or resources you need — be specific so your manager can help." style="resize:vertical;width:100%;padding:9px 12px;border:1.5px solid var(--amber);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.84rem;background:var(--amber-light)"></textarea>
+          </div>
+        </div>
+        <div class="portal-profile-field" style="margin-bottom:10px">
+          <label>Goals for Next Period</label>
+          <textarea id="sr-goals" rows="2" placeholder="What will you focus on next week / month?" style="resize:vertical"></textarea>
+        </div>
+        <div class="portal-profile-field">
+          <label>Overall Mood / Wellbeing</label>
+          <select id="sr-mood">
+            <option value="Great">😊 Great — feeling motivated and energised</option>
+            <option value="Good" selected>🙂 Good — steady and on track</option>
+            <option value="Okay">😐 Okay — managing, but could use support</option>
+            <option value="Struggling">😔 Struggling — would appreciate a check-in</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="sr-error" style="display:none;background:var(--red-light);border:1px solid rgba(163,48,48,0.2);border-radius:8px;padding:10px 13px;font-size:0.81rem;color:var(--red);margin-bottom:14px"></div>
+      <button class="portal-btn" onclick="submitSelfReview()">Submit Review</button>
+    </div>
+  </div>
+
+</div>
 <script>
 let hrEmail='hr@acmeconsulting.com';
+let portalUrl='';
 const employees=[
-  {id:1,name:"Arjun Mehta",initials:"AM",title:"Senior Consultant",dept:"Strategy",client:"Goldman Sachs",project:"Digital Transformation",status:"Active",visa:{type:"H-1B",expiry:"2025-11-15",country:"India"},manager:"Sarah Lee",joinDate:"2021-03-10",email:"a.mehta@consult.com",phone:"+1 212 555 0101",location:"New York",skills:["Strategy","Finance","Agile"],profileComplete:true},
-  {id:2,name:"Elena Voss",initials:"EV",title:"Principal Consultant",dept:"Technology",client:"Microsoft",project:"Cloud Migration",status:"Active",visa:{type:"L-1A",expiry:"2026-04-22",country:"Germany"},manager:"James Park",joinDate:"2019-07-15",email:"e.voss@consult.com",phone:"+1 415 555 0188",location:"Seattle",skills:["Cloud","AWS","Architecture"],profileComplete:true},
-  {id:3,name:"Priya Nair",initials:"PN",title:"Consultant",dept:"Operations",client:"Amazon",project:"Supply Chain Audit",status:"Active",visa:{type:"OPT",expiry:"2025-07-01",country:"India"},manager:"Sarah Lee",joinDate:"2023-01-20",email:"p.nair@consult.com",phone:"+1 503 555 0142",location:"Portland",skills:["Operations","Lean","Analytics"],profileComplete:true},
-  {id:4,name:"Marcus Chen",initials:"MC",title:"Senior Consultant",dept:"Finance",client:"JPMorgan",project:"Risk Analytics",status:"Bench",visa:{type:"Green Card",expiry:"N/A",country:"Taiwan"},manager:"James Park",joinDate:"2020-09-01",email:"m.chen@consult.com",phone:"+1 212 555 0177",location:"New York",skills:["Risk","Quantitative","Excel"],profileComplete:true},
-  {id:5,name:"Fatima Al-Rashid",initials:"FA",title:"Manager",dept:"Strategy",client:"PwC",project:"M&A Advisory",status:"Active",visa:{type:"TN",expiry:"2026-08-30",country:"Canada"},manager:"David White",joinDate:"2018-05-05",email:"f.alrashid@consult.com",phone:"+1 312 555 0199",location:"Chicago",skills:["M&A","Strategy","Leadership"],profileComplete:true},
-  {id:6,name:"Tom Nguyen",initials:"TN",title:"Analyst",dept:"Technology",client:"Unassigned",project:"Internal",status:"Bench",visa:{type:"Citizen",expiry:"N/A",country:"USA"},manager:"Elena Voss",joinDate:"2024-02-12",email:"t.nguyen@consult.com",phone:"+1 415 555 0155",location:"San Francisco",skills:["Python","SQL","BI"],profileComplete:true},
+  {id:1,name:"Arjun Mehta",initials:"AM",title:"Senior Consultant",dept:"Strategy",client:"Goldman Sachs",project:"Digital Transformation",status:"Active",visa:{type:"H-1B",expiry:"2025-11-15",country:"India",startDate:"2022-11-15",lcaDuties:"Lead digital strategy engagements\nConduct client workshops\nDeliver executive presentations"},manager:"Sarah Lee",clientManager:"David Chen",teamLead:"Sarah Lee",joinDate:"2021-03-10",email:"a.mehta@consult.com",phone:"+1 212 555 0101",location:"New York",skills:["Strategy","Finance","Agile"],profileComplete:true},
+  {id:2,name:"Elena Voss",initials:"EV",title:"Principal Consultant",dept:"Technology",client:"Microsoft",project:"Cloud Migration",status:"Active",visa:{type:"L-1A",expiry:"2026-04-22",country:"Germany",startDate:"2023-04-22",lcaDuties:""},manager:"James Park",clientManager:"Tom Brady",teamLead:"James Park",joinDate:"2019-07-15",email:"e.voss@consult.com",phone:"+1 415 555 0188",location:"Seattle",skills:["Cloud","AWS","Architecture"],profileComplete:true},
+  {id:3,name:"Priya Nair",initials:"PN",title:"Consultant",dept:"Operations",client:"Amazon",project:"Supply Chain Audit",status:"Active",visa:{type:"STEM OPT",expiry:"2026-01-20",country:"India",startDate:"2023-01-20",stemStart:"2023-01-20",lcaDuties:""},manager:"Sarah Lee",clientManager:"Alice Wong",teamLead:"Sarah Lee",joinDate:"2023-01-20",email:"p.nair@consult.com",phone:"+1 503 555 0142",location:"Portland",skills:["Operations","Lean","Analytics"],profileComplete:true},
+  {id:4,name:"Marcus Chen",initials:"MC",title:"Senior Consultant",dept:"Finance",client:"JPMorgan",project:"Risk Analytics",status:"Bench",visa:{type:"Green Card",expiry:"N/A",country:"Taiwan",startDate:"",lcaDuties:""},manager:"James Park",clientManager:"",teamLead:"",joinDate:"2020-09-01",email:"m.chen@consult.com",phone:"+1 212 555 0177",location:"New York",skills:["Risk","Quantitative","Excel"],profileComplete:true},
+  {id:5,name:"Fatima Al-Rashid",initials:"FA",title:"Manager",dept:"Strategy",client:"PwC",project:"M&A Advisory",status:"Active",visa:{type:"TN",expiry:"2026-08-30",country:"Canada",startDate:"2023-08-30",lcaDuties:""},manager:"David White",clientManager:"",teamLead:"",joinDate:"2018-05-05",email:"f.alrashid@consult.com",phone:"+1 312 555 0199",location:"Chicago",skills:["M&A","Strategy","Leadership"],profileComplete:true},
+  {id:6,name:"Tom Nguyen",initials:"TN",title:"Analyst",dept:"Technology",client:"Unassigned",project:"Internal",status:"Bench",visa:{type:"STEM OPT",expiry:"2026-07-01",country:"USA",startDate:"2024-02-12",stemStart:"2024-02-12",lcaDuties:""},manager:"Elena Voss",clientManager:"",teamLead:"",joinDate:"2024-02-12",email:"t.nguyen@consult.com",phone:"+1 415 555 0155",location:"San Francisco",skills:["Python","SQL","BI"],profileComplete:true},
 ];
 const reviews=[
-  {id:1,empId:1,period:"Weekly",date:"2025-05-19",manager:"Sarah Lee",scores:{delivery:4,communication:5,innovation:4,teamwork:4},notes:"Excellent progress on Goldman deck. Needs to finalise slide 12.",status:"Submitted"},
-  {id:2,empId:1,period:"Monthly",date:"2025-04-30",manager:"Sarah Lee",scores:{delivery:4,communication:5,innovation:3,teamwork:4},notes:"Strong month overall. Billability at 95%. Recommend for promotion track.",status:"Approved"},
-  {id:3,empId:2,period:"Weekly",date:"2025-05-19",manager:"James Park",scores:{delivery:5,communication:4,innovation:5,teamwork:5},notes:"Leading Azure migration phase 2 ahead of schedule.",status:"Submitted"},
-  {id:4,empId:3,period:"Weekly",date:"2025-05-12",manager:"Sarah Lee",scores:{delivery:3,communication:4,innovation:3,teamwork:4},notes:"Good work on Amazon audit. Visa OPT expiring soon - needs attention.",status:"Submitted"},
-  {id:5,empId:5,period:"Monthly",date:"2025-04-30",manager:"David White",scores:{delivery:5,communication:5,innovation:4,teamwork:5},notes:"Fatima closed the PwC engagement successfully. Star performer this quarter.",status:"Approved"},
+  {id:1,empId:1,period:"Weekly",evalType:"H-1B Monthly",date:"2025-05-19",manager:"Sarah Lee",scores:{technicalSkills:4,communication:5,teamwork:4,deliverables:4},notes:"Excellent progress on Goldman deck.",tasksCompleted:"Completed strategy deck for Goldman board. Ran 3 workshops.",goalsProgress:"On track with Q2 targets — 80% complete.",additionalRemarks:"Needs support with data room access.",supportRequested:false,managerComment:"Well done, keep momentum.",status:"Submitted"},
+  {id:2,empId:1,period:"Monthly",evalType:"H-1B Monthly",date:"2025-04-30",manager:"Sarah Lee",scores:{technicalSkills:4,communication:5,teamwork:4,deliverables:4},notes:"Strong month. Billability at 95%. Recommend for promotion track.",tasksCompleted:"Closed Q1 client report. Mentored 2 junior analysts.",goalsProgress:"Promotion case submitted.",additionalRemarks:"",supportRequested:false,managerComment:"Excellent quarter.",status:"Approved"},
+  {id:3,empId:2,period:"Weekly",evalType:"STEM Weekly",date:"2025-05-19",manager:"James Park",scores:{technicalSkills:5,communication:4,teamwork:5,deliverables:5},notes:"Leading Azure migration phase 2 ahead of schedule.",tasksCompleted:"Completed Azure data lake setup. Fixed 4 critical pipeline bugs.",goalsProgress:"Certification module 3 of 5 done.",additionalRemarks:"Need staging environment access.",supportRequested:true,managerComment:"Outstanding week.",status:"Submitted"},
+  {id:4,empId:3,period:"Weekly",evalType:"STEM Weekly",date:"2025-05-12",manager:"Sarah Lee",scores:{technicalSkills:3,communication:4,teamwork:4,deliverables:3},notes:"Good work on Amazon audit.",tasksCompleted:"Delivered lean audit report for 3 Amazon DCs.",goalsProgress:"On track with APICS certification.",additionalRemarks:"",supportRequested:false,managerComment:"Solid effort.",status:"Submitted"},
+  {id:5,empId:5,period:"Monthly",evalType:"H-1B Monthly",date:"2025-04-30",manager:"David White",scores:{technicalSkills:5,communication:5,teamwork:5,deliverables:5},notes:"Fatima closed the PwC engagement successfully.",tasksCompleted:"Closed $4M M&A advisory deal. Led 5-day due diligence.",goalsProgress:"All KPIs met.",additionalRemarks:"",supportRequested:false,managerComment:"Star performer.",status:"Approved"},
 ];
 let currentPage='dashboard';
 const AV=[['#e8f2ed','#2d4a3e'],['#e8eef8','#2a4a7a'],['#fdf3e3','#b8722a'],['#fce8e8','#a33030'],['#f0edf8','#5a3d8a']];
@@ -255,9 +689,12 @@ function navigate(page){
 function render(){
   const el=document.getElementById('main-content');
   if(currentPage==='dashboard')el.innerHTML=rDash();
+  else if(currentPage==='team')el.innerHTML=rTeam();
   else if(currentPage==='employees')el.innerHTML=rEmp();
   else if(currentPage==='visas')el.innerHTML=rVisa();
+  else if(currentPage==='projects')el.innerHTML=rProject();
   else if(currentPage==='reviews')el.innerHTML=rReviews();
+  else if(currentPage==='users')el.innerHTML=rUsers();
   else if(currentPage==='settings')el.innerHTML=rSettings();
 }
 function sBadge(s){return s==='Active'?'<span class="badge badge-green">Active</span>':'<span class="badge badge-amber">Bench</span>';}
@@ -269,11 +706,123 @@ function vBadge(v){
   if(d<180)return`<span class="badge badge-amber">${v.type}</span>`;
   return`<span class="badge badge-gray">${v.type}</span>`;
 }
+function visaCardBadge(type){
+  if(type==='STEM OPT'||type==='OPT')return`<span class="visa-badge-stem">${type}</span>`;
+  if(type==='H-1B'||type==='H1B')return`<span class="visa-badge-h1b">H-1B</span>`;
+  if(type==='L-1A'||type==='L-1B')return`<span class="visa-badge-h1b">${type}</span>`;
+  if(type==='TN')return`<span class="visa-badge-h1b">TN</span>`;
+  return`<span class="visa-badge-other">${type}</span>`;
+}
+function stemMilestones(stemStart){
+  if(!stemStart) return '';
+  const base=new Date(stemStart);
+  const today=new Date();
+  const months=[6,12,18,24];
+  return`<div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin:10px 0 6px">STEM Milestones</div>
+  <div class="milestones-grid">${months.map(m=>{
+    const d=new Date(base);d.setMonth(d.getMonth()+m);
+    const diff=Math.ceil((d-today)/86400000);
+    const label=diff>0?`${diff} days left`:`${Math.abs(diff)} days ago`;
+    const cls=diff>0&&diff<60?'urgent':diff>0&&diff<180?'warn':'';
+    return`<div class="milestone-item"><div class="milestone-period">${m} MONTHS</div><div class="milestone-date">${d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div><div class="milestone-sub ${cls}">${label}</div></div>`;
+  }).join('')}</div>`;
+}
+function stars(n,max=5){return'★'.repeat(n)+'☆'.repeat(max-n);}
+function rTeam(){
+  return`<div class="page-header"><div class="page-header-left"><h2>Team Overview</h2><p>${employees.length} team members</p></div>
+  <button class="btn btn-primary btn-sm" onclick="openInvite()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>Invite Employee</button></div>
+  <div class="page-body">
+  <div class="emp-cards-grid">
+  ${employees.map((e,i)=>{
+    const isStem=e.visa.type==='STEM OPT'||e.visa.type==='OPT';
+    const isH1b=e.visa.type==='H-1B';
+    const h1bExpiry=isH1b&&e.visa.expiry!=='N/A'?`<div style="font-size:0.76rem;color:var(--ink-3);margin-top:6px">H-1B Expiry: <strong style="color:${Math.ceil((new Date(e.visa.expiry)-new Date())/86400000)<365?'var(--red)':'var(--ink)'}">${e.visa.expiry}</strong></div>`:'';
+    const lcaBlock=e.visa.lcaDuties?`<div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-top:10px;margin-bottom:4px">LCA Job Duties</div><div class="lca-duties">${e.visa.lcaDuties}</div>`:'';
+    return`<div class="emp-card">
+      <div class="emp-card-header"><div><div class="emp-card-name">${e.name}</div><div class="emp-card-role">${e.title} · ${e.client}</div></div>
+      <button class="btn btn-ghost btn-sm" style="padding:4px 10px;font-size:0.75rem" onclick="openEditEmp(${e.id})">Edit</button></div>
+      <div style="margin-bottom:6px">${visaCardBadge(e.visa.type)}</div>
+      ${h1bExpiry}
+      ${lcaBlock}
+      ${isStem&&e.visa.stemStart?stemMilestones(e.visa.stemStart):''}
+      <div class="card-meta">BrightSharks Mgr: <strong>${e.manager||'—'}</strong></div>
+    </div>`;
+  }).join('')}
+  </div></div>`;
+}
+function rUsers(){
+  const managers=[{name:'Sarah Lee',email:'s.lee@consult.com',password:'SarahL@2024'},{name:'James Park',email:'j.park@consult.com',password:'JamesP@2024'},{name:'David White',email:'d.white@consult.com',password:'DavidW@2024'}];
+  return`<div class="page-header"><div class="page-header-left"><h2>User Management</h2><p>Add and manage employee and manager accounts</p></div>
+  <button class="btn btn-primary btn-sm" onclick="openInvite()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>+ Add User</button></div>
+  <div class="page-body">
+    <div class="card" style="margin-bottom:20px">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--border);font-weight:600;font-size:0.9rem">Employees (${employees.length})</div>
+      <table><thead><tr><th>Name</th><th>Email</th><th>Visa Type</th><th>Portal Username</th><th>Temp Password</th><th></th></tr></thead>
+      <tbody>${employees.map((e,i)=>`<tr>
+        <td><div class="emp-cell">${mkAv(e.initials,i)}<span class="emp-cell-name">${e.name}</span></div></td>
+        <td style="color:var(--ink-3)">${e.email}</td>
+        <td>${visaCardBadge(e.visa.type)}</td>
+        <td style="font-family:monospace;font-size:0.82rem">${e.credentials?e.credentials.username:'—'}</td>
+        <td style="font-family:monospace;font-size:0.82rem">${e.credentials?e.credentials.tempPassword:'—'}</td>
+        <td><button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:rgba(163,48,48,0.2);font-size:0.75rem" onclick="removeEmployee(${e.id})">Remove</button></td>
+      </tr>`).join('')}</tbody></table>
+    </div>
+    <div class="card">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--border);font-weight:600;font-size:0.9rem">Managers (${managers.length})</div>
+      <table><thead><tr><th>Name</th><th>Email</th><th>Password</th><th></th></tr></thead>
+      <tbody>${managers.map((m,i)=>`<tr>
+        <td><div class="emp-cell">${mkAv(m.name.split(' ').map(w=>w[0]).join(''),i)}<span class="emp-cell-name">${m.name}</span></div></td>
+        <td style="color:var(--ink-3)">${m.email}</td>
+        <td style="font-family:monospace;font-size:0.82rem">${m.password}</td>
+        <td><button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:rgba(163,48,48,0.2);font-size:0.75rem">Remove</button></td>
+      </tr>`).join('')}</tbody></table>
+    </div>
+  </div>`;
+}
+function removeEmployee(id){
+  if(!confirm('Remove this employee from the system?')) return;
+  const i=employees.findIndex(e=>e.id===id);
+  if(i>-1){employees.splice(i,1);saveEmployeesToStorage();render();}
+}
+function openInvite(){
+  showModal(`<div class="modal-header"><h3>Invite New Employee</h3><button class="btn btn-ghost btn-sm" onclick="closeModal()">&#x2715;</button></div>
+  <div class="modal-body">
+    <p style="font-size:0.83rem;color:var(--ink-3);margin-bottom:18px">They'll receive a welcome email with their login credentials.</p>
+    <div class="form-grid">
+      <div class="form-group full"><label>Full Name</label><input id="inv-name" placeholder="e.g. Priya Sharma"></div>
+      <div class="form-group full"><label>Work Email</label><input id="inv-email" type="email" placeholder="priya@company.com"></div>
+      <div class="form-group full"><label>Visa Type</label><select id="inv-visa"><option>STEM OPT</option><option>H-1B</option><option>L-1A</option><option>TN</option><option>Green Card</option><option>Citizen</option></select></div>
+    </div>
+  </div>
+  <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal()">Close</button><button class="btn btn-primary" onclick="sendInvite()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send Invite</button></div>`);
+}
+function sendInvite(){
+  const name=document.getElementById('inv-name').value.trim();
+  const email=document.getElementById('inv-email').value.trim();
+  const visaType=document.getElementById('inv-visa').value;
+  if(!name||!email){alert('Name and email are required.');return;}
+  const newEmp={id:employees.length+1,name,initials:mkIni(name),title:'New Employee',dept:'',client:'Unassigned',project:'',status:'Active',visa:{type:visaType,expiry:'N/A',country:'',startDate:'',lcaDuties:''},manager:'',clientManager:'',teamLead:'',joinDate:new Date().toISOString().split('T')[0],email,phone:'',location:'',skills:[],profileComplete:false};
+  employees.push(newEmp);
+  saveEmployeesToStorage();
+  closeModal();
+  showEmailComposer(newEmp);
+}
 function rDash(){
   const active=employees.filter(e=>e.status==='Active').length;
   const bench=employees.filter(e=>e.status==='Bench').length;
-  const exp=employees.filter(e=>{if(e.visa.expiry==='N/A')return false;return Math.ceil((new Date(e.visa.expiry)-new Date())/86400000)<90;}).length;
+  const today=new Date();
+  const exp=employees.filter(e=>{if(e.visa.expiry==='N/A')return false;return Math.ceil((new Date(e.visa.expiry)-today)/86400000)<90;}).length;
   const pend=reviews.filter(r=>r.status==='Submitted').length;
+  // Projects ending within 60 days
+  const projEndingSoon=employees.filter(e=>{
+    if(!e.projectEnd)return false;
+    const days=Math.ceil((new Date(e.projectEnd)-today)/86400000);
+    return days>=0&&days<=60;
+  });
+  const projOverdue=employees.filter(e=>{
+    if(!e.projectEnd)return false;
+    return new Date(e.projectEnd)<today;
+  });
   const bd={};employees.forEach(e=>{bd[e.dept]=(bd[e.dept]||0)+1;});
   const rr=reviews.slice(-3).reverse().map(r=>{
     const emp=employees.find(e=>e.id===r.empId);
@@ -286,15 +835,21 @@ function rDash(){
       <div class="metric-card mc-green"><div class="metric-label">Total Employees</div><div class="metric-val">${employees.length}</div><div class="metric-sub">All departments</div></div>
       <div class="metric-card mc-blue"><div class="metric-label">Active on Projects</div><div class="metric-val cv-blue">${active}</div><div class="metric-sub">${bench} on bench</div></div>
       <div class="metric-card mc-red"><div class="metric-label">Visa Expiring</div><div class="metric-val cv-red">${exp}</div><div class="metric-sub">Within 90 days</div></div>
-      <div class="metric-card mc-amber"><div class="metric-label">Pending Reviews</div><div class="metric-val cv-amber">${pend}</div><div class="metric-sub">Awaiting approval</div></div>
+      <div class="metric-card mc-amber"><div class="metric-label">Projects Ending Soon</div><div class="metric-val cv-amber">${projEndingSoon.length}</div><div class="metric-sub">${projOverdue.length>0?projOverdue.length+' overdue · ':''}Within 60 days</div></div>
     </div>
-    ${exp>0?`<div class="alert alert-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>${exp} visa(s) expiring within 90 days. <a onclick="navigate('visas')">Review now →</a></span></div>`:''}
+    ${exp>0?`<div class="alert alert-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span><strong>Visa Alert:</strong> ${exp} employee visa(s) expiring within 90 days. <a onclick="navigate('visas')">Review now →</a></span></div>`:''}
+    ${projOverdue.length>0?`<div class="alert alert-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span><strong>Project Overdue:</strong> ${projOverdue.map(e=>`<strong>${e.name}</strong> (${e.project}, ended ${e.projectEnd})`).join(', ')}. Please update their assignment.</span></div>`:``}
+    ${projEndingSoon.length>0?`<div class="alert alert-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span><strong>Project End Reminder:</strong> ${projEndingSoon.map(e=>{const d=Math.ceil((new Date(e.projectEnd)-today)/86400000);return`<strong>${e.name}</strong> — ${e.project} ends in <strong>${d} day${d===1?'':'s'}</strong> (${e.projectEnd})`;}).join(' · ')}</span></div>`:''}
     <div class="two-col">
       <div><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">By Department</div>
         <div class="card card-padded">${Object.entries(bd).map(([d,n])=>`<div class="dept-bar-row"><span class="dept-bar-label">${d}</span><div class="dept-bar-track"><div class="dept-bar-fill" style="width:${n/employees.length*100}%"></div></div><span class="dept-bar-count">${n}</span></div>`).join('')}</div>
       </div>
       <div><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">Active Projects</div>
-        <div class="card">${employees.filter(e=>e.status==='Active').map(e=>`<div style="padding:10px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:0.83rem;font-weight:500">${e.name}</div><div style="font-size:0.72rem;color:var(--ink-3)">${e.client} · ${e.project}</div></div>${sBadge(e.status)}</div>`).join('')}</div>
+        <div class="card">${employees.filter(e=>e.status==='Active').map(e=>{
+          const pe=e.projectEnd?Math.ceil((new Date(e.projectEnd)-today)/86400000):null;
+          const peColor=pe!==null?(pe<0?'var(--red)':pe<=60?'var(--amber)':'var(--accent)'):'var(--accent)';
+          return`<div style="padding:10px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:0.83rem;font-weight:500">${e.name}</div><div style="font-size:0.72rem;color:var(--ink-3)">${e.client} · ${e.project}</div>${e.projectStart||e.projectEnd?`<div style="font-size:0.7rem;margin-top:3px;display:flex;gap:5px;flex-wrap:wrap">${e.projectStart?`<span style="background:var(--accent-light);color:var(--accent);padding:1px 7px;border-radius:20px">Start: ${e.projectStart}</span>`:''}${e.projectEnd?`<span style="background:${pe<0?'var(--red-light)':pe<=60?'var(--amber-light)':'var(--surface-2)'};color:${peColor};padding:1px 7px;border-radius:20px;font-weight:600">End: ${e.projectEnd}${pe!==null&&pe<=60?` (${pe<0?'overdue':pe+'d left'})`:''}</span>`:''}</div>`:''}</div>${sBadge(e.status)}</div>`;
+        }).join('')}</div>
       </div>
     </div>
     <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">Recent Reviews</div>
@@ -336,29 +891,350 @@ function rVisa(){
     }).join('')}</tbody></table></div>
   </div>`;
 }
-function rReviews(){
-  return`<div class="page-header"><div class="page-header-left"><h2>Reviews</h2><p>Weekly and monthly performance assessments</p></div><button class="btn btn-primary btn-sm" onclick="openAddReview()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>New Review</button></div>
+
+function rProject(){
+  const today=new Date();
+  // Build list with days remaining, sorted: overdue first, then soonest end
+  const list=employees.map(e=>{
+    const hasProject=e.project&&e.project!=='Unassigned'&&e.project!=='Internal';
+    const daysLeft=e.projectEnd?Math.ceil((new Date(e.projectEnd)-today)/86400000):null;
+    const daysStarted=e.projectStart?Math.ceil((today-new Date(e.projectStart))/86400000):null;
+    return{...e,hasProject,daysLeft,daysStarted};
+  }).sort((a,b)=>{
+    // Overdue first, then by days left asc, then no end date last
+    const aD=a.daysLeft===null?99999:a.daysLeft;
+    const bD=b.daysLeft===null?99999:b.daysLeft;
+    return aD-bD;
+  });
+
+  const overdue=list.filter(e=>e.daysLeft!==null&&e.daysLeft<0);
+  const endingSoon=list.filter(e=>e.daysLeft!==null&&e.daysLeft>=0&&e.daysLeft<=60);
+  const noEndDate=list.filter(e=>e.daysLeft===null&&e.projectEnd==='');
+
+  const statusLabel=(e)=>{
+    if(!e.projectEnd) return'<span class="badge badge-gray">No end date</span>';
+    if(e.daysLeft<0) return'<span class="badge badge-red">Overdue</span>';
+    if(e.daysLeft<=14) return'<span class="badge badge-red">Ending this week</span>';
+    if(e.daysLeft<=30) return'<span class="badge badge-amber">Ending soon</span>';
+    if(e.daysLeft<=60) return'<span class="badge badge-amber">60-day reminder</span>';
+    return'<span class="badge badge-green">On track</span>';
+  };
+
+  const daysLeftLabel=(e)=>{
+    if(e.daysLeft===null) return'<span style="color:var(--ink-3)">—</span>';
+    if(e.daysLeft<0) return`<span style="font-weight:700;color:var(--red)">${Math.abs(e.daysLeft)}d overdue</span>`;
+    if(e.daysLeft===0) return`<span style="font-weight:700;color:var(--red)">Ends today</span>`;
+    return`<span style="font-weight:700;color:${e.daysLeft<=60?'var(--amber)':'var(--ink)'}">${e.daysLeft} days</span>`;
+  };
+
+  const progressBar=(e)=>{
+    if(!e.projectStart||!e.projectEnd) return'<span style="color:var(--ink-3);font-size:0.78rem">—</span>';
+    const total=Math.ceil((new Date(e.projectEnd)-new Date(e.projectStart))/86400000);
+    const done=Math.ceil((today-new Date(e.projectStart))/86400000);
+    const pct=Math.min(100,Math.max(0,Math.round(done/total*100)));
+    const color=pct>=100?'var(--red)':pct>=80?'var(--amber)':'var(--accent)';
+    return`<div style="display:flex;align-items:center;gap:8px">
+      <div style="flex:1;height:5px;background:var(--surface-3);border-radius:3px;overflow:hidden;min-width:80px">
+        <div style="height:100%;width:${pct}%;background:${color};border-radius:3px;transition:width 0.3s"></div>
+      </div>
+      <span style="font-size:0.75rem;font-weight:600;color:${color};white-space:nowrap">${pct}%</span>
+    </div>`;
+  };
+
+  return`
+  <div class="page-header">
+    <div class="page-header-left">
+      <h2>Project Tracker</h2>
+      <p>Monitor project timelines, end dates and assignment status</p>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="navigate('employees')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      Edit Project Dates
+    </button>
+  </div>
   <div class="page-body">
-    <div class="tabs"><div class="tab active" onclick="frev(this,'all')">All Reviews</div><div class="tab" onclick="frev(this,'Weekly')">Weekly</div><div class="tab" onclick="frev(this,'Monthly')">Monthly</div></div>
-    <div id="review-list">${rRevCards('all')}</div>
+
+    <!-- Summary metrics -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;border-top:3px solid var(--accent)">
+        <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:6px">Active Projects</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--accent);line-height:1">${employees.filter(e=>e.status==='Active').length}</div>
+        <div style="font-size:0.73rem;color:var(--ink-3);margin-top:3px">${employees.filter(e=>e.status==='Bench').length} on bench</div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;border-top:3px solid var(--red)">
+        <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:6px">Overdue</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--red);line-height:1">${overdue.length}</div>
+        <div style="font-size:0.73rem;color:var(--ink-3);margin-top:3px">Past end date</div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;border-top:3px solid var(--amber)">
+        <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:6px">Ending in 60 Days</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--amber);line-height:1">${endingSoon.length}</div>
+        <div style="font-size:0.73rem;color:var(--ink-3);margin-top:3px">Need attention</div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;border-top:3px solid var(--ink-3)">
+        <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:6px">No End Date Set</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--ink-3);line-height:1">${list.filter(e=>!e.projectEnd).length}</div>
+        <div style="font-size:0.73rem;color:var(--ink-3);margin-top:3px">Update recommended</div>
+      </div>
+    </div>
+
+    <!-- Alerts -->
+    ${overdue.length>0?`<div class="alert alert-red" style="margin-bottom:10px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span><strong>Overdue Projects:</strong> ${overdue.map(e=>`<strong>${e.name}</strong> — ${e.project} (${Math.abs(e.daysLeft)}d past end date)`).join(' · ')}. Please extend or close these projects.</span></div>`:''}
+    ${endingSoon.length>0?`<div class="alert alert-amber" style="margin-bottom:16px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span><strong>60-Day Reminder:</strong> ${endingSoon.map(e=>`<strong>${e.name}</strong> — ${e.project} ends in ${e.daysLeft}d (${e.projectEnd})`).join(' · ')}</span></div>`:''}
+
+    <!-- Filter bar -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <div class="search-wrap" style="max-width:260px">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input placeholder="Search employee or project..." oninput="filterProjectTracker(this.value)" id="proj-search">
+      </div>
+      <select id="proj-status-filter" onchange="filterProjectTracker(document.getElementById('proj-search').value)" style="padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:0.83rem;background:#fff">
+        <option value="">All Statuses</option>
+        <option value="overdue">Overdue</option>
+        <option value="soon">Ending in 60 days</option>
+        <option value="active">Active</option>
+        <option value="bench">Bench</option>
+      </select>
+    </div>
+
+    <!-- Main table -->
+    <div class="card table-wrap" id="proj-table-wrap">
+      ${buildProjectTable(list)}
+    </div>
   </div>`;
 }
-function frev(el,t){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.getElementById('review-list').innerHTML=rRevCards(t);}
-function rRevCards(t){
-  const list=t==='all'?reviews:reviews.filter(r=>r.period===t);
-  const fields={delivery:'Delivery',communication:'Communication',innovation:'Innovation',teamwork:'Teamwork'};
-  return list.map(r=>{
-    const emp=employees.find(e=>e.id===r.empId);
-    const avg=(Object.values(r.scores).reduce((a,b)=>a+b,0)/4).toFixed(1);
-    return`<div class="review-card"><div class="review-header"><div class="emp-cell">${mkAv(emp.initials,emp.id,36)}<div><span class="emp-cell-name">${emp.name}</span><span class="emp-cell-sub">${emp.title} · ${r.period} · ${r.date}</span></div></div><div style="text-align:right"><div class="review-score">${avg}</div><div class="review-score-sub">avg / 5</div><div style="margin-top:5px">${r.status==='Approved'?'<span class="badge badge-green">Approved</span>':'<span class="badge badge-amber">Pending</span>'}</div></div></div>
-    <div style="margin-bottom:11px">${Object.entries(r.scores).map(([k,v])=>`<div class="rating-bar"><span class="rating-label">${fields[k]}</span><div class="bar-track"><div class="bar-fill" style="width:${v/5*100}%"></div></div><span class="rating-score">${v}/5</span></div>`).join('')}</div>
-    <div style="background:var(--surface);border-radius:8px;padding:9px 13px;font-size:0.81rem;color:var(--ink-2);line-height:1.65">${r.notes}</div>
-    <div style="margin-top:9px;font-size:0.73rem;color:var(--ink-3)">By <strong style="color:var(--ink-2)">${r.manager}</strong></div></div>`;
-  }).join('');
+
+function buildProjectTable(list){
+  const today=new Date();
+  const statusLabel=(e)=>{
+    if(!e.projectEnd) return'<span class="badge badge-gray">No end date</span>';
+    if(e.daysLeft<0) return'<span class="badge badge-red">Overdue</span>';
+    if(e.daysLeft<=14) return'<span class="badge badge-red">Ending this week</span>';
+    if(e.daysLeft<=30) return'<span class="badge badge-amber">Ending soon</span>';
+    if(e.daysLeft<=60) return'<span class="badge badge-amber">60-day reminder</span>';
+    return'<span class="badge badge-green">On track</span>';
+  };
+  const daysLeftLabel=(e)=>{
+    if(e.daysLeft===null||e.daysLeft===undefined) return'<span style="color:var(--ink-3)">—</span>';
+    if(e.daysLeft<0) return`<span style="font-weight:700;color:var(--red)">${Math.abs(e.daysLeft)}d overdue</span>`;
+    if(e.daysLeft===0) return`<span style="font-weight:700;color:var(--red)">Ends today</span>`;
+    return`<span style="font-weight:700;color:${e.daysLeft<=60?'var(--amber)':'var(--ink)'}">${e.daysLeft} days</span>`;
+  };
+  const progressBar=(e)=>{
+    if(!e.projectStart||!e.projectEnd) return'<span style="color:var(--ink-3);font-size:0.78rem">—</span>';
+    const total=Math.ceil((new Date(e.projectEnd)-new Date(e.projectStart))/86400000);
+    if(total<=0) return'<span style="color:var(--ink-3);font-size:0.78rem">—</span>';
+    const done=Math.ceil((today-new Date(e.projectStart))/86400000);
+    const pct=Math.min(100,Math.max(0,Math.round(done/total*100)));
+    const color=pct>=100?'var(--red)':pct>=80?'var(--amber)':'var(--accent)';
+    return`<div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:5px;background:var(--surface-3);border-radius:3px;overflow:hidden;min-width:70px"><div style="height:100%;width:${pct}%;background:${color};border-radius:3px"></div></div><span style="font-size:0.75rem;font-weight:600;color:${color};white-space:nowrap">${pct}%</span></div>`;
+  };
+  if(!list.length) return'<div style="text-align:center;padding:60px;color:var(--ink-3)">No employees match your filter.</div>';
+  return`<table>
+    <thead><tr>
+      <th>Employee</th>
+      <th>Project</th>
+      <th>Client</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Progress</th>
+      <th>Days Left</th>
+      <th>Status</th>
+      <th></th>
+    </tr></thead>
+    <tbody>${list.map((e,i)=>{
+      const rowBg=e.daysLeft!==null&&e.daysLeft<0?'background:rgba(163,48,48,0.03)':e.daysLeft!==null&&e.daysLeft<=60?'background:rgba(184,114,42,0.03)':'';
+      return`<tr style="${rowBg}">
+        <td><div class="emp-cell">${mkAv(e.initials,i)}<div><span class="emp-cell-name">${e.name}</span><span class="emp-cell-sub">${e.dept}</span></div></div></td>
+        <td style="font-weight:500;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.project||'<span style="color:var(--ink-3)">Unassigned</span>'}</td>
+        <td style="color:var(--ink-3);font-size:0.82rem">${e.client||'—'}</td>
+        <td style="font-size:0.83rem">${e.projectStart||'<span style="color:var(--ink-3)">Not set</span>'}</td>
+        <td style="font-size:0.83rem;font-weight:500;color:${e.daysLeft!==null&&e.daysLeft<0?'var(--red)':e.daysLeft!==null&&e.daysLeft<=60?'var(--amber)':'var(--ink)'}">${e.projectEnd||'<span style="color:var(--ink-3);font-weight:400">Not set</span>'}</td>
+        <td style="min-width:120px">${progressBar(e)}</td>
+        <td>${daysLeftLabel(e)}</td>
+        <td>${statusLabel(e)}</td>
+        <td><button class="btn btn-ghost btn-sm" style="font-size:0.75rem" onclick="openEditEmp(${e.id})">Edit →</button></td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table>`;
+}
+
+function filterProjectTracker(search){
+  const today=new Date();
+  const statusF=(document.getElementById('proj-status-filter')||{}).value||'';
+  let list=employees.map(e=>{
+    const daysLeft=e.projectEnd?Math.ceil((new Date(e.projectEnd)-today)/86400000):null;
+    return{...e,daysLeft};
+  });
+  if(search){const s=search.toLowerCase();list=list.filter(e=>e.name.toLowerCase().includes(s)||( e.project&&e.project.toLowerCase().includes(s))||(e.client&&e.client.toLowerCase().includes(s)));}
+  if(statusF==='overdue') list=list.filter(e=>e.daysLeft!==null&&e.daysLeft<0);
+  else if(statusF==='soon') list=list.filter(e=>e.daysLeft!==null&&e.daysLeft>=0&&e.daysLeft<=60);
+  else if(statusF==='active') list=list.filter(e=>e.status==='Active');
+  else if(statusF==='bench') list=list.filter(e=>e.status==='Bench');
+  list.sort((a,b)=>(a.daysLeft===null?99999:a.daysLeft)-(b.daysLeft===null?99999:b.daysLeft));
+  const wrap=document.getElementById('proj-table-wrap');
+  if(wrap) wrap.innerHTML=buildProjectTable(list);
+}
+function rReviews(){
+  const pending=reviews.filter(r=>r.status==='Submitted');
+  const reviewed=reviews.filter(r=>r.status==='Approved');
+  return`<div class="page-header"><div class="page-header-left"><h2>Evaluations</h2><p>Review and comment on employee evaluations</p></div><button class="btn btn-primary btn-sm" onclick="openAddReview()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>New Evaluation</button></div>
+  <div class="page-body">
+    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 18px;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end">
+      <div><div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:5px">Search by Name</div>
+      <div class="search-wrap" style="max-width:220px"><svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input id="eval-search" placeholder="Employee name..." oninput="fEvalFilter()"></div></div>
+      <div><div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:5px">Type</div>
+      <select id="eval-type" onchange="fEvalFilter()"><option value="">All</option><option value="STEM Weekly">STEM Weekly</option><option value="H-1B Monthly">H-1B Monthly</option></select></div>
+      <div><div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:5px">From Date</div><input type="date" id="eval-from" onchange="fEvalFilter()" style="padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:0.83rem"></div>
+      <div><div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:5px">To Date</div><input type="date" id="eval-to" onchange="fEvalFilter()" style="padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:0.83rem"></div>
+    </div>
+    <div class="tabs">
+      <div class="tab active" onclick="fEvalTab(this,'pending')">Pending Review (${pending.length})</div>
+      <div class="tab" onclick="fEvalTab(this,'reviewed')">Reviewed (${reviewed.length})</div>
+    </div>
+    <div id="eval-list">${rEvalTable('pending','','','','')}</div>
+  </div>`;
+}
+let evalTab='pending';
+function fEvalTab(el,tab){
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');
+  evalTab=tab;fEvalFilter();
+}
+function fEvalFilter(){
+  const name=(document.getElementById('eval-search')||{}).value||'';
+  const type=(document.getElementById('eval-type')||{}).value||'';
+  const from=(document.getElementById('eval-from')||{}).value||'';
+  const to=(document.getElementById('eval-to')||{}).value||'';
+  document.getElementById('eval-list').innerHTML=rEvalTable(evalTab,name,type,from,to);
+}
+function rEvalTable(tab,name,type,from,to){
+  let list=reviews.filter(r=>tab==='pending'?r.status==='Submitted':r.status==='Approved');
+  if(name){const n=name.toLowerCase();list=list.filter(r=>{const emp=employees.find(e=>e.id===r.empId);return emp&&emp.name.toLowerCase().includes(n);});}
+  if(type)list=list.filter(r=>r.evalType===type);
+  if(from)list=list.filter(r=>r.date>=from);
+  if(to)list=list.filter(r=>r.date<=to);
+  if(!list.length)return`<div style="text-align:center;padding:60px;color:var(--ink-3);font-size:0.9rem">No ${tab==='pending'?'pending':''} evaluations 🎉</div>`;
+  // Unified field labels covering both manager-created and self-submitted reviews
+  const allFields={delivery:'Delivery',communication:'Communication',innovation:'Innovation',teamwork:'Teamwork',technicalSkills:'Technical',deliverables:'Deliverables'};
+  return`<div class="card table-wrap"><table>
+    <thead><tr><th>Employee</th><th>Period</th><th>Date</th><th>Source</th><th>Ratings</th><th>Support</th><th>Action</th></tr></thead>
+    <tbody>${list.map(r=>{
+      const emp=employees.find(e=>e.id===r.empId);
+      const hasScores=r.scores&&Object.values(r.scores).some(v=>v>0);
+      const ratingsHtml=hasScores?Object.entries(r.scores).map(([k,v])=>{
+        const label=allFields[k]||k.charAt(0).toUpperCase()+k.slice(1);
+        return`<div class="eval-stars"><span style="font-size:0.71rem;color:var(--ink-3);min-width:82px">${label}:</span><span class="eval-star">${stars(v)}</span><span style="font-size:0.7rem;color:var(--ink-3);margin-left:3px">${v}/5</span></div>`;
+      }).join(''):'—';
+      const periodBadge=r.period?`<span class="badge ${r.period==='Weekly'?'badge-blue':'badge-purple'}" style="font-size:0.7rem">${r.period}</span>`:(r.evalType?`<span style="font-size:0.76rem;color:var(--ink-3)">${r.evalType}</span>`:'-');
+      const sourceBadge=r.selfSubmitted?'<span class="badge badge-teal" style="font-size:0.7rem">Self</span>':'<span class="badge badge-gray" style="font-size:0.7rem">Manager</span>';
+      const supportBadge=r.supportRequested?'<span class="support-yes" style="font-size:0.76rem">Yes</span>':r.support?'<span class="support-yes" style="font-size:0.76rem">Yes</span>':'<span style="color:var(--ink-3);font-size:0.76rem">No</span>';
+      return`<tr>
+        <td><div class="emp-cell">${mkAv(emp?emp.initials:'?',emp?emp.id:0)}<div><span class="emp-cell-name">${emp?emp.name:'Unknown'}</span><span class="emp-cell-sub">${emp?emp.dept:''}</span></div></div></td>
+        <td>${periodBadge}</td>
+        <td>${r.date}</td>
+        <td>${sourceBadge}</td>
+        <td>${ratingsHtml}</td>
+        <td>${supportBadge}</td>
+        <td><button class="btn btn-ghost btn-sm" style="font-size:0.76rem" onclick="viewEvalModal(${r.id})">${tab==='pending'?'Review →':'View'}</button></td>
+      </tr>`;
+    }).join('')}</tbody></table></div>`;
+}
+function viewEvalModal(rid){
+  const r=reviews.find(x=>x.id===rid);
+  const emp=employees.find(e=>e.id===r.empId);
+  const allFields={delivery:'Delivery',communication:'Communication',innovation:'Innovation',teamwork:'Teamwork',technicalSkills:'Technical Skills',deliverables:'Deliverables'};
+  const hasSupport=r.supportRequested||r.support;
+  const moodColor={Great:'var(--accent)',Good:'var(--blue)',Okay:'var(--amber)',Struggling:'var(--red)'}[r.mood]||'var(--ink-3)';
+  showModal(`<div class="modal-header"><h3>${emp?emp.name:'Employee'} — ${r.period||r.evalType||'Review'} · ${r.date}</h3><button class="btn btn-ghost btn-sm" onclick="closeModal()">&#x2715;</button></div>
+  <div class="modal-body">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      ${r.selfSubmitted?'<span class="badge badge-teal">Self-submitted</span>':'<span class="badge badge-gray">Manager review</span>'}
+      ${r.period?`<span class="badge ${r.period==='Weekly'?'badge-blue':'badge-purple'}">${r.period}</span>`:''}
+      ${hasSupport?'<span class="support-yes">Support Requested</span>':'<span class="badge badge-gray">No Support Needed</span>'}
+      ${r.mood?`<span style="font-size:0.76rem;font-weight:600;color:${moodColor};background:var(--surface-2);padding:2px 9px;border-radius:20px">Mood: ${r.mood}</span>`:''}
+      <span style="font-size:0.76rem;color:var(--ink-3);background:var(--surface-2);padding:2px 9px;border-radius:20px">${r.status}</span>
+    </div>
+
+    ${r.tasksAssigned||r.tasksCompleted||r.tasksPending?`
+    <div style="background:var(--surface);border-radius:10px;padding:14px 16px;margin-bottom:14px">
+      <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:10px">📋 Tasks & Deliverables</div>
+      ${r.tasksAssigned?`<div style="margin-bottom:8px"><div style="font-size:0.71rem;font-weight:600;color:var(--ink-3);margin-bottom:3px">ASSIGNED</div><div style="font-size:0.83rem;color:var(--ink-2);line-height:1.5">${r.tasksAssigned}</div></div>`:''}
+      ${r.tasksCompleted?`<div style="margin-bottom:8px"><div style="font-size:0.71rem;font-weight:600;color:var(--accent);margin-bottom:3px">COMPLETED ✓</div><div style="font-size:0.83rem;color:var(--ink-2);line-height:1.5">${r.tasksCompleted}</div></div>`:''}
+      ${r.tasksPending?`<div><div style="font-size:0.71rem;font-weight:600;color:var(--amber);margin-bottom:3px">PENDING / IN PROGRESS</div><div style="font-size:0.83rem;color:var(--ink-2);line-height:1.5">${r.tasksPending}</div></div>`:''}
+    </div>`:''}
+
+    ${Object.values(r.scores||{}).some(v=>v>0)?`
+    <div style="background:var(--surface);border-radius:10px;padding:14px 16px;margin-bottom:14px">
+      <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:10px">⭐ Self Ratings</div>
+      ${Object.entries(r.scores).map(([k,v])=>`<div class="rating-bar"><span class="rating-label">${allFields[k]||k}</span><div class="bar-track"><div class="bar-fill" style="width:${v/5*100}%"></div></div><span class="rating-score">${v}/5</span></div>`).join('')}
+    </div>`:''}
+
+    ${r.highlights||r.challenges?`
+    <div style="background:var(--surface);border-radius:10px;padding:14px 16px;margin-bottom:14px">
+      <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:10px">🏆 Highlights & Challenges</div>
+      ${r.highlights?`<div style="margin-bottom:8px"><div style="font-size:0.71rem;font-weight:600;color:var(--ink-3);margin-bottom:3px">KEY WINS</div><div style="font-size:0.83rem;color:var(--ink-2);line-height:1.5">${r.highlights}</div></div>`:''}
+      ${r.challenges?`<div><div style="font-size:0.71rem;font-weight:600;color:var(--ink-3);margin-bottom:3px">CHALLENGES</div><div style="font-size:0.83rem;color:var(--ink-2);line-height:1.5">${r.challenges}</div></div>`:''}
+    </div>`:''}
+
+    ${hasSupport||r.goals?`
+    <div style="background:${hasSupport?'var(--amber-light)':'var(--surface)'};border:${hasSupport?'1px solid rgba(184,114,42,0.25)':'1px solid var(--border)'};border-radius:10px;padding:14px 16px;margin-bottom:14px">
+      <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:${hasSupport?'var(--amber)':'var(--ink-3)'};margin-bottom:10px">🙏 Support & Next Steps</div>
+      ${hasSupport?`<div style="margin-bottom:8px"><div style="font-size:0.71rem;font-weight:600;color:var(--amber);margin-bottom:3px">SUPPORT NEEDED</div><div style="font-size:0.83rem;color:var(--ink-2);line-height:1.5">${r.support||'Support requested (no details provided)'}</div></div>`:''}
+      ${r.goals?`<div><div style="font-size:0.71rem;font-weight:600;color:var(--ink-3);margin-bottom:3px">GOALS NEXT PERIOD</div><div style="font-size:0.83rem;color:var(--ink-2);line-height:1.5">${r.goals}</div></div>`:''}
+    </div>`:''}
+
+    ${r.notes&&!r.selfSubmitted?`<div style="background:var(--surface);border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:0.83rem;color:var(--ink-2);line-height:1.6">${r.notes}</div>`:''}
+
+    <div style="font-size:0.71rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:6px">Manager Comments</div>
+    <textarea id="modal-comment" rows="3" placeholder="Add your comments or feedback for this employee..." style="width:100%;padding:9px 12px;border:1px solid var(--border-strong);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:0.84rem;resize:vertical">${r.managerComment||''}</textarea>
+    <p style="font-size:0.74rem;color:var(--ink-3);margin-top:6px">Comments are visible to the employee in their portal.</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary" onclick="saveEvalComment(${rid})">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M20 6 9 17l-5-5"/></svg>
+      Approve & Save
+    </button>
+  </div>`);
+}
+function saveEvalComment(rid){
+  const r=reviews.find(x=>x.id===rid);
+  if(r){r.managerComment=document.getElementById('modal-comment').value;r.status='Approved';}
+  saveReviewsToStorage();
+  closeModal();render();
 }
 function rSettings(){
+  const isHosted=portalUrl.startsWith('http');
   return`<div class="page-header"><div class="page-header-left"><h2>Settings</h2><p>Configure your ConsultTrack workspace</p></div></div>
   <div class="page-body"><div class="settings-section">
+    <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">Portal Access</div>
+    <div class="card card-padded" style="margin-bottom:22px">
+      <div style="font-size:0.83rem;color:var(--ink-2);margin-bottom:14px;line-height:1.6">To send employees a direct portal link, host this HTML file somewhere and paste the URL below. Options: <strong>Netlify Drop</strong> (drag &amp; drop, free), <strong>GitHub Pages</strong>, <strong>SharePoint</strong>, or your company intranet.</div>
+      <div class="form-group full" style="margin-bottom:12px"><label>Employee Portal URL</label>
+        <div style="display:flex;gap:8px">
+          <input id="portal-url-input" value="${portalUrl}" placeholder="https://your-company.netlify.app/consulttrack.html#portal" oninput="portalUrl=this.value;updatePortalStatus()" style="flex:1">
+          ${isHosted?`<button class="btn btn-ghost btn-sm" onclick="navigator.clipboard.writeText(portalUrl+'#portal')" title="Copy link">Copy</button>`:''}
+        </div>
+      </div>
+      <div id="portal-url-status">
+        ${isHosted
+          ? `<div style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--accent);background:var(--accent-light);padding:10px 12px;border-radius:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Portal link is set. Welcome emails will include a direct clickable link for employees.</div>`
+          : `<div style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--amber);background:var(--amber-light);padding:10px 12px;border-radius:8px;border:1px solid rgba(184,114,42,0.2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>No portal URL set yet. Employees will be instructed to open the HTML file directly.</div>`
+        }
+      </div>
+    </div>
+    <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">Admin Login Credentials</div>
+    <div class="card card-padded" style="margin-bottom:22px">
+      <p style="font-size:0.82rem;color:var(--ink-3);margin-bottom:16px;line-height:1.5">Change the username and password used to access the HR dashboard. You will need to log in again after saving.</p>
+      <div class="form-grid">
+        <div class="form-group"><label>Admin Username</label><input id="admin-username-input" value="${hrAdminCredentials.username}" placeholder="admin"></div>
+        <div class="form-group"><label>Current Password</label><input type="password" id="admin-current-pw" placeholder="Enter current password"></div>
+        <div class="form-group"><label>New Password</label><input type="password" id="admin-new-pw" placeholder="Min. 6 characters"></div>
+        <div class="form-group"><label>Confirm New Password</label><input type="password" id="admin-confirm-pw" placeholder="Re-enter new password"></div>
+      </div>
+      <div id="admin-pw-msg" style="display:none;margin-top:10px;font-size:0.81rem;border-radius:8px;padding:9px 12px"></div>
+      <div style="margin-top:16px;display:flex;justify-content:flex-end"><button class="btn btn-primary btn-sm" onclick="saveAdminCredentials()">Update Credentials</button></div>
+    </div>
     <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">Company</div>
     <div class="card card-padded" style="margin-bottom:22px"><div class="form-grid">
       <div class="form-group full"><label>Company Name</label><input value="Acme Consulting Partners"></div>
@@ -373,6 +1249,14 @@ function rSettings(){
     <div class="card">${['Sarah Lee','James Park','David White'].map((m,i)=>`<div style="padding:12px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><div class="emp-cell">${mkAv(m.split(' ').map(w=>w[0]).join(''),i)}<span class="emp-cell-name">${m}</span></div><span class="badge badge-ink">Manager</span></div>`).join('')}
     <div style="padding:12px 18px"><button class="btn btn-ghost btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>Add Manager</button></div></div>
   </div></div>`;
+}
+function updatePortalStatus(){
+  const s=document.getElementById('portal-url-status');
+  if(!s)return;
+  const isHosted=portalUrl.startsWith('http');
+  s.innerHTML=isHosted
+    ?`<div style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--accent);background:var(--accent-light);padding:10px 12px;border-radius:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Portal link is set. Welcome emails will include a direct clickable link for employees.</div>`
+    :`<div style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--amber);background:var(--amber-light);padding:10px 12px;border-radius:8px;border:1px solid rgba(184,114,42,0.2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>No portal URL set yet. Employees will be instructed to open the HTML file directly.</div>`;
 }
 function viewEmp(id){
   const e=employees.find(x=>x.id===id);
@@ -389,11 +1273,30 @@ function viewEmp(id){
       <div class="detail-item"><label>Location</label><span>${e.location}</span></div><div class="detail-item"><label>Manager</label><span>${e.manager}</span></div>
       <div class="detail-item"><label>Join Date</label><span>${e.joinDate}</span></div><div class="detail-item"><label>Client</label><span>${e.client}</span></div>
       <div class="detail-item" style="grid-column:1/-1"><label>Project</label><span>${e.project}</span></div>
+      <div class="detail-item"><label>Project Start Date</label><span>${e.projectStart||'—'}</span></div>
+      <div class="detail-item"><label>Project End Date</label><span style="color:${e.projectEnd&&new Date(e.projectEnd)<new Date()?'var(--red)':e.projectEnd?'var(--ink)':'var(--ink-3)'}">${e.projectEnd||'—'}</span></div>
     </div>
     <div style="margin-bottom:16px"><div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:9px">Visa</div>
     <div class="detail-grid"><div class="detail-item"><label>Type</label><span>${e.visa.type}</span></div><div class="detail-item"><label>Country</label><span>${e.visa.country}</span></div><div class="detail-item"><label>Expiry</label><span>${e.visa.expiry}</span></div><div class="detail-item"><label>Status</label>${vBadge(e.visa)}</div></div></div>
-    <div><div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:9px">Skills</div>
+    <div style="margin-bottom:16px"><div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:9px">Skills</div>
     <div class="skill-tags">${e.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div></div>
+    <div style="border-top:1px solid var(--border);padding-top:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3)">Portal Login</div>
+        <button class="btn btn-ghost btn-sm" onclick="resetCredentials(${e.id})" style="font-size:0.75rem;color:var(--red);border-color:rgba(163,48,48,0.2)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Reset Credentials
+        </button>
+      </div>
+      ${e.credentials ? `
+      <div style="background:var(--surface-2);border-radius:var(--radius);padding:12px 14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px">
+          <div><div style="font-size:0.68rem;color:var(--ink-3);font-weight:600;margin-bottom:3px">USERNAME</div><div style="font-family:monospace;font-size:0.85rem;font-weight:600;color:var(--ink)">${e.credentials.username}</div></div>
+          <div><div style="font-size:0.68rem;color:var(--ink-3);font-weight:600;margin-bottom:3px">TEMP PASSWORD</div><div style="font-family:monospace;font-size:0.85rem;font-weight:600;color:var(--ink)">${e.credentials.tempPassword}</div></div>
+        </div>
+        <div style="font-size:0.73rem;color:var(--amber);display:flex;align-items:center;gap:4px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>${e.credentials.mustChange?'Employee must set a new password on first login':'Password has been changed by employee'}</div>
+      </div>` : `<div style="font-size:0.83rem;color:var(--ink-3);padding:10px 14px;background:var(--surface-2);border-radius:var(--radius)">No credentials generated yet. <span style="color:var(--accent);cursor:pointer;font-weight:500" onclick="resetCredentials(${e.id})">Generate now →</span></div>`}
+    </div>
   </div>
   <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal()">Close</button><button class="btn btn-primary" onclick="openEditEmp(${e.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit Employee</button></div>`);
 }
@@ -412,6 +1315,8 @@ function showEmpForm(e=null){
     <div class="form-group"><label>Status</label><select id="f-status"><option ${!e||e.status==='Active'?'selected':''}>Active</option><option ${e&&e.status==='Bench'?'selected':''}>Bench</option></select></div>
     <div class="form-group"><label>Current Client</label><input id="f-client" value="${e?e.client:''}"></div>
     <div class="form-group"><label>Current Project</label><input id="f-project" value="${e?e.project:''}"></div>
+    <div class="form-group"><label>Project Start Date</label><input type="date" id="f-proj-start" value="${e?e.projectStart||'':''}"></div>
+    <div class="form-group"><label>Project End Date</label><input type="date" id="f-proj-end" value="${e?e.projectEnd||'':''}"></div>
     <div class="form-divider"></div>
     <div class="form-section-label">Visa Information</div>
     <div class="form-group"><label>Visa Type</label><select id="f-visa">${['H-1B','L-1A','L-1B','OPT','TN','Green Card','Citizen','Other'].map(v=>`<option ${e&&e.visa.type===v?'selected':''}>${v}</option>`).join('')}</select></div>
@@ -422,52 +1327,136 @@ function showEmpForm(e=null){
   </div></div>
   <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" id="save-btn" onclick="saveEmp(${e?e.id:0},${!e})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M20 6 9 17l-5-5"/></svg>${e?'Save Changes':'Add Employee'}</button></div>`);
 }
-async function saveEmp(id,isNew){
-  const v={name:document.getElementById('f-name').value.trim(),title:document.getElementById('f-title').value.trim(),dept:document.getElementById('f-dept').value,email:document.getElementById('f-email').value.trim(),phone:document.getElementById('f-phone').value.trim(),location:document.getElementById('f-loc').value.trim(),manager:document.getElementById('f-mgr').value.trim(),status:document.getElementById('f-status').value,client:document.getElementById('f-client').value.trim(),project:document.getElementById('f-project').value.trim(),visa:{type:document.getElementById('f-visa').value,expiry:document.getElementById('f-vexp').value||'N/A',country:document.getElementById('f-country').value.trim()},skills:document.getElementById('f-skills').value.split(',').map(s=>s.trim()).filter(Boolean),profileComplete:false};
+function saveEmp(id,isNew){
+  const v={name:document.getElementById('f-name').value.trim(),title:document.getElementById('f-title').value.trim(),dept:document.getElementById('f-dept').value,email:document.getElementById('f-email').value.trim(),phone:document.getElementById('f-phone').value.trim(),location:document.getElementById('f-loc').value.trim(),manager:document.getElementById('f-mgr').value.trim(),status:document.getElementById('f-status').value,client:document.getElementById('f-client').value.trim(),project:document.getElementById('f-project').value.trim(),projectStart:document.getElementById('f-proj-start').value||'',projectEnd:document.getElementById('f-proj-end').value||'',visa:{type:document.getElementById('f-visa').value,expiry:document.getElementById('f-vexp').value||'N/A',country:document.getElementById('f-country').value.trim()},skills:document.getElementById('f-skills').value.split(',').map(s=>s.trim()).filter(Boolean),profileComplete:false};
   if(!v.name||!v.email){alert('Name and email are required.');return;}
   const btn=document.getElementById('save-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Saving...';
   if(id){
     const i=employees.findIndex(e=>e.id===id);
     v.id=id;v.initials=mkIni(v.name);v.joinDate=employees[i].joinDate;v.profileComplete=employees[i].profileComplete;
-    employees[i]={...employees[i],...v};closeModal();navigate('employees');
+    employees[i]={...employees[i],...v};saveEmployeesToStorage();closeModal();navigate('employees');
   } else {
     v.id=employees.length+1;v.initials=mkIni(v.name);v.joinDate=new Date().toISOString().split('T')[0];
-    employees.push(v);await showEmailComposer(v);
+    employees.push(v);saveEmployeesToStorage();showEmailComposer(v);
   }
 }
-async function showEmailComposer(emp){
-  showModal(`<div class="modal-header"><h3>Welcome Email</h3><button class="btn btn-ghost btn-sm" onclick="closeModal();navigate('employees')">&#x2715;</button></div>
+
+function genUsername(name){
+  const parts=name.trim().split(' ');
+  const first=parts[0].toLowerCase().replace(/[^a-z]/g,'');
+  const last=(parts[parts.length-1]||'').toLowerCase().replace(/[^a-z]/g,'');
+  return first+'.'+last;
+}
+function genTempPassword(){
+  const upper='ABCDEFGHJKLMNPQRSTUVWXYZ';
+  const lower='abcdefghjkmnpqrstuvwxyz';
+  const digits='23456789';
+  const special='@#!$';
+  const pick=(s)=>s[Math.floor(Math.random()*s.length)];
+  let pw=pick(upper)+pick(upper)+pick(lower)+pick(lower)+pick(digits)+pick(digits)+pick(special);
+  return pw.split('').sort(()=>Math.random()-0.5).join('');
+}
+function generateCredentials(emp){
+  const username=genUsername(emp.name);
+  const tempPassword=genTempPassword();
+  return {username, tempPassword, mustChange:true, createdAt:new Date().toISOString().split('T')[0]};
+}
+function genEmail(emp,creds){
+  const firstName=emp.name.split(' ')[0];
+  const isHosted=portalUrl.startsWith('http');
+  const loginUrl=isHosted?(portalUrl.replace(/#.*/,'')+'#portal'):null;
+  const accessInstructions=isHosted
+    ?`Click the link below to access the ConsultTrack Employee Portal:\n\n  ${loginUrl}\n\nOn the login page, enter your credentials:`
+    :`HR will share the ConsultTrack portal file (ConsultTrack.html) with you. Open it in any browser, then click "Employee Portal" in the top navigation and enter your credentials:`;
+  return `Dear ${firstName},
+
+Welcome to Acme Consulting Partners! We're excited to have you join the ${emp.dept} team as ${emp.title}, reporting to ${emp.manager}.
+
+Your ConsultTrack employee portal account is ready. ${accessInstructions}
+
+  Username:           ${creds.username}
+  Temporary Password: ${creds.tempPassword}
+
+You will be asked to set your own permanent password immediately after signing in for the first time.
+
+Once logged in, please complete your profile within 3 business days — including your emergency contacts, biography, certifications, preferred working hours, and additional skills.
+
+IMPORTANT: Do not share these credentials with anyone.
+
+For any login issues, contact us at ${hrEmail}.
+
+Welcome aboard!
+
+The HR Team
+Acme Consulting Partners`;
+}
+function showEmailComposer(emp){
+  const creds=generateCredentials(emp);
+  emp.credentials=creds;
+  persistCredentials(emp);
+  const body=genEmail(emp,creds);
+  const isHosted=portalUrl.startsWith('http');
+  const subject=`Welcome to Acme Consulting Partners — your portal login details`;
+  const mailto=`mailto:${encodeURIComponent(emp.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const portalWarning=isHosted?'':`<div style="background:var(--amber-light);border:1px solid rgba(184,114,42,0.2);border-radius:8px;padding:10px 13px;font-size:0.8rem;color:var(--amber);margin-bottom:14px;display:flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>No portal URL configured. <span style="text-decoration:underline;cursor:pointer;font-weight:500" onclick="closeModal();navigate('settings')">Set it in Settings →</span> to include a direct link in this email.</div>`;
+  showModal(`<div class="modal-header"><h3>Login Credentials &amp; Welcome Email</h3><button class="btn btn-ghost btn-sm" onclick="closeModal();navigate('employees')">&#x2715;</button></div>
   <div class="modal-body">
-    <p style="font-size:0.83rem;color:var(--ink-3);margin-bottom:18px">Profile created. Composing a welcome email for <strong style="color:var(--ink)">${emp.name}</strong>...</p>
-    <div id="email-loading" style="text-align:center;padding:36px 0"><span class="spinner spinner-dark" style="width:20px;height:20px;border-width:3px"></span><div style="margin-top:12px;font-size:0.83rem;color:var(--ink-3)">Generating personalised email with Claude...</div></div>
-    <div id="email-ready" style="display:none"></div>
+    ${portalWarning}
+    <p style="font-size:0.83rem;color:var(--ink-3);margin-bottom:16px">Profile created for <strong style="color:var(--ink)">${emp.name}</strong>. Auto-generated login credentials are ready to send.</p>
+    <div style="background:var(--accent-light);border:1px solid rgba(45,74,62,0.2);border-radius:var(--radius);padding:14px 16px;margin-bottom:16px">
+      <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:10px">Generated Login Details</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><div style="font-size:0.7rem;color:var(--accent);font-weight:600;margin-bottom:3px">USERNAME</div><div style="font-family:monospace;font-size:0.9rem;font-weight:600;color:var(--ink);background:#fff;padding:6px 10px;border-radius:6px;border:1px solid rgba(45,74,62,0.2)">${creds.username}</div></div>
+        <div><div style="font-size:0.7rem;color:var(--accent);font-weight:600;margin-bottom:3px">TEMP PASSWORD</div><div style="font-family:monospace;font-size:0.9rem;font-weight:600;color:var(--ink);background:#fff;padding:6px 10px;border-radius:6px;border:1px solid rgba(45,74,62,0.2)">${creds.tempPassword}</div></div>
+      </div>
+      <div style="margin-top:10px;font-size:0.75rem;color:var(--accent);display:flex;align-items:center;gap:5px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Employee must set a new password on first login.</div>
+    </div>
+    <div class="email-meta">
+      <div class="email-meta-row"><label>From:</label><span>${hrEmail}</span></div>
+      <div class="email-meta-row"><label>To:</label><span>${emp.email}</span></div>
+      <div class="email-meta-row"><label>Subject:</label><span>${subject}</span></div>
+    </div>
+    <div class="email-body-preview">${body}</div>
+    <div class="email-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Clicking "Send Email" opens Gmail pre-filled with the login credentials included.</div>
+    <div id="sent-confirm"></div>
   </div>
-  <div class="modal-footer" id="email-footer" style="display:none"></div>`);
-  try{
-    const body=await genEmail(emp);
-    const subject=`Welcome to Acme Consulting Partners — please complete your profile, ${emp.name.split(' ')[0]}`;
-    const mailto=`mailto:${encodeURIComponent(emp.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    document.getElementById('email-loading').style.display='none';
-    document.getElementById('email-ready').style.display='block';
-    document.getElementById('email-ready').innerHTML=`<div class="email-meta"><div class="email-meta-row"><label>From:</label><span>${hrEmail}</span></div><div class="email-meta-row"><label>To:</label><span>${emp.email}</span></div><div class="email-meta-row"><label>Subject:</label><span>${subject}</span></div></div><div class="email-body-preview">${body}</div><div class="email-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Clicking "Send Email" opens Gmail pre-filled and ready to send.</div>`;
-    document.getElementById('email-footer').style.display='flex';
-    document.getElementById('email-footer').innerHTML=`<button class="btn btn-ghost" onclick="closeModal();navigate('employees')">Skip</button><a class="btn btn-green" href="${mailto}" onclick="markSent(${emp.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send Email</a>`;
-  } catch(err){
-    document.getElementById('email-loading').innerHTML=`<div style="color:var(--red);font-size:0.83rem">Could not generate email: ${err.message}</div>`;
-  }
+  <div class="modal-footer">
+    <button class="btn btn-ghost" onclick="closeModal();navigate('employees')">Skip</button>
+    <a class="btn btn-green" href="${mailto}" onclick="markSent(${emp.id})">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      Send Login Details
+    </a>
+  </div>`);
 }
 function markSent(empId){
   setTimeout(()=>{
-    const r=document.getElementById('email-ready');const f=document.getElementById('email-footer');
-    if(r)r.insertAdjacentHTML('beforeend',`<div class="success-banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Email client opened — check your compose window and hit Send.</div>`);
-    if(f)f.innerHTML=`<button class="btn btn-ghost" onclick="closeModal();navigate('employees')">Done</button>`;
-  },700);
+    const c=document.getElementById('sent-confirm');
+    if(c)c.innerHTML=`<div class="success-banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Email client opened — review and hit Send to deliver the login credentials.</div>`;
+  },600);
 }
-async function genEmail(emp){
-  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:`Write a professional warm welcome email to a new consulting firm employee from HR asking them to complete their online profile.\n\nEmployee:\n- Name: ${emp.name}\n- Title: ${emp.title}\n- Department: ${emp.dept}\n- Manager: ${emp.manager}\n- Start Date: ${emp.joinDate}\n- HR Email: ${hrEmail}\n\nRequirements:\n1. Welcome them warmly by first name\n2. Say their basic profile was created by HR\n3. Ask them to visit https://consulttrack.app/profile/complete to fill in: emergency contacts, biography, profile photo, certifications, preferred working hours, additional skills\n4. Ask them to complete within 3 business days\n5. Under 150 words, professional but warm\n6. Sign off as: The HR Team, Acme Consulting Partners\n\nOutput ONLY the plain email body text. No subject, no markdown, no JSON.`}]})});
-  if(!res.ok)throw new Error(`API error ${res.status}`);
-  const data=await res.json();
-  return data.content.filter(b=>b.type==='text').map(b=>b.text).join('').trim();
+function resetCredentials(empId){
+  const emp=employees.find(e=>e.id===empId);
+  if(!emp)return;
+  const creds=generateCredentials(emp);
+  emp.credentials=creds;
+  persistCredentials(emp);
+  const body='Dear '+emp.name.split(' ')[0]+',\n\nYour ConsultTrack password has been reset by HR. Please use the new temporary credentials below to log in:\n\n  Username:           '+creds.username+'\n  Temporary Password: '+creds.tempPassword+'\n\nTo log in:\n1. Open the ConsultTrack portal\n2. Click "Employee Portal" in the top navigation\n3. Enter your username and the temporary password above\n4. You will be required to set a new password immediately\n\nIf you did not request this reset, contact HR at '+hrEmail+' immediately.\n\nThe HR Team\nAcme Consulting Partners';
+  const subject='ConsultTrack — your password has been reset';
+  const mailto='mailto:'+encodeURIComponent(emp.email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  closeModal();
+  showModal('<div class="modal-header"><h3>Reset Credentials</h3><button class="btn btn-ghost btn-sm" onclick="closeModal()">&#x2715;</button></div>'
+  +'<div class="modal-body">'
+  +'<p style="font-size:0.83rem;color:var(--ink-3);margin-bottom:16px">New credentials generated for <strong style="color:var(--ink)">'+emp.name+'</strong>.</p>'
+  +'<div style="background:var(--accent-light);border:1px solid rgba(45,74,62,0.2);border-radius:var(--radius);padding:14px 16px;margin-bottom:16px">'
+  +'<div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:10px">New Login Details</div>'
+  +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+  +'<div><div style="font-size:0.7rem;color:var(--accent);font-weight:600;margin-bottom:3px">USERNAME</div><div style="font-family:monospace;font-size:0.9rem;font-weight:600;color:var(--ink);background:#fff;padding:6px 10px;border-radius:6px;border:1px solid rgba(45,74,62,0.2)">'+creds.username+'</div></div>'
+  +'<div><div style="font-size:0.7rem;color:var(--accent);font-weight:600;margin-bottom:3px">TEMP PASSWORD</div><div style="font-family:monospace;font-size:0.9rem;font-weight:600;color:var(--ink);background:#fff;padding:6px 10px;border-radius:6px;border:1px solid rgba(45,74,62,0.2)">'+creds.tempPassword+'</div></div>'
+  +'</div></div></div>'
+  +'<div class="modal-footer">'
+  +'<button class="btn btn-ghost" onclick="closeModal()">Cancel</button>'
+  +'<a class="btn btn-green" href="'+mailto+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send New Credentials</a>'
+  +'</div>');
 }
 function openAddReview(){
   showModal(`<div class="modal-header"><h3>New Performance Review</h3><button class="btn btn-ghost btn-sm" onclick="closeModal()">&#x2715;</button></div>
@@ -487,7 +1476,695 @@ function saveReview(){
 }
 function showModal(html){document.getElementById('modal-root').innerHTML=`<div class="modal-overlay" onclick="if(event.target===this)closeModal()"><div class="modal">${html}</div></div>`;}
 function closeModal(){document.getElementById('modal-root').innerHTML='';}
-navigate('dashboard');
+
+let portalUser=null;
+
+function switchEmpRevTab(el, type){
+  document.querySelectorAll('#emp-dash-content .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  const e=portalUser;
+  let list=reviews.filter(r=>r.empId===e.id);
+  if(type==='weekly') list=list.filter(r=>r.period==='Weekly');
+  else if(type==='monthly') list=list.filter(r=>r.period==='Monthly');
+  const fields={delivery:'Delivery',communication:'Communication',innovation:'Innovation',teamwork:'Teamwork'};
+  const html=list.length?list.slice().reverse().map(r=>{
+    const ravg=(Object.values(r.scores).reduce((a,b)=>a+b,0)/4).toFixed(1);
+    const selfLabel=r.selfSubmitted?'<span class="badge badge-teal" style="font-size:0.68rem">Self-submitted</span>':'<span class="badge badge-ink" style="font-size:0.68rem">Manager review</span>';
+    return`<div style="border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div>
+          <div style="font-size:0.83rem;font-weight:500">${r.period} Review ${selfLabel}</div>
+          <div style="font-size:0.75rem;color:var(--ink-3);margin-top:2px">${r.date} · ${r.selfSubmitted?'Submitted by you':'Reviewed by '+r.manager}</div>
+        </div>
+        <div style="text-align:right"><div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--accent);line-height:1">${ravg}</div><div style="font-size:0.68rem;color:var(--ink-3)">/ 5</div></div>
+      </div>
+      <div style="margin-bottom:8px">${Object.entries(r.scores).map(([k,v])=>`<div class="rating-bar"><span class="rating-label">${fields[k]}</span><div class="bar-track"><div class="bar-fill" style="width:${v/5*100}%"></div></div><span class="rating-score">${v}/5</span></div>`).join('')}</div>
+      ${r.tasksAssigned?`<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:0.79rem;margin-bottom:6px">
+          ${r.tasksAssigned?`<div><span style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-3);display:block;margin-bottom:2px">Assigned</span>${r.tasksAssigned}</div>`:''}
+          ${r.tasksCompleted?`<div><span style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent);display:block;margin-bottom:2px">Completed ✓</span>${r.tasksCompleted}</div>`:''}
+        </div>
+        ${r.highlights?`<div style="font-size:0.79rem;margin-bottom:4px"><span style="font-weight:600;color:var(--ink-3)">Highlights: </span>${r.highlights}</div>`:''}
+        ${r.support?`<div style="font-size:0.79rem;margin-bottom:4px;color:var(--amber)"><span style="font-weight:600">Support needed: </span>${r.support}</div>`:''}
+        ${r.mood?`<div style="font-size:0.79rem"><span style="font-weight:600;color:var(--ink-3)">Mood: </span>${r.mood}</div>`:''}
+      </div>`:''}
+      ${r.notes?`<div style="font-size:0.8rem;color:var(--ink-2);background:var(--surface);padding:8px 11px;border-radius:7px;line-height:1.6;margin-top:8px">${r.notes}</div>`:''}
+    </div>`;
+  }).join(''):`<div style="text-align:center;padding:28px;color:var(--ink-3);font-size:0.83rem">No ${type==='all'?'':type.toLowerCase()+' '}reviews yet. Click <strong>Submit Review</strong> to add one.</div>`;
+  document.getElementById('emp-rev-content').innerHTML=html;
+}
+function toggleSupport(yes){
+  const yesBtn=document.getElementById('sr-support-yes');
+  const noBtn=document.getElementById('sr-support-no');
+  const detail=document.getElementById('sr-support-detail');
+  const val=document.getElementById('sr-support-val');
+  if(yes){
+    yesBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--amber);background:var(--amber-light);font-family:DM Sans,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--amber);transition:all 0.15s';
+    noBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--border-strong);background:#fff;font-family:DM Sans,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--ink-3);transition:all 0.15s';
+    detail.style.display='block';
+    val.value='yes';
+  } else {
+    noBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--accent);background:var(--accent-light);font-family:DM Sans,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--accent);transition:all 0.15s';
+    yesBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--border-strong);background:#fff;font-family:DM Sans,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--ink-3);transition:all 0.15s';
+    detail.style.display='none';
+    val.value='no';
+  }
+}
+function openSelfReview(period){
+  showPortalStep('portal-self-review');
+  const today=new Date().toISOString().split('T')[0];
+  document.getElementById('sr-date').value=today;
+  if(period==='monthly') document.getElementById('sr-period').value='Monthly';
+  else document.getElementById('sr-period').value='Weekly';
+  // Reset sliders
+  ['delivery','communication','innovation','teamwork'].forEach(f=>{
+    document.getElementById('sr-'+f).value=3;
+    document.getElementById('sr-'+f+'-val').textContent='3';
+  });
+  // Clear fields
+  ['sr-tasks-assigned','sr-tasks-completed','sr-tasks-pending','sr-highlights','sr-challenges','sr-support','sr-goals'].forEach(id=>{
+    document.getElementById(id).value='';
+  });
+  document.getElementById('sr-mood').value='Good';
+  document.getElementById('sr-error').style.display='none';
+  // Reset support toggle to "No"
+  const sval=document.getElementById('sr-support-val');
+  if(sval) sval.value='no';
+  const detail=document.getElementById('sr-support-detail');
+  if(detail) detail.style.display='none';
+  const noBtn=document.getElementById('sr-support-no');
+  if(noBtn) noBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--accent);background:var(--accent-light);font-family:DM Sans,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--accent);transition:all 0.15s';
+  const yesBtn=document.getElementById('sr-support-yes');
+  if(yesBtn) yesBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--border-strong);background:#fff;font-family:DM Sans,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--ink-3);transition:all 0.15s';
+}
+function submitSelfReview(){
+  const errEl=document.getElementById('sr-error');
+  errEl.style.display='none';
+  const tasksAssigned=document.getElementById('sr-tasks-assigned').value.trim();
+  const tasksCompleted=document.getElementById('sr-tasks-completed').value.trim();
+  if(!tasksAssigned||!tasksCompleted){
+    errEl.textContent='Please fill in Tasks Assigned and Tasks Completed — these are required.';
+    errEl.style.display='block';
+    return;
+  }
+  const rev={
+    id: reviews.length+1,
+    empId: portalUser.id,
+    period: document.getElementById('sr-period').value,
+    date: document.getElementById('sr-date').value,
+    manager: portalUser.manager||'HR',
+    scores:{
+      delivery: parseInt(document.getElementById('sr-delivery').value),
+      communication: parseInt(document.getElementById('sr-communication').value),
+      innovation: parseInt(document.getElementById('sr-innovation').value),
+      teamwork: parseInt(document.getElementById('sr-teamwork').value),
+    },
+    notes: document.getElementById('sr-highlights').value.trim()||'Self-submitted review.',
+    tasksAssigned,
+    tasksCompleted,
+    tasksPending: document.getElementById('sr-tasks-pending').value.trim(),
+    highlights: document.getElementById('sr-highlights').value.trim(),
+    challenges: document.getElementById('sr-challenges').value.trim(),
+    supportRequested: document.getElementById('sr-support-val').value==='yes',
+    support: document.getElementById('sr-support-val').value==='yes'?(document.getElementById('sr-support')||{value:''}).value.trim():'',
+    goals: document.getElementById('sr-goals').value.trim(),
+    mood: document.getElementById('sr-mood').value,
+    status: 'Submitted',
+    selfSubmitted: true,
+  };
+  reviews.push(rev);
+  saveReviewsToStorage();
+  showPortalStep('portal-dashboard');
+  renderEmpDash();
+  // Flash success message
+  setTimeout(()=>{
+    const content=document.getElementById('emp-rev-content');
+    if(content) content.insertAdjacentHTML('afterbegin',`<div style="background:var(--accent-light);border:1px solid rgba(45,74,62,0.2);border-radius:10px;padding:12px 16px;margin-bottom:12px;display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Review submitted successfully! Your manager has been notified.</div>`);
+  },100);
+}
+function saveReviewsToStorage(){
+  try{
+    // Save all self-submitted reviews with full state (including approval status and manager comments)
+    const selfRevs=reviews.filter(r=>r.selfSubmitted);
+    localStorage.setItem('ct_self_reviews',JSON.stringify(selfRevs));
+  } catch(e){}
+}
+function loadReviewsFromStorage(){
+  try{
+    const stored=JSON.parse(localStorage.getItem('ct_self_reviews')||'[]');
+    stored.forEach(stored_r=>{
+      const existing=reviews.find(x=>x.id===stored_r.id);
+      if(existing){
+        // Update existing review with persisted status and manager comment
+        existing.status=stored_r.status;
+        existing.managerComment=stored_r.managerComment;
+      } else {
+        reviews.push(stored_r);
+      }
+    });
+  } catch(e){}
+}
+function empLogout(){
+  portalUser=null;
+  showPortalStep('portal-login');
+  document.getElementById('login-username').value='';
+  document.getElementById('login-password').value='';
+  document.getElementById('login-error').classList.remove('visible');
+}
+function openEmpEditProfile(){
+  const p=portalUser.profile||{};
+  showPortalStep('portal-edit-profile');
+  setTimeout(()=>{
+    if(p.nickname) document.getElementById('ep-nickname').value=p.nickname;
+    if(p.bio) document.getElementById('ep-bio').value=p.bio;
+    if(p.ecname) document.getElementById('ep-ecname').value=p.ecname;
+    if(p.ecrel) document.getElementById('ep-ecrel').value=p.ecrel;
+    if(p.ecphone) document.getElementById('ep-ecphone').value=p.ecphone;
+    if(p.certs) document.getElementById('ep-certs').value=p.certs;
+    if(p.skills) document.getElementById('ep-skills').value=p.skills;
+    if(p.hours){const s=document.getElementById('ep-hours');for(let o of s.options)if(o.value===p.hours)o.selected=true;}
+    if(p.mode){const s=document.getElementById('ep-mode');for(let o of s.options)if(o.value===p.mode)o.selected=true;}
+  },50);
+}
+function doUpdateProfile(){
+  const ecname=document.getElementById('ep-ecname').value.trim();
+  const ecphone=document.getElementById('ep-ecphone').value.trim();
+  if(!ecname||!ecphone){alert('Emergency contact name and phone are required.');return;}
+  portalUser.profile={
+    nickname:document.getElementById('ep-nickname').value.trim(),
+    bio:document.getElementById('ep-bio').value.trim(),
+    ecname,ecrel:document.getElementById('ep-ecrel').value.trim(),ecphone,
+    hours:document.getElementById('ep-hours').value,
+    mode:document.getElementById('ep-mode').value,
+    certs:document.getElementById('ep-certs').value.trim(),
+    skills:document.getElementById('ep-skills').value.trim(),
+  };
+  portalUser.profileComplete=true;
+  persistCredentials(portalUser);
+  saveEmployeesToStorage();
+  showPortalStep('portal-dashboard');
+  renderEmpDash();
+}
+function checkCPwStrength(){
+  const pw=document.getElementById('cp-new').value;
+  const score=[pw.length>=8,/[A-Z]/.test(pw),/[0-9]/.test(pw),/[!@#$%^&*]/.test(pw)].filter(Boolean).length;
+  const bar=document.getElementById('cpw-strength-bar');
+  const colors=['#e8e4de','#a33030','#b8722a','#4a7c65','#2d4a3e'];
+  bar.style.width=(score*25)+'%';bar.style.background=colors[score];
+}
+function doChangePassword(){
+  const current=document.getElementById('cp-current').value;
+  const pw=document.getElementById('cp-new').value;
+  const cpw=document.getElementById('cp-confirm').value;
+  const errEl=document.getElementById('cpw-error');
+  errEl.classList.remove('visible');
+  const validCurrent=current===portalUser.credentials.tempPassword||current===(portalUser.credentials.userPassword||'');
+  if(!validCurrent){errEl.textContent='Current password is incorrect.';errEl.classList.add('visible');return;}
+  if(pw.length<8||!/[A-Z]/.test(pw)||!/[0-9]/.test(pw)||!/[!@#$%^&*]/.test(pw)){errEl.textContent='New password does not meet requirements.';errEl.classList.add('visible');return;}
+  if(pw!==cpw){errEl.textContent='New passwords do not match.';errEl.classList.add('visible');return;}
+  portalUser.credentials.userPassword=pw;
+  portalUser.credentials.mustChange=false;
+  persistCredentials(portalUser);
+  showPortalStep('portal-dashboard');
+  renderEmpDash();
+}
+function switchToPortal(){
+  document.getElementById('hr-topnav').style.display='none';
+  document.querySelector('.layout').style.display='none';
+  document.getElementById('portal-shell').classList.add('visible');
+  showPortalStep('portal-login');
+  if(window.location.hash!=='#portal') history.pushState(null,null,'#portal');
+  // Populate credential lookup dropdown
+  const sel=document.getElementById('cred-lookup');
+  if(sel){
+    sel.innerHTML='<option value="">Select employee...</option>';
+    employees.forEach(e=>{
+      const opt=document.createElement('option');
+      opt.value=e.id;
+      opt.textContent=e.name;
+      sel.appendChild(opt);
+    });
+  }
+}
+function lookupCreds(){
+  const id=parseInt(document.getElementById('cred-lookup').value);
+  const result=document.getElementById('cred-result');
+  if(!id){result.style.display='none';return;}
+  const emp=employees.find(e=>e.id===id);
+  if(!emp||!emp.credentials){result.style.display='none';return;}
+  document.getElementById('cr-user').textContent=emp.credentials.username;
+  document.getElementById('cr-pass').textContent=emp.credentials.userPassword?'[employee set own password]':emp.credentials.tempPassword;
+  document.getElementById('cr-status').textContent=emp.credentials.userPassword?'✓ Employee has set their own password':'⚠ Using temporary password — must change on first login';
+  document.getElementById('cr-status').style.color=emp.credentials.userPassword?'var(--accent)':'var(--amber)';
+  result.style.display='block';
+}
+function switchToHR(){
+  document.getElementById('portal-shell').classList.remove('visible');
+  portalUser=null;
+  if(window.location.hash) history.pushState(null,null,window.location.pathname);
+  if(hrLoggedIn){
+    document.getElementById('hr-topnav').style.display='flex';
+    document.querySelector('.layout').style.display='flex';
+    document.getElementById('hr-login-screen').classList.remove('visible');
+    render();
+  } else {
+    document.getElementById('hr-topnav').style.display='none';
+    document.querySelector('.layout').style.display='none';
+    document.getElementById('hr-login-screen').classList.add('visible');
+  }
+}
+function showPortalStep(step){
+  ['portal-login','portal-setpw','portal-profile','portal-dashboard','portal-edit-profile','portal-changepw','portal-self-review'].forEach(s=>{
+    const el=document.getElementById(s);
+    if(el) el.style.display=(s===step?'block':'none');
+  });
+}
+
+function renderEmpDash(){
+  const e=portalUser;
+  const empRevs=reviews.filter(r=>r.empId===e.id);
+  const avg=empRevs.length?(empRevs.reduce((s,r)=>s+(Object.values(r.scores).reduce((a,b)=>a+b,0)/4),0)/empRevs.length).toFixed(1):'—';
+  const p=e.profile||{};
+  const visaDays=e.visa.expiry==='N/A'?9999:Math.ceil((new Date(e.visa.expiry)-new Date())/86400000);
+  const visaColor=visaDays<90?'var(--red)':visaDays<180?'var(--amber)':'var(--accent)';
+  const visaLabel=visaDays===9999?'No expiry':visaDays<0?'Expired':`${visaDays} days remaining`;
+  document.getElementById('emp-nav-name').textContent=e.name;
+  const fields={delivery:'Delivery',communication:'Communication',innovation:'Innovation',teamwork:'Teamwork'};
+  const reviewsHtml=empRevs.length?empRevs.slice().reverse().map(r=>{
+    const ravg=(Object.values(r.scores).reduce((a,b)=>a+b,0)/4).toFixed(1);
+    return`<div style="border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div><div style="font-size:0.83rem;font-weight:500">${r.period} Review</div><div style="font-size:0.75rem;color:var(--ink-3)">${r.date} · by ${r.manager}</div></div>
+        <div style="text-align:right"><div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--accent);line-height:1">${ravg}</div><div style="font-size:0.68rem;color:var(--ink-3)">/ 5</div></div>
+      </div>
+      <div style="margin-bottom:8px">${Object.entries(r.scores).map(([k,v])=>`<div class="rating-bar"><span class="rating-label">${fields[k]}</span><div class="bar-track"><div class="bar-fill" style="width:${v/5*100}%"></div></div><span class="rating-score">${v}/5</span></div>`).join('')}</div>
+      <div style="font-size:0.8rem;color:var(--ink-2);background:var(--surface);padding:8px 11px;border-radius:7px;line-height:1.6">${r.notes}</div>
+    </div>`;
+  }).join(''):`<div style="text-align:center;padding:28px;color:var(--ink-3);font-size:0.83rem">No reviews yet.</div>`;
+
+  document.getElementById('emp-dash-content').innerHTML=`
+    <!-- Header card -->
+    <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:16px;display:flex;align-items:center;gap:18px">
+      <div style="width:56px;height:56px;border-radius:50%;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:600;flex-shrink:0">${e.initials}</div>
+      <div style="flex:1">
+        <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;font-weight:400;margin-bottom:2px">${e.name}</div>
+        <div style="font-size:0.82rem;color:var(--ink-3)">${e.title} · ${e.dept} · ${e.location}</div>
+        <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
+          ${sBadge(e.status)}
+          <span class="badge badge-gray">${e.manager ? 'Manager: '+e.manager : 'No manager assigned'}</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0">
+        <button onclick="openEmpEditProfile()" class="btn btn-primary btn-sm">Edit Profile</button>
+        <button onclick="showPortalStep('portal-changepw')" class="btn btn-ghost btn-sm">Change Password</button>
+      </div>
+    </div>
+
+    <!-- Metrics row -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px">
+        <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:6px">Avg Review Score</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--accent);line-height:1">${avg}</div>
+        <div style="font-size:0.73rem;color:var(--ink-3);margin-top:3px">${empRevs.length} review(s) total</div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px">
+        <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:6px">Current Project</div>
+        <div style="font-size:0.95rem;font-weight:500;line-height:1.3;margin-bottom:5px">${e.project||'Unassigned'}</div>
+        <div style="font-size:0.73rem;color:var(--ink-3);margin-bottom:4px">${e.client||'No client'}</div>
+        ${e.projectStart||e.projectEnd?`<div style="font-size:0.72rem;display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+          ${e.projectStart?`<span style="background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:20px;font-weight:500">Start: ${e.projectStart}</span>`:''}
+          ${e.projectEnd?`<span style="background:${new Date(e.projectEnd)<new Date()?'var(--red-light)':'var(--amber-light)'};color:${new Date(e.projectEnd)<new Date()?'var(--red)':'var(--amber)'};padding:2px 8px;border-radius:20px;font-weight:500">End: ${e.projectEnd}</span>`:''}
+        </div>`:''}
+      </div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px">
+        <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:6px">Visa / Work Auth</div>
+        <div style="font-size:0.95rem;font-weight:500;margin-bottom:3px">${e.visa.type}</div>
+        <div style="font-size:0.73rem;font-weight:600;color:${visaColor}">${visaLabel}</div>
+      </div>
+    </div>
+
+    <!-- Two columns -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <!-- Profile details -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px">
+        <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:14px">My Details</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:0.83rem">
+          <div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Email</span>${e.email}</div>
+          <div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Phone</span>${e.phone||'Not set'}</div>
+          <div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Joined</span>${e.joinDate}</div>
+          ${e.projectStart?`<div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Project Start</span>${e.projectStart}</div>`:''}
+          ${e.projectEnd?`<div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Project End</span><span style="font-weight:600;color:${new Date(e.projectEnd)<new Date()?'var(--red)':'var(--amber)'}">${e.projectEnd}</span></div>`:''}
+          ${p.ecname?`<div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Emergency Contact</span>${p.ecname} · ${p.ecphone}</div>`:''}
+          ${p.hours?`<div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Working Hours</span>${p.hours}</div>`:''}
+          ${p.mode?`<div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Work Mode</span>${p.mode}</div>`:''}
+          ${p.bio?`<div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Bio</span><span style="color:var(--ink-2)">${p.bio}</span></div>`:''}
+        </div>
+        ${e.skills&&e.skills.length?`<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)"><div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-3);margin-bottom:8px">Skills</div><div style="display:flex;flex-wrap:wrap;gap:5px">${e.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div></div>`:''}
+      </div>
+
+      <!-- Visa details -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px">
+        <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:14px">Visa & Work Auth</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:0.83rem">
+          <div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Visa Type</span>${e.visa.type}</div>
+          <div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Country of Origin</span>${e.visa.country}</div>
+          <div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Expiry Date</span><span style="font-weight:600;color:${visaColor}">${e.visa.expiry}</span></div>
+          ${visaDays<180&&visaDays>0?`<div style="background:var(--amber-light);border-radius:8px;padding:9px 12px;font-size:0.78rem;color:var(--amber)">⚠ Your visa expires soon. Please contact HR to begin the renewal process.</div>`:''}
+          ${e.visa.startDate?`<div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Start Date</span>${e.visa.startDate}</div>`:''}
+        </div>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">
+          <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:6px">Portal Login</div>
+          <div style="font-family:monospace;font-size:0.83rem;color:var(--ink-2)">Username: <strong>${e.credentials?e.credentials.username:'—'}</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reviews section with tabs -->
+    <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3)">Performance Reviews</div>
+        <button onclick="openSelfReview('weekly')" class="btn btn-primary btn-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>
+          Submit Review
+        </button>
+      </div>
+      <div style="display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:14px">
+        <div class="tab active" onclick="switchEmpRevTab(this,'past')" style="padding:7px 14px;font-size:0.8rem">Past Reviews (${empRevs.length})</div>
+        <div class="tab" onclick="switchEmpRevTab(this,'weekly')" style="padding:7px 14px;font-size:0.8rem">Weekly Reviews</div>
+        <div class="tab" onclick="switchEmpRevTab(this,'monthly')" style="padding:7px 14px;font-size:0.8rem">Monthly Reviews</div>
+      </div>
+      <div id="emp-rev-content">${reviewsHtml}</div>
+    </div>
+  `;
+}
+
+function doLogin(){
+  const username=document.getElementById('login-username').value.trim().toLowerCase();
+  const password=document.getElementById('login-password').value;
+  const errEl=document.getElementById('login-error');
+  errEl.classList.remove('visible');
+  if(!username||!password){errEl.textContent='Please enter your username and password.';errEl.classList.add('visible');return;}
+
+  // Match by username OR by email (fallback)
+  const emp=employees.find(e=>
+    e.credentials&&(
+      e.credentials.username===username ||
+      e.email.toLowerCase()===username
+    )
+  );
+
+  if(!emp){
+    errEl.textContent='Username not found. Your username is firstname.lastname (e.g. jane.smith). Check your welcome email or contact HR.';
+    errEl.classList.add('visible');
+    return;
+  }
+
+  const validPassword = password===emp.credentials.tempPassword || password===(emp.credentials.userPassword||'');
+  if(!validPassword){
+    errEl.textContent='Incorrect password. Use the temporary password from your HR welcome email.';
+    errEl.classList.add('visible');
+    return;
+  }
+
+  portalUser=emp;
+  if(emp.credentials.mustChange&&!emp.credentials.userPassword){
+    showPortalStep('portal-setpw');
+  } else {
+    showPortalStep('portal-dashboard');
+    renderEmpDash();
+  }
+}
+
+function checkPwStrength(){
+  const pw=document.getElementById('new-pw').value;
+  const rules={len:pw.length>=8,upper:/[A-Z]/.test(pw),num:/[0-9]/.test(pw),special:/[!@#$%^&*]/.test(pw)};
+  const checkSvg=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+  const failSvg=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+  const labels={len:'At least 8 characters',upper:'One uppercase letter',num:'One number',special:'One special character (!@#$)'};
+  Object.entries(rules).forEach(([k,ok])=>{
+    const el=document.getElementById('rule-'+k);
+    el.className='portal-rule '+(ok?'ok':'fail');
+    el.innerHTML=(ok?checkSvg:failSvg)+labels[k];
+  });
+  const score=Object.values(rules).filter(Boolean).length;
+  const bar=document.getElementById('pw-strength-bar');
+  const colors=['#e8e4de','#a33030','#b8722a','#4a7c65','#2d4a3e'];
+  bar.style.width=(score*25)+'%';
+  bar.style.background=colors[score];
+}
+
+function doSetPassword(){
+  const pw=document.getElementById('new-pw').value;
+  const cpw=document.getElementById('confirm-pw').value;
+  const errEl=document.getElementById('pw-error');
+  errEl.classList.remove('visible');
+  const rules={len:pw.length>=8,upper:/[A-Z]/.test(pw),num:/[0-9]/.test(pw),special:/[!@#$%^&*]/.test(pw)};
+  if(!Object.values(rules).every(Boolean)){errEl.textContent='Password does not meet all requirements.';errEl.classList.add('visible');return;}
+  if(pw!==cpw){errEl.textContent='Passwords do not match. Please try again.';errEl.classList.add('visible');return;}
+  portalUser.credentials.userPassword=pw;
+  portalUser.credentials.mustChange=false;
+  portalUser.credentials.tempPassword='[changed]';
+  persistCredentials(portalUser);
+  showPortalStep('portal-profile');
+  prefillProfile(portalUser);
+}
+
+function prefillProfile(emp){
+  if(emp.profile){
+    const p=emp.profile;
+    if(p.nickname)document.getElementById('pp-nickname').value=p.nickname;
+    if(p.bio)document.getElementById('pp-bio').value=p.bio;
+    if(p.ecname)document.getElementById('pp-ecname').value=p.ecname;
+    if(p.ecrel)document.getElementById('pp-ecrel').value=p.ecrel;
+    if(p.ecphone)document.getElementById('pp-ecphone').value=p.ecphone;
+    if(p.certs)document.getElementById('pp-certs').value=p.certs;
+    if(p.skills)document.getElementById('pp-skills').value=p.skills;
+  }
+}
+
+function doSaveProfile(){
+  const ecname=document.getElementById('pp-ecname').value.trim();
+  const ecphone=document.getElementById('pp-ecphone').value.trim();
+  if(!ecname||!ecphone){alert('Emergency contact name and phone are required.');return;}
+  portalUser.profile={
+    nickname:document.getElementById('pp-nickname').value.trim(),
+    bio:document.getElementById('pp-bio').value.trim(),
+    ecname,ecrel:document.getElementById('pp-ecrel').value.trim(),ecphone,
+    hours:document.getElementById('pp-hours').value,
+    mode:document.getElementById('pp-mode').value,
+    certs:document.getElementById('pp-certs').value.trim(),
+    skills:document.getElementById('pp-skills').value.trim(),
+  };
+  portalUser.profileComplete=true;
+  persistCredentials(portalUser);
+  saveEmployeesToStorage();
+  showPortalStep('portal-dashboard');
+  renderEmpDash();
+  const p=portalUser.profile;
+  document.getElementById('portal-done-summary').innerHTML=`
+    <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:10px">Profile Summary</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:0.82rem">
+      <div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Name</span>${portalUser.name}</div>
+      <div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Department</span>${portalUser.dept}</div>
+      <div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Work Mode</span>${p.mode}</div>
+      <div><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Hours</span>${p.hours}</div>
+      ${p.ecname?`<div style="grid-column:1/-1"><span style="color:var(--ink-3);display:block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:1px">Emergency Contact</span>${p.ecname} · ${p.ecphone}</div>`:''}
+    </div>`;
+}
+
+// Load persisted credentials from localStorage, then generate for any missing
+function saveEmployeesToStorage(){
+  try{
+    // Save only dynamically added employees (id > 6 are user-created)
+    const dynamic=employees.filter(e=>e.id>6);
+    localStorage.setItem('ct_employees',JSON.stringify(dynamic));
+  } catch(e){}
+}
+function loadEmployeesFromStorage(){
+  try{
+    const stored=JSON.parse(localStorage.getItem('ct_employees')||'[]');
+    stored.forEach(emp=>{
+      if(!employees.find(e=>e.id===emp.id)){
+        employees.push(emp);
+      }
+    });
+  } catch(e){}
+}
+function loadPersistedCredentials(){
+  try{
+    // First load any dynamically added employees
+    loadEmployeesFromStorage();
+    const stored=JSON.parse(localStorage.getItem('ct_credentials')||'{}');
+    employees.forEach(emp=>{
+      if(stored[emp.id]){
+        emp.credentials=stored[emp.id];
+      } else {
+        emp.credentials=generateCredentials(emp);
+        stored[emp.id]=emp.credentials;
+      }
+    });
+    localStorage.setItem('ct_credentials',JSON.stringify(stored));
+  } catch(e){
+    employees.forEach(emp=>{ if(!emp.credentials) emp.credentials=generateCredentials(emp); });
+  }
+}
+function persistCredentials(emp){
+  try{
+    const stored=JSON.parse(localStorage.getItem('ct_credentials')||'{}');
+    stored[emp.id]=emp.credentials;
+    localStorage.setItem('ct_credentials',JSON.stringify(stored));
+  } catch(e){}
+}
+function persistEmployee(emp){
+  try{
+    saveEmployeesToStorage();
+    persistCredentials(emp);
+  } catch(e){}
+}
+// ── HR Admin Credentials ──────────────────────────────────────
+const DEFAULT_ADMIN = {username:'admin', password:'admin123'};
+let hrAdminCredentials = (()=>{
+  try { return JSON.parse(localStorage.getItem('ct_admin_creds')) || {...DEFAULT_ADMIN}; }
+  catch { return {...DEFAULT_ADMIN}; }
+})();
+let hrLoggedIn = false;
+
+function doHRLogin(){
+  const u = document.getElementById('hr-username').value.trim();
+  const p = document.getElementById('hr-password').value;
+  const err = document.getElementById('hr-login-error');
+  err.classList.remove('visible');
+  if(!u || !p){ err.textContent='Please enter both username and password.'; err.classList.add('visible'); return; }
+  if(u === hrAdminCredentials.username && p === hrAdminCredentials.password){
+    hrLoggedIn = true;
+    document.getElementById('hr-login-screen').classList.remove('visible');
+    document.getElementById('hr-topnav').style.display='flex';
+    document.querySelector('.layout').style.display='flex';
+    navigate('dashboard');
+  } else {
+    err.textContent='Incorrect username or password. Try admin / admin123 if first time.';
+    err.classList.add('visible');
+    document.getElementById('hr-password').classList.add('err');
+    setTimeout(()=>document.getElementById('hr-password').classList.remove('err'), 1500);
+  }
+}
+
+function hrLogout(showLogin=true){
+  hrLoggedIn = false;
+  document.getElementById('hr-topnav').style.display='none';
+  document.querySelector('.layout').style.display='none';
+  document.getElementById('portal-shell').classList.remove('visible');
+  if(showLogin){
+    document.getElementById('hr-login-screen').classList.add('visible');
+    document.getElementById('hr-username').value='';
+    document.getElementById('hr-password').value='';
+    document.getElementById('hr-login-error').classList.remove('visible');
+    setTimeout(()=>document.getElementById('hr-username').focus(), 100);
+  }
+}
+
+function showEmpPortalFromLogin(){
+  document.getElementById('hr-login-screen').classList.remove('visible');
+  switchToPortal();
+}
+
+function saveAdminCredentials(){
+  const newUser = document.getElementById('admin-username-input').value.trim();
+  const currentPw = document.getElementById('admin-current-pw').value;
+  const newPw = document.getElementById('admin-new-pw').value;
+  const confirmPw = document.getElementById('admin-confirm-pw').value;
+  const msg = document.getElementById('admin-pw-msg');
+  msg.style.display='none';
+
+  const showMsg=(text, ok)=>{
+    msg.textContent=text;
+    msg.style.cssText=`display:block;margin-top:10px;font-size:0.81rem;border-radius:8px;padding:9px 12px;background:${ok?'var(--accent-light)':'var(--red-light)'};color:${ok?'var(--accent)':'var(--red)'}`;
+  };
+
+  if(!newUser){ showMsg('Username cannot be empty.', false); return; }
+  if(!currentPw){ showMsg('Please enter your current password to confirm changes.', false); return; }
+  if(currentPw !== hrAdminCredentials.password){ showMsg('Current password is incorrect.', false); return; }
+  if(newPw && newPw.length < 6){ showMsg('New password must be at least 6 characters.', false); return; }
+  if(newPw && newPw !== confirmPw){ showMsg('New passwords do not match.', false); return; }
+
+  hrAdminCredentials.username = newUser;
+  if(newPw) hrAdminCredentials.password = newPw;
+  try{ localStorage.setItem('ct_admin_creds', JSON.stringify(hrAdminCredentials)); } catch(e){}
+  showMsg('✓ Credentials updated. You will need to use the new credentials next time you log in.', true);
+  document.getElementById('admin-current-pw').value='';
+  document.getElementById('admin-new-pw').value='';
+  document.getElementById('admin-confirm-pw').value='';
+}
+
+loadPersistedCredentials();
+loadReviewsFromStorage();
+
+// Show HR login screen on startup (hide dashboard)
+document.getElementById('hr-topnav').style.display='none';
+document.querySelector('.layout').style.display='none';
+
+// If arriving via #portal, skip HR login and go straight to employee portal
+if(window.location.hash==='#portal'){
+  document.getElementById('hr-login-screen').classList.remove('visible');
+  switchToPortal();
+} else {
+  // Show HR login
+  document.getElementById('hr-login-screen').classList.add('visible');
+  setTimeout(()=>{ const el=document.getElementById('hr-username'); if(el) el.focus(); }, 150);
+}
+
+window.addEventListener('hashchange',()=>{
+  if(window.location.hash==='#portal') { hrLogout(false); switchToPortal(); }
+  else if(hrLoggedIn) switchToHR();
+});
+
+// ── GitHub Auto-Update (only active when running via local server) ──
+function isLocalServer(){
+  return window.location.protocol==='http:'&&(window.location.hostname==='localhost'||window.location.hostname==='127.0.0.1');
+}
+async function checkGithubUpdate(){
+  if(!isLocalServer()) return;
+  try{
+    const r=await fetch('/api/check-update');
+    if(!r.ok) return;
+    const d=await r.json();
+    if(d.hasUpdate){
+      const badge=document.getElementById('update-badge');
+      if(badge){
+        badge.style.display='block';
+        badge.querySelector('button').title=`Current: ${d.currentCommit} → Latest: ${d.latestCommit}`;
+      }
+    }
+  } catch(e){ /* server not running or no GitHub configured — silent */ }
+}
+async function applyUpdate(){
+  const badge=document.getElementById('update-badge');
+  if(badge) badge.querySelector('button').textContent='⏳ Updating...';
+  try{
+    const r=await fetch('/api/update');
+    const d=await r.json();
+    if(d.success){
+      showModal(`<div class="modal-header"><h3>✅ Update Successful</h3><button class="btn btn-ghost btn-sm" onclick="location.reload()">Reload</button></div>
+      <div class="modal-body">
+        <p style="font-size:0.84rem;color:var(--ink-2);margin-bottom:12px">ConsultTrack has been updated from GitHub.</p>
+        <div style="background:var(--surface-2);border-radius:8px;padding:12px 14px;font-family:monospace;font-size:0.8rem;white-space:pre-wrap;color:var(--ink-2);max-height:140px;overflow-y:auto">${d.message}</div>
+        ${d.backup?`<p style="font-size:0.75rem;color:var(--ink-3);margin-top:10px">Backup saved: ${d.backup.split('/').pop()}</p>`:''}
+      </div>
+      <div class="modal-footer"><button class="btn btn-primary" onclick="location.reload()">Reload App</button></div>`);
+    } else {
+      showModal(`<div class="modal-header"><h3>❌ Update Failed</h3><button class="btn btn-ghost btn-sm" onclick="closeModal()">✕</button></div>
+      <div class="modal-body">
+        <div style="background:var(--red-light);border-radius:8px;padding:12px 14px;font-family:monospace;font-size:0.8rem;white-space:pre-wrap;color:var(--red)">${d.message}</div>
+        <p style="font-size:0.78rem;color:var(--ink-3);margin-top:10px">Try running manually: <code>git pull origin main</code></p>
+      </div>
+      <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal()">Close</button></div>`);
+    }
+  } catch(e){
+    if(badge) badge.querySelector('button').textContent='⚡ Update available';
+  }
+}
+// Check for updates 3 seconds after page load (non-blocking)
+setTimeout(checkGithubUpdate, 3000);
 </script>
 </body>
 </html>
