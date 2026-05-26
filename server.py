@@ -19,7 +19,7 @@ from datetime import datetime
 
 PORT = 3000
 HOST = "localhost"
-GITHUB_REPO = ""          # Set this after you create your GitHub repo
+GITHUB_REPO = "saivikaschowdary/consulttrack"          # Set this after you create your GitHub repo
 # Example: GITHUB_REPO = "yourusername/consulttrack"
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
