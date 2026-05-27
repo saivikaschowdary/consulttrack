@@ -321,7 +321,7 @@ select:focus{outline:none;border-color:var(--accent)}
     </button>
     <button class="btn btn-ghost btn-sm" onclick="hrLogout(true)" title="Sign out" style="color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.15)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      Sign Out
+      <span id="hr-user-label">Admin</span> · Sign Out
     </button>
   </div>
 </nav>
@@ -750,8 +750,22 @@ function rTeam(){
   }).join('')}
   </div></div>`;
 }
+// ── Manager Accounts (persisted in localStorage) ──────────────
+let managers = (()=>{
+  try {
+    const stored = JSON.parse(localStorage.getItem('ct_managers'));
+    if(stored && stored.length) return stored;
+  } catch(e){}
+  return [
+    {id:1, name:'Sarah Lee',   email:'s.lee@consult.com',   username:'sarah.lee',   password:'SarahL@2024',  role:'Manager'},
+    {id:2, name:'James Park',  email:'j.park@consult.com',  username:'james.park',  password:'JamesP@2024',  role:'Manager'},
+    {id:3, name:'David White', email:'d.white@consult.com', username:'david.white', password:'DavidW@2024',  role:'Manager'},
+  ];
+})();
+function saveManagersToStorage(){
+  try{ localStorage.setItem('ct_managers', JSON.stringify(managers)); } catch(e){}
+}
 function rUsers(){
-  const managers=[{name:'Sarah Lee',email:'s.lee@consult.com',password:'SarahL@2024'},{name:'James Park',email:'j.park@consult.com',password:'JamesP@2024'},{name:'David White',email:'d.white@consult.com',password:'DavidW@2024'}];
   return`<div class="page-header"><div class="page-header-left"><h2>User Management</h2><p>Add and manage employee and manager accounts</p></div>
   <button class="btn btn-primary btn-sm" onclick="openInvite()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>+ Add User</button></div>
   <div class="page-body">
@@ -768,16 +782,96 @@ function rUsers(){
       </tr>`).join('')}</tbody></table>
     </div>
     <div class="card">
-      <div style="padding:16px 20px;border-bottom:1px solid var(--border);font-weight:600;font-size:0.9rem">Managers (${managers.length})</div>
-      <table><thead><tr><th>Name</th><th>Email</th><th>Password</th><th></th></tr></thead>
+      <div style="padding:14px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+        <span style="font-weight:600;font-size:0.9rem">Managers (${managers.length}) — Full HR Dashboard Access</span>
+        <button class="btn btn-primary btn-sm" onclick="openAddManager()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>Add Manager</button>
+      </div>
+      <table><thead><tr><th>Name</th><th>Email</th><th>Username</th><th>Password</th><th>Access</th><th></th></tr></thead>
       <tbody>${managers.map((m,i)=>`<tr>
         <td><div class="emp-cell">${mkAv(m.name.split(' ').map(w=>w[0]).join(''),i)}<span class="emp-cell-name">${m.name}</span></div></td>
-        <td style="color:var(--ink-3)">${m.email}</td>
+        <td style="color:var(--ink-3);font-size:0.82rem">${m.email}</td>
+        <td style="font-family:monospace;font-size:0.82rem">${m.username}</td>
         <td style="font-family:monospace;font-size:0.82rem">${m.password}</td>
-        <td><button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:rgba(163,48,48,0.2);font-size:0.75rem">Remove</button></td>
+        <td><span class="badge badge-green" style="font-size:0.7rem">Full HR Access</span></td>
+        <td style="display:flex;gap:6px">
+          <button class="btn btn-ghost btn-sm" style="font-size:0.75rem" onclick="openEditManager(${m.id})">Edit</button>
+          <button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:rgba(163,48,48,0.2);font-size:0.75rem" onclick="removeManager(${m.id})">Remove</button>
+        </td>
       </tr>`).join('')}</tbody></table>
+      <div style="padding:12px 18px;font-size:0.78rem;color:var(--ink-3);background:var(--surface);border-top:1px solid var(--border)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13" style="vertical-align:-2px;margin-right:4px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Managers log in at the same HR dashboard login screen using their username and password above.
+      </div>
     </div>
   </div>`;
+}
+function openAddManager(){
+  showModal(`<div class="modal-header"><h3>Add Manager</h3><button class="btn btn-ghost btn-sm" onclick="closeModal()">&#x2715;</button></div>
+  <div class="modal-body">
+    <p style="font-size:0.83rem;color:var(--ink-3);margin-bottom:18px">Managers get full access to the HR dashboard — employees, reviews, visa tracker, project tracker and settings.</p>
+    <div class="form-grid">
+      <div class="form-group full"><label>Full Name</label><input id="mgr-name" placeholder="e.g. Priya Sharma"></div>
+      <div class="form-group full"><label>Email</label><input id="mgr-email" type="email" placeholder="priya@company.com"></div>
+      <div class="form-group"><label>Username</label><input id="mgr-username" placeholder="e.g. priya.sharma"></div>
+      <div class="form-group"><label>Password</label><input id="mgr-password" placeholder="Min. 6 characters" type="text"></div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary" onclick="saveManager(0)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M20 6 9 17l-5-5"/></svg>
+      Add Manager
+    </button>
+  </div>`);
+  // Auto-fill username from name
+  document.getElementById('mgr-name').addEventListener('input', function(){
+    const parts=this.value.trim().toLowerCase().split(' ');
+    if(parts.length>=2) document.getElementById('mgr-username').value=parts[0]+'.'+parts[parts.length-1];
+  });
+}
+function openEditManager(id){
+  const m=managers.find(x=>x.id===id);
+  if(!m) return;
+  showModal(`<div class="modal-header"><h3>Edit Manager</h3><button class="btn btn-ghost btn-sm" onclick="closeModal()">&#x2715;</button></div>
+  <div class="modal-body">
+    <div class="form-grid">
+      <div class="form-group full"><label>Full Name</label><input id="mgr-name" value="${m.name}"></div>
+      <div class="form-group full"><label>Email</label><input id="mgr-email" type="email" value="${m.email}"></div>
+      <div class="form-group"><label>Username</label><input id="mgr-username" value="${m.username}"></div>
+      <div class="form-group"><label>Password</label><input id="mgr-password" value="${m.password}" type="text"></div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary" onclick="saveManager(${id})">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M20 6 9 17l-5-5"/></svg>
+      Save Changes
+    </button>
+  </div>`);
+}
+function saveManager(id){
+  const name=document.getElementById('mgr-name').value.trim();
+  const email=document.getElementById('mgr-email').value.trim();
+  const username=document.getElementById('mgr-username').value.trim().toLowerCase();
+  const password=document.getElementById('mgr-password').value.trim();
+  if(!name||!username||!password){ alert('Name, username and password are required.'); return; }
+  if(password.length<6){ alert('Password must be at least 6 characters.'); return; }
+  if(id){
+    const m=managers.find(x=>x.id===id);
+    if(m){ m.name=name; m.email=email; m.username=username; m.password=password; }
+  } else {
+    const newId=Math.max(0,...managers.map(m=>m.id))+1;
+    managers.push({id:newId, name, email, username, password, role:'Manager'});
+  }
+  saveManagersToStorage();
+  closeModal();
+  navigate('team');
+}
+function removeManager(id){
+  if(!confirm('Remove this manager? They will lose access to the HR dashboard.')) return;
+  managers=managers.filter(m=>m.id!==id);
+  saveManagersToStorage();
+  navigate('team');
 }
 function removeEmployee(id){
   if(!confirm('Remove this employee from the system?')) return;
@@ -1246,8 +1340,8 @@ function rSettings(){
       <div class="form-group"><label>Fiscal Year Start</label><select><option>January</option><option>April</option><option>July</option></select></div>
     </div><div style="margin-top:18px;display:flex;justify-content:flex-end"><button class="btn btn-primary btn-sm">Save Settings</button></div></div>
     <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">Managers</div>
-    <div class="card">${['Sarah Lee','James Park','David White'].map((m,i)=>`<div style="padding:12px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><div class="emp-cell">${mkAv(m.split(' ').map(w=>w[0]).join(''),i)}<span class="emp-cell-name">${m}</span></div><span class="badge badge-ink">Manager</span></div>`).join('')}
-    <div style="padding:12px 18px"><button class="btn btn-ghost btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>Add Manager</button></div></div>
+    <div class="card">${managers.map((m,i)=>`<div style="padding:12px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><div class="emp-cell">${mkAv(m.name.split(' ').map(w=>w[0]).join(''),i)}<div><span class="emp-cell-name">${m.name}</span><span class="emp-cell-sub">${m.email} · <span style="font-family:monospace">${m.username}</span></span></div></div><div style="display:flex;align-items:center;gap:8px"><span class="badge badge-ink">Manager</span><button class="btn btn-ghost btn-sm" style="font-size:0.75rem" onclick="openEditManager(${m.id})">Edit</button></div></div>`).join('')}
+    <div style="padding:12px 18px"><button class="btn btn-ghost btn-sm" onclick="openAddManager()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>Add Manager</button></div></div>
   </div></div>`;
 }
 function updatePortalStatus(){
@@ -2029,20 +2123,30 @@ let hrAdminCredentials = (()=>{
 })();
 let hrLoggedIn = false;
 
+let hrCurrentUser = {name:'Admin', role:'admin'};
 function doHRLogin(){
-  const u = document.getElementById('hr-username').value.trim();
+  const u = document.getElementById('hr-username').value.trim().toLowerCase();
   const p = document.getElementById('hr-password').value;
   const err = document.getElementById('hr-login-error');
   err.classList.remove('visible');
   if(!u || !p){ err.textContent='Please enter both username and password.'; err.classList.add('visible'); return; }
-  if(u === hrAdminCredentials.username && p === hrAdminCredentials.password){
+
+  // Check admin credentials
+  const isAdmin = (u === hrAdminCredentials.username.toLowerCase() && p === hrAdminCredentials.password);
+  // Check manager credentials
+  const managerMatch = managers.find(m => m.username.toLowerCase() === u && m.password === p);
+
+  if(isAdmin || managerMatch){
     hrLoggedIn = true;
+    hrCurrentUser = isAdmin ? {name:'Admin', role:'admin'} : {name: managerMatch.name, role:'manager', id: managerMatch.id};
     document.getElementById('hr-login-screen').classList.remove('visible');
     document.getElementById('hr-topnav').style.display='flex';
     document.querySelector('.layout').style.display='flex';
+    const lbl = document.getElementById('hr-user-label');
+    if(lbl) lbl.textContent = hrCurrentUser.name;
     navigate('dashboard');
   } else {
-    err.textContent='Incorrect username or password. Try admin / admin123 if first time.';
+    err.textContent='Incorrect username or password. Default admin: admin / admin123';
     err.classList.add('visible');
     document.getElementById('hr-password').classList.add('err');
     setTimeout(()=>document.getElementById('hr-password').classList.remove('err'), 1500);
