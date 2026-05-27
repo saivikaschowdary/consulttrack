@@ -274,7 +274,7 @@ select:focus{outline:none;border-color:var(--accent)}
     <div class="hr-login-error" id="hr-login-error">Incorrect username or password.</div>
     <div class="hr-login-field">
       <label>Username</label>
-      <input type="text" id="hr-username" placeholder="admin" autocomplete="username" onkeydown="if(event.key==='Enter')doHRLogin()">
+      <input type="text" id="hr-username" placeholder="admin" autocomplete="username" onkeydown="if(event.key==='Enter')doHRLogin()" oninput="this.value=this.value.toLowerCase()">
     </div>
     <div class="hr-login-field">
       <label>Password</label>
@@ -390,7 +390,7 @@ select:focus{outline:none;border-color:var(--accent)}
       <div class="portal-error" id="login-error">Incorrect username or password. Please try again.</div>
       <div class="portal-field">
         <label>Username</label>
-        <input type="text" id="login-username" placeholder="e.g. jane.smith" autocomplete="username">
+        <input type="text" id="login-username" placeholder="e.g. jane.smith" autocomplete="username" oninput="this.value=this.value.toLowerCase()">
       </div>
       <div class="portal-field">
         <label>Password</label>
@@ -2023,7 +2023,7 @@ function doLogin(){
   // Match by username OR by email (fallback)
   const emp=employees.find(e=>
     e.credentials&&(
-      e.credentials.username===username ||
+      e.credentials.username.toLowerCase()===username ||
       e.email.toLowerCase()===username
     )
   );
