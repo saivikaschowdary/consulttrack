@@ -3,67 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HUMAC — Employee Management</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<title>HUMAC Inc. — Employee Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #0f0e0c;
-  --ink-2: #3a3830;
-  --ink-3: #7a7770;
-  --surface: #faf9f7;
-  --surface-2: #f2f0ec;
-  --surface-3: #e8e4de;
-  --accent: #2d4a3e;
-  --accent-2: #4a7c65;
-  --accent-light: #e8f2ed;
-  --amber: #b8722a;
-  --amber-light: #fdf3e3;
-  --red: #a33030;
-  --red-light: #fce8e8;
-  --blue: #2a4a7a;
-  --blue-light: #e8eef8;
-  --border: rgba(15,14,12,0.1);
-  --border-strong: rgba(15,14,12,0.18);
+  --ink: #1a1a2e;
+  --ink-2: #2d2d44;
+  --ink-3: #6b7280;
+  --surface: #f0f4f8;
+  --surface-2: #e4eaf2;
+  --surface-3: #d1dce8;
+  --accent: #1a7ab8;
+  --accent-2: #1a9dd4;
+  --accent-light: #e0f0fb;
+  --accent-dark: #0f5a8a;
+  --gray: #4a5568;
+  --gray-light: #edf2f7;
+  --amber: #c47d2b;
+  --amber-light: #fef3e2;
+  --red: #c53030;
+  --red-light: #fff0f0;
+  --green: #276749;
+  --green-light: #e6f4ed;
+  --blue: #2b6cb0;
+  --blue-light: #ebf4ff;
+  --border: rgba(26,122,184,0.12);
+  --border-strong: rgba(26,122,184,0.22);
   --radius: 10px;
   --radius-lg: 14px;
+  --shadow: 0 1px 3px rgba(26,122,184,0.08), 0 4px 16px rgba(26,122,184,0.06);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{font-size:15px}
-body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink);min-height:100vh;line-height:1.6}
-.topnav{position:sticky;top:0;z-index:100;background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:56px;border-bottom:1px solid rgba(255,255,255,0.06)}
-.topnav-brand{display:flex;align-items:baseline;gap:10px}
-.topnav-brand h1{font-family:'DM Serif Display',serif;font-size:1.25rem;color:#fff;font-weight:400;letter-spacing:-0.02em}
-.topnav-brand span{font-size:0.7rem;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.12em}
+body{font-family:'Inter',sans-serif;background:var(--surface);color:var(--ink);min-height:100vh;line-height:1.6}
+.topnav{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,#0d5a8e 0%,#1a7ab8 60%,#1a9dd4 100%);display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:58px;border-bottom:1px solid rgba(255,255,255,0.1);box-shadow:0 2px 12px rgba(26,122,184,0.3)}
+.topnav-brand{display:flex;align-items:center;gap:12px}
+.topnav-brand-logo{width:34px;height:34px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
+.topnav-brand-logo svg{width:20px;height:20px}
+.topnav-brand-text{display:flex;flex-direction:column}
+.topnav-brand-text h1{font-family:'Inter',sans-serif;font-size:1.15rem;color:#fff;font-weight:700;letter-spacing:0.02em;line-height:1.1}
+.topnav-brand-text span{font-size:0.62rem;color:rgba(255,255,255,0.6);letter-spacing:0.08em;line-height:1}
 .topnav-nav{display:flex;gap:2px}
-.topnav-nav a{padding:5px 13px;border-radius:6px;font-size:0.81rem;color:rgba(255,255,255,0.5);cursor:pointer;transition:all 0.15s;text-decoration:none}
-.topnav-nav a:hover{color:#fff;background:rgba(255,255,255,0.08)}
-.topnav-nav a.active{color:#fff;background:rgba(255,255,255,0.13)}
+.topnav-nav a{padding:5px 13px;border-radius:6px;font-size:0.81rem;color:rgba(255,255,255,0.65);cursor:pointer;transition:all 0.15s;text-decoration:none;font-weight:400}
+.topnav-nav a:hover{color:#fff;background:rgba(255,255,255,0.12)}
+.topnav-nav a.active{color:#fff;background:rgba(255,255,255,0.18);font-weight:500}
 .topnav-actions{display:flex;align-items:center;gap:8px}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:var(--radius);border:1px solid var(--border-strong);background:transparent;color:var(--ink);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;transition:all 0.15s;text-decoration:none;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:var(--radius);border:1px solid var(--border-strong);background:transparent;color:var(--ink);cursor:pointer;font-family:'Inter',sans-serif;font-size:0.82rem;font-weight:500;transition:all 0.15s;text-decoration:none;white-space:nowrap}
 .btn:hover{background:var(--surface-2)}
 .btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
 .btn-primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
 .btn-sm{padding:5px 13px;font-size:0.79rem}
-.btn-white{background:#fff;color:var(--ink);border-color:var(--border-strong)}
-.btn-white:hover{background:var(--surface-2)}
+.btn-white{background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.25)}
+.btn-white:hover{background:rgba(255,255,255,0.25)}
 .btn-ghost{border-color:transparent}
 .btn-ghost:hover{background:var(--surface-2);border-color:var(--border)}
 .btn-green{background:var(--accent);color:#fff;border-color:var(--accent)}
-.btn-green:hover{background:var(--accent-2)}
+.btn-green:hover{background:var(--accent-dark)}
 .btn:disabled{opacity:0.5;cursor:not-allowed}
 .layout{display:flex;min-height:calc(100vh - 56px)}
-.sidebar{width:210px;min-width:210px;flex-shrink:0;background:#fff;border-right:1px solid var(--border);padding:22px 0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
+.sidebar{width:210px;min-width:210px;flex-shrink:0;background:#fff;border-right:1px solid var(--border);padding:22px 0;position:sticky;top:58px;height:calc(100vh - 58px);overflow-y:auto;box-shadow:1px 0 8px rgba(26,122,184,0.05)}
 .sidebar-section{padding:0 12px;margin-bottom:20px}
-.sidebar-label{font-size:0.67rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);padding:0 8px;margin-bottom:5px;display:block}
-.nav-item{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:0.83rem;color:var(--ink-2);transition:all 0.12s;margin-bottom:1px}
+.sidebar-label{font-size:0.67rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);padding:0 8px;margin-bottom:5px;display:block}
+.nav-item{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:0.83rem;color:var(--ink-2);transition:all 0.12s;margin-bottom:1px;font-weight:400}
 .nav-item svg{width:15px;height:15px;flex-shrink:0;opacity:0.55}
-.nav-item:hover{background:var(--surface-2);color:var(--ink)}
-.nav-item.active{background:var(--accent-light);color:var(--accent);font-weight:500}
+.nav-item:hover{background:var(--accent-light);color:var(--accent)}
+.nav-item.active{background:var(--accent-light);color:var(--accent);font-weight:600;border-left:3px solid var(--accent);padding-left:7px}
 .nav-item.active svg{opacity:1}
 .sidebar-divider{height:1px;background:var(--border);margin:14px 12px}
 .main{flex:1;min-width:0}
 .page-header{padding:26px 32px 0;margin-bottom:24px;display:flex;align-items:flex-end;justify-content:space-between}
-.page-header-left h2{font-family:'DM Serif Display',serif;font-size:1.7rem;font-weight:400;letter-spacing:-0.03em;line-height:1.1;margin-bottom:3px}
+.page-header-left h2{font-family:'Inter',sans-serif;font-weight:700;font-size:1.6rem;letter-spacing:-0.03em;line-height:1.1;margin-bottom:3px}
 .page-header-left p{font-size:0.81rem;color:var(--ink-3)}
 .page-body{padding:0 32px 48px}
 .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
@@ -76,7 +85,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink)
 .metric-card.mc-red::before{background:var(--red)}
 .metric-card.mc-blue::before{background:var(--blue)}
 .metric-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:7px}
-.metric-val{font-family:'DM Serif Display',serif;font-size:2.1rem;font-weight:400;line-height:1;margin-bottom:3px}
+.metric-val{font-family:'Inter',sans-serif;font-weight:700;font-size:2rem;line-height:1;margin-bottom:3px}
 .metric-val.cv-green{color:var(--accent)}
 .metric-val.cv-amber{color:var(--amber)}
 .metric-val.cv-red{color:var(--red)}
@@ -101,10 +110,10 @@ tbody tr:hover td{background:var(--surface)}
 .emp-cell-sub{font-size:0.72rem;color:var(--ink-3);display:block}
 .toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .search-wrap{position:relative;flex:1;max-width:340px}
-.search-wrap input{width:100%;padding:8px 12px 8px 34px;border:1px solid var(--border-strong);border-radius:var(--radius);background:#fff;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:0.83rem}
+.search-wrap input{width:100%;padding:8px 12px 8px 34px;border:1px solid var(--border-strong);border-radius:var(--radius);background:#fff;color:var(--ink);font-family:'Inter',sans-serif;font-size:0.83rem}
 .search-wrap input:focus{outline:none;border-color:var(--accent)}
 .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--ink-3);pointer-events:none}
-select{padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--radius);background:#fff;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:0.83rem;cursor:pointer}
+select{padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--radius);background:#fff;color:var(--ink);font-family:'Inter',sans-serif;font-size:0.83rem;cursor:pointer}
 select:focus{outline:none;border-color:var(--accent)}
 .alert{display:flex;align-items:center;gap:9px;padding:11px 14px;border-radius:var(--radius);font-size:0.82rem;margin-bottom:14px}
 .alert-amber{background:var(--amber-light);color:var(--amber);border:1px solid rgba(184,114,42,0.2)}
@@ -122,21 +131,21 @@ select:focus{outline:none;border-color:var(--accent)}
 .tab.active{color:var(--accent);font-weight:500;border-bottom-color:var(--accent)}
 .review-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:12px}
 .review-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:13px}
-.review-score{font-family:'DM Serif Display',serif;font-size:1.9rem;color:var(--accent);line-height:1}
+.review-score{font-family:'Inter',sans-serif;font-weight:700;font-size:1.9rem;color:var(--accent);line-height:1}
 .review-score-sub{font-size:0.7rem;color:var(--ink-3);text-align:right;margin-top:2px}
 .modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(15,14,12,0.45);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px);animation:fadeIn 0.15s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .modal{background:#fff;border-radius:var(--radius-lg);box-shadow:0 8px 40px rgba(15,14,12,0.15),0 2px 8px rgba(15,14,12,0.08);width:100%;max-width:580px;max-height:90vh;overflow-y:auto;animation:slideUp 0.18s ease}
 @keyframes slideUp{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
 .modal-header{display:flex;align-items:center;justify-content:space-between;padding:22px 26px 0}
-.modal-header h3{font-family:'DM Serif Display',serif;font-size:1.25rem;font-weight:400}
+.modal-header h3{font-family:'Inter',sans-serif;font-weight:700;font-size:1.25rem;font-weight:400}
 .modal-body{padding:18px 26px 24px}
 .modal-footer{display:flex;gap:10px;justify-content:flex-end;padding:16px 26px;border-top:1px solid var(--border);background:var(--surface);border-radius:0 0 var(--radius-lg) var(--radius-lg)}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form-group{display:flex;flex-direction:column;gap:5px}
 .form-group.full{grid-column:1/-1}
 .form-group label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3)}
-.form-group input,.form-group select,.form-group textarea{padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--radius);background:#fff;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:0.84rem}
+.form-group input,.form-group select,.form-group textarea{padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--radius);background:#fff;color:var(--ink);font-family:'Inter',sans-serif;font-size:0.84rem}
 .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--accent)}
 .form-divider{grid-column:1/-1;height:1px;background:var(--border);margin:2px 0}
 .form-section-label{grid-column:1/-1;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);padding-top:2px}
@@ -166,20 +175,20 @@ select:focus{outline:none;border-color:var(--accent)}
 @media(max-width:880px){.sidebar{display:none}.metric-grid{grid-template-columns:1fr 1fr}}
 
 /* PORTAL (Employee Login) */
-.portal-shell{display:none;min-height:100vh;background:var(--surface-2);align-items:center;justify-content:center;flex-direction:column;padding:24px}
+.portal-shell{display:none;min-height:100vh;background:linear-gradient(135deg,#0d5a8e 0%,#1a7ab8 60%,#1a9dd4 100%);align-items:center;justify-content:center;flex-direction:column;padding:24px}
 .portal-shell.visible{display:flex}
-.portal-card{background:#fff;border-radius:20px;box-shadow:0 4px 32px rgba(15,14,12,0.1),0 1px 4px rgba(15,14,12,0.06);width:100%;max-width:420px;padding:40px 40px 36px;animation:slideUp 0.2s ease}
+.portal-card{background:#fff;border-radius:20px;border-top:4px solid var(--accent);box-shadow:0 4px 32px rgba(15,14,12,0.1),0 1px 4px rgba(15,14,12,0.06);width:100%;max-width:420px;padding:40px 40px 36px;animation:slideUp 0.2s ease}
 .portal-logo{display:flex;align-items:baseline;gap:8px;margin-bottom:32px}
-.portal-logo h1{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ink);font-weight:400}
+.portal-logo h1{font-family:'Inter',sans-serif;font-weight:700;font-size:1.3rem;color:var(--ink);font-weight:400}
 .portal-logo span{font-size:0.68rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.1em}
-.portal-heading{font-family:'DM Serif Display',serif;font-size:1.6rem;font-weight:400;color:var(--ink);margin-bottom:6px;letter-spacing:-0.02em}
+.portal-heading{font-family:'Inter',sans-serif;font-weight:700;font-size:1.6rem;font-weight:400;color:var(--ink);margin-bottom:6px;letter-spacing:-0.02em}
 .portal-sub{font-size:0.83rem;color:var(--ink-3);margin-bottom:28px;line-height:1.5}
 .portal-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
 .portal-field label{font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3)}
-.portal-field input{padding:11px 14px;border:1.5px solid var(--border-strong);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--ink);background:#fff;transition:border-color 0.15s}
+.portal-field input{padding:11px 14px;border:1.5px solid var(--border-strong);border-radius:10px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ink);background:#fff;transition:border-color 0.15s}
 .portal-field input:focus{outline:none;border-color:var(--accent)}
 .portal-field input.error{border-color:var(--red)}
-.portal-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:background 0.15s;margin-top:6px}
+.portal-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:background 0.15s;margin-top:6px}
 .portal-btn:hover{background:var(--accent-2)}
 .portal-btn:disabled{opacity:0.5;cursor:not-allowed}
 .portal-error{background:var(--red-light);border:1px solid rgba(163,48,48,0.2);border-radius:8px;padding:10px 13px;font-size:0.81rem;color:var(--red);margin-bottom:14px;display:none}
@@ -196,7 +205,7 @@ select:focus{outline:none;border-color:var(--accent)}
 .portal-profile-field{display:flex;flex-direction:column;gap:5px}
 .portal-profile-field.full{grid-column:1/-1}
 .portal-profile-field label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3)}
-.portal-profile-field input,.portal-profile-field textarea,.portal-profile-field select{padding:9px 12px;border:1.5px solid var(--border-strong);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.84rem;color:var(--ink);background:#fff}
+.portal-profile-field input,.portal-profile-field textarea,.portal-profile-field select{padding:9px 12px;border:1.5px solid var(--border-strong);border-radius:9px;font-family:'Inter',sans-serif;font-size:0.84rem;color:var(--ink);background:#fff}
 .portal-profile-field input:focus,.portal-profile-field textarea:focus,.portal-profile-field select:focus{outline:none;border-color:var(--accent)}
 .portal-section-label{grid-column:1/-1;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);padding-top:6px;border-top:1px solid var(--border);margin-top:4px}
 .portal-progress{display:flex;gap:6px;margin-bottom:28px}
@@ -207,7 +216,7 @@ select:focus{outline:none;border-color:var(--accent)}
 
 /* BRIGHTSHARKS FEATURES */
 .view-toggle{display:flex;gap:4px;background:var(--surface-2);border-radius:8px;padding:3px}
-.view-toggle button{padding:5px 12px;border:none;background:transparent;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;color:var(--ink-3);transition:all 0.15s}
+.view-toggle button{padding:5px 12px;border:none;background:transparent;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;font-size:0.78rem;font-weight:500;color:var(--ink-3);transition:all 0.15s}
 .view-toggle button.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(15,14,12,0.1)}
 .emp-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
 .emp-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;transition:box-shadow 0.15s}
@@ -240,22 +249,22 @@ select:focus{outline:none;border-color:var(--accent)}
 .support-banner{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#fce8e8;border:1px solid rgba(163,48,48,0.15);border-radius:8px;font-size:0.82rem;color:var(--red);font-weight:500;margin-top:10px}
 
 /* ── HR Admin Login Screen ── */
-.hr-login-screen{display:none;position:fixed;inset:0;z-index:9999;background:var(--ink);align-items:center;justify-content:center;flex-direction:column;gap:20px}
+.hr-login-screen{display:none;position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#0d5a8e 0%,#1a7ab8 60%,#1a9dd4 100%);align-items:center;justify-content:center;flex-direction:column;gap:20px}
 .hr-login-screen.visible{display:flex}
-.hr-login-card{background:#fff;border-radius:20px;width:100%;max-width:400px;padding:40px;box-shadow:0 24px 80px rgba(0,0,0,0.5);animation:slideUp 0.25s ease}
+.hr-login-card{background:#fff;border-radius:20px;border-top:4px solid var(--accent);width:100%;max-width:400px;padding:40px;box-shadow:0 24px 80px rgba(0,0,0,0.5);animation:slideUp 0.25s ease}
 .hr-login-brand{display:flex;align-items:baseline;gap:10px;margin-bottom:32px}
-.hr-login-brand h1{font-family:'DM Serif Display',serif;font-size:1.4rem;font-weight:400;color:var(--ink)}
+.hr-login-brand h1{font-family:'Inter',sans-serif;font-weight:700;font-size:1.4rem;font-weight:400;color:var(--ink)}
 .hr-login-brand span{font-size:0.7rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.12em}
-.hr-login-heading{font-family:'DM Serif Display',serif;font-size:1.5rem;font-weight:400;margin-bottom:4px}
+.hr-login-heading{font-family:'Inter',sans-serif;font-weight:700;font-size:1.5rem;font-weight:400;margin-bottom:4px}
 .hr-login-sub{font-size:0.82rem;color:var(--ink-3);margin-bottom:24px;line-height:1.5}
 .hr-login-error{background:var(--red-light);border:1px solid rgba(163,48,48,0.2);border-radius:8px;padding:10px 13px;font-size:0.81rem;color:var(--red);margin-bottom:14px;display:none}
 .hr-login-error.visible{display:block}
 .hr-login-field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
 .hr-login-field label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3)}
-.hr-login-field input{padding:11px 14px;border:1.5px solid var(--border-strong);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--ink);background:#fff;transition:border-color 0.15s}
+.hr-login-field input{padding:11px 14px;border:1.5px solid var(--border-strong);border-radius:10px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--ink);background:#fff;transition:border-color 0.15s}
 .hr-login-field input:focus{outline:none;border-color:var(--accent)}
 .hr-login-field input.err{border-color:var(--red)}
-.hr-login-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;margin-top:6px;transition:background 0.15s}
+.hr-login-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;margin-top:6px;transition:background 0.15s}
 .hr-login-btn:hover{background:var(--accent-2)}
 .hr-login-hint{font-size:0.75rem;color:rgba(255,255,255,0.3);text-align:center}
 .hr-login-hint a{color:rgba(255,255,255,0.55);cursor:pointer;text-decoration:underline}
@@ -266,7 +275,7 @@ select:focus{outline:none;border-color:var(--accent)}
 <div class="hr-login-screen visible" id="hr-login-screen">
   <div class="hr-login-card">
     <div class="hr-login-brand">
-      <h1>HUMAC</h1>
+      <h1>HUMAC Inc.</h1>
       <span>HR Dashboard</span>
     </div>
     <h2 class="hr-login-heading">Admin Sign In</h2>
@@ -290,8 +299,16 @@ select:focus{outline:none;border-color:var(--accent)}
 
 <nav class="topnav" id="hr-topnav">
   <div class="topnav-brand">
-    <h1>HUMAC</h1>
-    <span>Employee Management</span>
+    <div class="topnav-brand-logo">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="9" stroke="#1a7ab8" stroke-width="1.8"/>
+        <path d="M9 7v10M9 12h6M15 7v10" stroke="#1a7ab8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="topnav-brand-text">
+      <h1>HUMAC Inc.</h1>
+      <span>Information Technology Services</span>
+    </div>
   </div>
   <div class="topnav-nav">
     <a onclick="navigate('dashboard')" id="nav-dashboard" class="active">Dashboard</a>
@@ -305,7 +322,7 @@ select:focus{outline:none;border-color:var(--accent)}
   </div>
   <div class="topnav-actions">
     <div id="update-badge" style="display:none">
-      <button onclick="applyUpdate()" style="padding:5px 12px;border-radius:6px;border:1px solid #f59e0b;background:#fef3c7;color:#92400e;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px">⚡ Update available</button>
+      <button onclick="applyUpdate()" style="padding:5px 12px;border-radius:6px;border:1px solid #f59e0b;background:#fef3c7;color:#92400e;font-family:'Inter',sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px">⚡ Update available</button>
     </div>
     <button class="btn btn-white btn-sm" onclick="switchToPortal()" title="Switch to Employee Portal view">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -327,7 +344,7 @@ select:focus{outline:none;border-color:var(--accent)}
 </nav>
 <div class="layout">
   <aside class="sidebar">
-    <div class="sidebar-section">
+    <div class="sidebar-section"><div style="display:flex;align-items:center;gap:8px;padding:4px 8px 16px;margin-bottom:4px;border-bottom:1px solid var(--border)"><div style="width:28px;height:28px;background:var(--accent-light);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox='0 0 24 24' fill='none' width='14' height='14'><circle cx='12' cy='12' r='9' stroke='#1a7ab8' stroke-width='1.8'/><path d='M9 7v10M9 12h6M15 7v10' stroke='#1a7ab8' stroke-width='2' stroke-linecap='round'/></svg></div><div><div style='font-size:0.78rem;font-weight:700;color:var(--ink);line-height:1.1'>HUMAC Inc.</div><div style='font-size:0.58rem;color:var(--ink-3);letter-spacing:0.04em'>IT Services</div></div></div>
       <span class="sidebar-label">Main</span>
       <div class="nav-item active" onclick="navigate('dashboard')" id="side-dashboard">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
@@ -378,7 +395,7 @@ select:focus{outline:none;border-color:var(--accent)}
   <div id="portal-login" style="width:100%;max-width:420px">
     <div class="portal-card">
       <div class="portal-logo">
-        <h1>HUMAC</h1>
+        <h1>HUMAC Inc.</h1>
         <span>Employee Portal</span>
       </div>
       <div style="background:var(--accent-light);border:1px solid rgba(45,74,62,0.2);border-radius:8px;padding:9px 12px;margin-bottom:20px;display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--accent)">
@@ -407,7 +424,7 @@ select:focus{outline:none;border-color:var(--accent)}
   <!-- Step 2: Set new password (first login) -->
   <div id="portal-setpw" style="display:none;width:100%;max-width:420px">
     <div class="portal-card">
-      <div class="portal-logo"><h1>HUMAC</h1><span>Employee Portal</span></div>
+      <div class="portal-logo"><h1>HUMAC Inc.</h1><span>Employee Portal</span></div>
       <div class="portal-progress">
         <div class="portal-progress-step done"></div>
         <div class="portal-progress-step active"></div>
@@ -438,7 +455,7 @@ select:focus{outline:none;border-color:var(--accent)}
   <!-- Step 3: Complete profile -->
   <div id="portal-profile" style="display:none;width:100%;max-width:560px">
     <div class="portal-card" style="max-width:560px">
-      <div class="portal-logo"><h1>HUMAC</h1><span>Employee Portal</span></div>
+      <div class="portal-logo"><h1>HUMAC Inc.</h1><span>Employee Portal</span></div>
       <div class="portal-progress">
         <div class="portal-progress-step done"></div>
         <div class="portal-progress-step done"></div>
@@ -471,12 +488,12 @@ select:focus{outline:none;border-color:var(--accent)}
     <!-- Employee nav -->
     <div style="background:var(--ink);border-radius:14px;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
       <div style="display:flex;align-items:baseline;gap:10px">
-        <span style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:#fff;font-weight:400">HUMAC</span>
+        <span style="font-family:'Inter',sans-serif;font-weight:700;font-size:1.15rem;color:#fff;font-weight:400">HUMAC</span>
         <span style="font-size:0.68rem;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em">Employee Portal</span>
       </div>
       <div style="display:flex;align-items:center;gap:10px">
         <span id="emp-nav-name" style="font-size:0.82rem;color:rgba(255,255,255,0.6)"></span>
-        <button onclick="empLogout()" style="padding:5px 13px;border-radius:7px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.7);font-family:'DM Sans',sans-serif;font-size:0.78rem;cursor:pointer">Sign Out</button>
+        <button onclick="empLogout()" style="padding:5px 13px;border-radius:7px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.7);font-family:'Inter',sans-serif;font-size:0.78rem;cursor:pointer">Sign Out</button>
       </div>
     </div>
 
@@ -608,17 +625,17 @@ select:focus{outline:none;border-color:var(--accent)}
           <label>Support Needed from Manager / HR?</label>
           <div style="display:flex;gap:10px;margin-top:4px">
             <button type="button" id="sr-support-yes" onclick="toggleSupport(true)"
-              style="flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--border-strong);background:#fff;font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--ink-3);transition:all 0.15s">
+              style="flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--border-strong);background:#fff;font-family:'Inter',sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--ink-3);transition:all 0.15s">
               👍 Yes, I need support
             </button>
             <button type="button" id="sr-support-no" onclick="toggleSupport(false)"
-              style="flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--accent);background:var(--accent-light);font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--accent);transition:all 0.15s">
+              style="flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--accent);background:var(--accent-light);font-family:'Inter',sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--accent);transition:all 0.15s">
               ✓ No, all good
             </button>
           </div>
           <input type="hidden" id="sr-support-val" value="no">
           <div id="sr-support-detail" style="display:none;margin-top:10px">
-            <textarea id="sr-support" rows="2" placeholder="Describe the support or resources you need — be specific so your manager can help." style="resize:vertical;width:100%;padding:9px 12px;border:1.5px solid var(--amber);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.84rem;background:var(--amber-light)"></textarea>
+            <textarea id="sr-support" rows="2" placeholder="Describe the support or resources you need — be specific so your manager can help." style="resize:vertical;width:100%;padding:9px 12px;border:1.5px solid var(--amber);border-radius:9px;font-family:'Inter',sans-serif;font-size:0.84rem;background:var(--amber-light)"></textarea>
           </div>
         </div>
         <div class="portal-profile-field" style="margin-bottom:10px">
@@ -1099,22 +1116,22 @@ function rProject(){
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
       <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;border-top:3px solid var(--accent)">
         <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:6px">Active Projects</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--accent);line-height:1">${employees.filter(e=>e.status==='Active').length}</div>
+        <div style="font-family:'Inter',sans-serif;font-weight:700;font-size:2rem;color:var(--accent);line-height:1">${employees.filter(e=>e.status==='Active').length}</div>
         <div style="font-size:0.73rem;color:var(--ink-3);margin-top:3px">${employees.filter(e=>e.status==='Bench').length} on bench</div>
       </div>
       <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;border-top:3px solid var(--red)">
         <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:6px">Overdue</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--red);line-height:1">${overdue.length}</div>
+        <div style="font-family:'Inter',sans-serif;font-weight:700;font-size:2rem;color:var(--red);line-height:1">${overdue.length}</div>
         <div style="font-size:0.73rem;color:var(--ink-3);margin-top:3px">Past end date</div>
       </div>
       <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;border-top:3px solid var(--amber)">
         <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:6px">Ending in 60 Days</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--amber);line-height:1">${endingSoon.length}</div>
+        <div style="font-family:'Inter',sans-serif;font-weight:700;font-size:2rem;color:var(--amber);line-height:1">${endingSoon.length}</div>
         <div style="font-size:0.73rem;color:var(--ink-3);margin-top:3px">Need attention</div>
       </div>
       <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;border-top:3px solid var(--ink-3)">
         <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:6px">No End Date Set</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--ink-3);line-height:1">${list.filter(e=>!e.projectEnd).length}</div>
+        <div style="font-family:'Inter',sans-serif;font-weight:700;font-size:2rem;color:var(--ink-3);line-height:1">${list.filter(e=>!e.projectEnd).length}</div>
         <div style="font-size:0.73rem;color:var(--ink-3);margin-top:3px">Update recommended</div>
       </div>
     </div>
@@ -1129,7 +1146,7 @@ function rProject(){
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         <input placeholder="Search employee or project..." oninput="filterProjectTracker(this.value)" id="proj-search">
       </div>
-      <select id="proj-status-filter" onchange="filterProjectTracker(document.getElementById('proj-search').value)" style="padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:0.83rem;background:#fff">
+      <select id="proj-status-filter" onchange="filterProjectTracker(document.getElementById('proj-search').value)" style="padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:0.83rem;background:#fff">
         <option value="">All Statuses</option>
         <option value="overdue">Overdue</option>
         <option value="soon">Ending in 60 days</option>
@@ -1226,8 +1243,8 @@ function rReviews(){
       <div class="search-wrap" style="max-width:220px"><svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input id="eval-search" placeholder="Employee name..." oninput="fEvalFilter()"></div></div>
       <div><div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:5px">Type</div>
       <select id="eval-type" onchange="fEvalFilter()"><option value="">All</option><option value="STEM Weekly">STEM Weekly</option><option value="H-1B Monthly">H-1B Monthly</option></select></div>
-      <div><div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:5px">From Date</div><input type="date" id="eval-from" onchange="fEvalFilter()" style="padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:0.83rem"></div>
-      <div><div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:5px">To Date</div><input type="date" id="eval-to" onchange="fEvalFilter()" style="padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:0.83rem"></div>
+      <div><div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:5px">From Date</div><input type="date" id="eval-from" onchange="fEvalFilter()" style="padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:0.83rem"></div>
+      <div><div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:5px">To Date</div><input type="date" id="eval-to" onchange="fEvalFilter()" style="padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:0.83rem"></div>
     </div>
     <div class="tabs">
       <div class="tab active" onclick="fEvalTab(this,'pending')">Pending Review (${pending.length})</div>
@@ -1327,7 +1344,7 @@ function viewEvalModal(rid){
     ${r.notes&&!r.selfSubmitted?`<div style="background:var(--surface);border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:0.83rem;color:var(--ink-2);line-height:1.6">${r.notes}</div>`:''}
 
     <div style="font-size:0.71rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:6px">Manager Comments</div>
-    <textarea id="modal-comment" rows="3" placeholder="Add your comments or feedback for this employee..." style="width:100%;padding:9px 12px;border:1px solid var(--border-strong);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:0.84rem;resize:vertical">${r.managerComment||''}</textarea>
+    <textarea id="modal-comment" rows="3" placeholder="Add your comments or feedback for this employee..." style="width:100%;padding:9px 12px;border:1px solid var(--border-strong);border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:0.84rem;resize:vertical">${r.managerComment||''}</textarea>
     <p style="font-size:0.74rem;color:var(--ink-3);margin-top:6px">Comments are visible to the employee in their portal.</p>
   </div>
   <div class="modal-footer">
@@ -1407,7 +1424,7 @@ function viewEmp(id){
   <div class="modal-body">
     <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border)">
       ${mkAv(e.initials,e.id,50)}<div style="flex:1"><div style="font-size:1rem;font-weight:600;margin-bottom:2px">${e.name}</div><div style="font-size:0.81rem;color:var(--ink-3);margin-bottom:8px">${e.title} · ${e.dept}</div><div style="display:flex;gap:6px;flex-wrap:wrap">${sBadge(e.status)} ${vBadge(e.visa)} ${pBadge(e)}</div></div>
-      <div style="text-align:right"><div style="font-family:'DM Serif Display',serif;font-size:1.9rem;color:var(--accent);line-height:1">${avg}</div><div style="font-size:0.7rem;color:var(--ink-3);margin-top:2px">avg review</div></div>
+      <div style="text-align:right"><div style="font-family:'Inter',sans-serif;font-weight:700;font-size:1.9rem;color:var(--accent);line-height:1">${avg}</div><div style="font-size:0.7rem;color:var(--ink-3);margin-top:2px">avg review</div></div>
     </div>
     <div class="detail-grid">
       <div class="detail-item"><label>Email</label><span>${e.email}</span></div><div class="detail-item"><label>Phone</label><span>${e.phone}</span></div>
@@ -1637,7 +1654,7 @@ function switchEmpRevTab(el, type){
           <div style="font-size:0.83rem;font-weight:500">${r.period} Review ${selfLabel}</div>
           <div style="font-size:0.75rem;color:var(--ink-3);margin-top:2px">${r.date} · ${r.selfSubmitted?'Submitted by you':'Reviewed by '+r.manager}</div>
         </div>
-        <div style="text-align:right"><div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--accent);line-height:1">${ravg}</div><div style="font-size:0.68rem;color:var(--ink-3)">/ 5</div></div>
+        <div style="text-align:right"><div style="font-family:'Inter',sans-serif;font-weight:700;font-size:1.6rem;color:var(--accent);line-height:1">${ravg}</div><div style="font-size:0.68rem;color:var(--ink-3)">/ 5</div></div>
       </div>
       <div style="margin-bottom:8px">${Object.entries(r.scores).map(([k,v])=>`<div class="rating-bar"><span class="rating-label">${fields[k]}</span><div class="bar-track"><div class="bar-fill" style="width:${v/5*100}%"></div></div><span class="rating-score">${v}/5</span></div>`).join('')}</div>
       ${r.tasksAssigned?`<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
@@ -1660,13 +1677,13 @@ function toggleSupport(yes){
   const detail=document.getElementById('sr-support-detail');
   const val=document.getElementById('sr-support-val');
   if(yes){
-    yesBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--amber);background:var(--amber-light);font-family:DM Sans,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--amber);transition:all 0.15s';
-    noBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--border-strong);background:#fff;font-family:DM Sans,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--ink-3);transition:all 0.15s';
+    yesBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--amber);background:var(--amber-light);font-family:Inter,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--amber);transition:all 0.15s';
+    noBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--border-strong);background:#fff;font-family:Inter,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--ink-3);transition:all 0.15s';
     detail.style.display='block';
     val.value='yes';
   } else {
-    noBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--accent);background:var(--accent-light);font-family:DM Sans,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--accent);transition:all 0.15s';
-    yesBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--border-strong);background:#fff;font-family:DM Sans,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--ink-3);transition:all 0.15s';
+    noBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--accent);background:var(--accent-light);font-family:Inter,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--accent);transition:all 0.15s';
+    yesBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--border-strong);background:#fff;font-family:Inter,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--ink-3);transition:all 0.15s';
     detail.style.display='none';
     val.value='no';
   }
@@ -1694,9 +1711,9 @@ function openSelfReview(period){
   const detail=document.getElementById('sr-support-detail');
   if(detail) detail.style.display='none';
   const noBtn=document.getElementById('sr-support-no');
-  if(noBtn) noBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--accent);background:var(--accent-light);font-family:DM Sans,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--accent);transition:all 0.15s';
+  if(noBtn) noBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--accent);background:var(--accent-light);font-family:Inter,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--accent);transition:all 0.15s';
   const yesBtn=document.getElementById('sr-support-yes');
-  if(yesBtn) yesBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--border-strong);background:#fff;font-family:DM Sans,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--ink-3);transition:all 0.15s';
+  if(yesBtn) yesBtn.style.cssText='flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--border-strong);background:#fff;font-family:Inter,sans-serif;font-size:0.84rem;font-weight:500;cursor:pointer;color:var(--ink-3);transition:all 0.15s';
 }
 function submitSelfReview(){
   const errEl=document.getElementById('sr-error');
@@ -1896,7 +1913,7 @@ function renderEmpDash(){
     return`<div style="border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
         <div><div style="font-size:0.83rem;font-weight:500">${r.period} Review</div><div style="font-size:0.75rem;color:var(--ink-3)">${r.date} · by ${r.manager}</div></div>
-        <div style="text-align:right"><div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--accent);line-height:1">${ravg}</div><div style="font-size:0.68rem;color:var(--ink-3)">/ 5</div></div>
+        <div style="text-align:right"><div style="font-family:'Inter',sans-serif;font-weight:700;font-size:1.6rem;color:var(--accent);line-height:1">${ravg}</div><div style="font-size:0.68rem;color:var(--ink-3)">/ 5</div></div>
       </div>
       <div style="margin-bottom:8px">${Object.entries(r.scores).map(([k,v])=>`<div class="rating-bar"><span class="rating-label">${fields[k]}</span><div class="bar-track"><div class="bar-fill" style="width:${v/5*100}%"></div></div><span class="rating-score">${v}/5</span></div>`).join('')}</div>
       <div style="font-size:0.8rem;color:var(--ink-2);background:var(--surface);padding:8px 11px;border-radius:7px;line-height:1.6">${r.notes}</div>
@@ -1908,7 +1925,7 @@ function renderEmpDash(){
     <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:16px;display:flex;align-items:center;gap:18px">
       <div style="width:56px;height:56px;border-radius:50%;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:600;flex-shrink:0">${e.initials}</div>
       <div style="flex:1">
-        <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;font-weight:400;margin-bottom:2px">${e.name}</div>
+        <div style="font-family:'Inter',sans-serif;font-weight:700;font-size:1.3rem;font-weight:400;margin-bottom:2px">${e.name}</div>
         <div style="font-size:0.82rem;color:var(--ink-3)">${e.title} · ${e.dept} · ${e.location}</div>
         <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
           ${sBadge(e.status)}
@@ -1925,7 +1942,7 @@ function renderEmpDash(){
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
       <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px">
         <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:6px">Avg Review Score</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--accent);line-height:1">${avg}</div>
+        <div style="font-family:'Inter',sans-serif;font-weight:700;font-size:2rem;color:var(--accent);line-height:1">${avg}</div>
         <div style="font-size:0.73rem;color:var(--ink-3);margin-top:3px">${empRevs.length} review(s) total</div>
       </div>
       <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px">
