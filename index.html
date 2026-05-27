@@ -398,22 +398,8 @@ select:focus{outline:none;border-color:var(--accent)}
       </div>
       <button class="portal-btn" onclick="doLogin()">Sign In</button>
       <p class="portal-hint">Need help? Contact <a href="#">saivikaschowdary@gmail.com</a></p>
-      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
-        <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:8px">HR: Look up employee credentials</div>
-        <div style="display:flex;gap:8px">
-          <select id="cred-lookup" style="flex:1;padding:8px 10px;border:1px solid var(--border-strong);border-radius:8px;font-family:DM Sans,sans-serif;font-size:0.82rem;background:#fff;color:var(--ink)">
-            <option value="">Select employee...</option>
-          </select>
-          <button onclick="lookupCreds()" style="padding:8px 14px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-family:DM Sans,sans-serif;font-size:0.82rem;font-weight:500;cursor:pointer">Show</button>
-        </div>
-        <div id="cred-result" style="display:none;margin-top:10px;background:var(--surface-2);border-radius:8px;padding:12px 14px">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <div><div style="font-size:0.68rem;color:var(--ink-3);font-weight:600;margin-bottom:2px">USERNAME</div><div id="cr-user" style="font-family:monospace;font-size:0.88rem;font-weight:600;color:var(--ink)"></div></div>
-            <div><div style="font-size:0.68rem;color:var(--ink-3);font-weight:600;margin-bottom:2px">PASSWORD</div><div id="cr-pass" style="font-family:monospace;font-size:0.88rem;font-weight:600;color:var(--ink)"></div></div>
-          </div>
-          <div id="cr-status" style="margin-top:6px;font-size:0.75rem;color:var(--amber)"></div>
-        </div>
-      </div>
+    </div>
+    <p style="text-align:center;margin-top:16px;font-size:0.78rem;color:var(--ink-3)">HR admin? <a style="color:var(--accent);cursor:pointer;font-weight:500" onclick="switchToHR()">Back to HR Dashboard →</a></p>
     </div>
     <p style="text-align:center;margin-top:16px;font-size:0.78rem;color:var(--ink-3)">HR admin? <a style="color:var(--accent);cursor:pointer;font-weight:500" onclick="switchToHR()">Back to HR Dashboard →</a></p>
   </div>
