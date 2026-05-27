@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ConsultTrack — Employee Database</title>
+<title>HUMAC — Employee Management</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -266,7 +266,7 @@ select:focus{outline:none;border-color:var(--accent)}
 <div class="hr-login-screen visible" id="hr-login-screen">
   <div class="hr-login-card">
     <div class="hr-login-brand">
-      <h1>ConsultTrack</h1>
+      <h1>HUMAC</h1>
       <span>HR Dashboard</span>
     </div>
     <h2 class="hr-login-heading">Admin Sign In</h2>
@@ -290,8 +290,8 @@ select:focus{outline:none;border-color:var(--accent)}
 
 <nav class="topnav" id="hr-topnav">
   <div class="topnav-brand">
-    <h1>ConsultTrack</h1>
-    <span>Employee Database</span>
+    <h1>HUMAC</h1>
+    <span>Employee Management</span>
   </div>
   <div class="topnav-nav">
     <a onclick="navigate('dashboard')" id="nav-dashboard" class="active">Dashboard</a>
@@ -378,7 +378,7 @@ select:focus{outline:none;border-color:var(--accent)}
   <div id="portal-login" style="width:100%;max-width:420px">
     <div class="portal-card">
       <div class="portal-logo">
-        <h1>ConsultTrack</h1>
+        <h1>HUMAC</h1>
         <span>Employee Portal</span>
       </div>
       <div style="background:var(--accent-light);border:1px solid rgba(45,74,62,0.2);border-radius:8px;padding:9px 12px;margin-bottom:20px;display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--accent)">
@@ -397,7 +397,7 @@ select:focus{outline:none;border-color:var(--accent)}
         <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
       </div>
       <button class="portal-btn" onclick="doLogin()">Sign In</button>
-      <p class="portal-hint">Need help? Contact <a href="#">hr@acmeconsulting.com</a></p>
+      <p class="portal-hint">Need help? Contact <a href="#">saivikaschowdary@gmail.com</a></p>
       <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
         <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-3);margin-bottom:8px">HR: Look up employee credentials</div>
         <div style="display:flex;gap:8px">
@@ -421,7 +421,7 @@ select:focus{outline:none;border-color:var(--accent)}
   <!-- Step 2: Set new password (first login) -->
   <div id="portal-setpw" style="display:none;width:100%;max-width:420px">
     <div class="portal-card">
-      <div class="portal-logo"><h1>ConsultTrack</h1><span>Employee Portal</span></div>
+      <div class="portal-logo"><h1>HUMAC</h1><span>Employee Portal</span></div>
       <div class="portal-progress">
         <div class="portal-progress-step done"></div>
         <div class="portal-progress-step active"></div>
@@ -452,7 +452,7 @@ select:focus{outline:none;border-color:var(--accent)}
   <!-- Step 3: Complete profile -->
   <div id="portal-profile" style="display:none;width:100%;max-width:560px">
     <div class="portal-card" style="max-width:560px">
-      <div class="portal-logo"><h1>ConsultTrack</h1><span>Employee Portal</span></div>
+      <div class="portal-logo"><h1>HUMAC</h1><span>Employee Portal</span></div>
       <div class="portal-progress">
         <div class="portal-progress-step done"></div>
         <div class="portal-progress-step done"></div>
@@ -485,7 +485,7 @@ select:focus{outline:none;border-color:var(--accent)}
     <!-- Employee nav -->
     <div style="background:var(--ink);border-radius:14px;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
       <div style="display:flex;align-items:baseline;gap:10px">
-        <span style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:#fff;font-weight:400">ConsultTrack</span>
+        <span style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:#fff;font-weight:400">HUMAC</span>
         <span style="font-size:0.68rem;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em">Employee Portal</span>
       </div>
       <div style="display:flex;align-items:center;gap:10px">
@@ -657,7 +657,7 @@ select:focus{outline:none;border-color:var(--accent)}
 
 </div>
 <script>
-let hrEmail='hr@acmeconsulting.com';
+let hrEmail='saivikaschowdary@gmail.com';
 let portalUrl='';
 const employees=[
   {id:1,name:"Arjun Mehta",initials:"AM",title:"Senior Consultant",dept:"Strategy",client:"Goldman Sachs",project:"Digital Transformation",status:"Active",visa:{type:"H-1B",expiry:"2025-11-15",country:"India",startDate:"2022-11-15",lcaDuties:"Lead digital strategy engagements\nConduct client workshops\nDeliver executive presentations"},manager:"Sarah Lee",clientManager:"David Chen",teamLead:"Sarah Lee",joinDate:"2021-03-10",email:"a.mehta@consult.com",phone:"+1 212 555 0101",location:"New York",skills:["Strategy","Finance","Agile"],profileComplete:true},
@@ -1299,7 +1299,7 @@ function saveEvalComment(rid){
 }
 function rSettings(){
   const isHosted=portalUrl.startsWith('http');
-  return`<div class="page-header"><div class="page-header-left"><h2>Settings</h2><p>Configure your ConsultTrack workspace</p></div></div>
+  return`<div class="page-header"><div class="page-header-left"><h2>Settings</h2><p>Configure your HUMAC workspace</p></div></div>
   <div class="page-body"><div class="settings-section">
     <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">Portal Access</div>
     <div class="card card-padded" style="margin-bottom:22px">
@@ -1331,7 +1331,7 @@ function rSettings(){
     </div>
     <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">Company</div>
     <div class="card card-padded" style="margin-bottom:22px"><div class="form-grid">
-      <div class="form-group full"><label>Company Name</label><input value="Acme Consulting Partners"></div>
+      <div class="form-group full"><label>Company Name</label><input value="HUMAC"></div>
       <div class="form-group"><label>Industry</label><input value="Management Consulting"></div>
       <div class="form-group"><label>Headquarters</label><input value="New York, USA"></div>
       <div class="form-group full"><label>HR Email (used as sender for welcome emails)</label><input id="hr-email-input" value="${hrEmail}" oninput="hrEmail=this.value"></div>
@@ -1460,13 +1460,13 @@ function genEmail(emp,creds){
   const isHosted=portalUrl.startsWith('http');
   const loginUrl=isHosted?(portalUrl.replace(/#.*/,'')+'#portal'):null;
   const accessInstructions=isHosted
-    ?`Click the link below to access the ConsultTrack Employee Portal:\n\n  ${loginUrl}\n\nOn the login page, enter your credentials:`
-    :`HR will share the ConsultTrack portal file (ConsultTrack.html) with you. Open it in any browser, then click "Employee Portal" in the top navigation and enter your credentials:`;
+    ?`Click the link below to access the HUMAC Employee Portal:\n\n  ${loginUrl}\n\nOn the login page, enter your credentials:`
+    :`HR will share the HUMAC portal file (consulttrack.html) with you. Open it in any browser, then click "Employee Portal" in the top navigation and enter your credentials:`;
   return `Dear ${firstName},
 
-Welcome to Acme Consulting Partners! We're excited to have you join the ${emp.dept} team as ${emp.title}, reporting to ${emp.manager}.
+Welcome to HUMAC! We're excited to have you join the ${emp.dept} team as ${emp.title}, reporting to ${emp.manager}.
 
-Your ConsultTrack employee portal account is ready. ${accessInstructions}
+Your HUMAC employee portal account is ready. ${accessInstructions}
 
   Username:           ${creds.username}
   Temporary Password: ${creds.tempPassword}
@@ -1482,7 +1482,7 @@ For any login issues, contact us at ${hrEmail}.
 Welcome aboard!
 
 The HR Team
-Acme Consulting Partners`;
+HUMAC`;
 }
 function showEmailComposer(emp){
   const creds=generateCredentials(emp);
@@ -1490,7 +1490,7 @@ function showEmailComposer(emp){
   persistCredentials(emp);
   const body=genEmail(emp,creds);
   const isHosted=portalUrl.startsWith('http');
-  const subject=`Welcome to Acme Consulting Partners — your portal login details`;
+  const subject=`Welcome to HUMAC — your portal login details`;
   const mailto=`mailto:${encodeURIComponent(emp.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   const portalWarning=isHosted?'':`<div style="background:var(--amber-light);border:1px solid rgba(184,114,42,0.2);border-radius:8px;padding:10px 13px;font-size:0.8rem;color:var(--amber);margin-bottom:14px;display:flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>No portal URL configured. <span style="text-decoration:underline;cursor:pointer;font-weight:500" onclick="closeModal();navigate('settings')">Set it in Settings →</span> to include a direct link in this email.</div>`;
   showModal(`<div class="modal-header"><h3>Login Credentials &amp; Welcome Email</h3><button class="btn btn-ghost btn-sm" onclick="closeModal();navigate('employees')">&#x2715;</button></div>
@@ -1534,8 +1534,8 @@ function resetCredentials(empId){
   const creds=generateCredentials(emp);
   emp.credentials=creds;
   persistCredentials(emp);
-  const body='Dear '+emp.name.split(' ')[0]+',\n\nYour ConsultTrack password has been reset by HR. Please use the new temporary credentials below to log in:\n\n  Username:           '+creds.username+'\n  Temporary Password: '+creds.tempPassword+'\n\nTo log in:\n1. Open the ConsultTrack portal\n2. Click "Employee Portal" in the top navigation\n3. Enter your username and the temporary password above\n4. You will be required to set a new password immediately\n\nIf you did not request this reset, contact HR at '+hrEmail+' immediately.\n\nThe HR Team\nAcme Consulting Partners';
-  const subject='ConsultTrack — your password has been reset';
+  const body='Dear '+emp.name.split(' ')[0]+',\n\nYour HUMAC password has been reset by HR. Please use the new temporary credentials below to log in:\n\n  Username:           '+creds.username+'\n  Temporary Password: '+creds.tempPassword+'\n\nTo log in:\n1. Open the HUMAC portal\n2. Click "Employee Portal" in the top navigation\n3. Enter your username and the temporary password above\n4. You will be required to set a new password immediately\n\nIf you did not request this reset, contact HR at '+hrEmail+' immediately.\n\nThe HR Team\nHUMAC';
+  const subject='HUMAC — your password has been reset';
   const mailto='mailto:'+encodeURIComponent(emp.email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
   closeModal();
   showModal('<div class="modal-header"><h3>Reset Credentials</h3><button class="btn btn-ghost btn-sm" onclick="closeModal()">&#x2715;</button></div>'
@@ -2250,7 +2250,7 @@ async function applyUpdate(){
     if(d.success){
       showModal(`<div class="modal-header"><h3>✅ Update Successful</h3><button class="btn btn-ghost btn-sm" onclick="location.reload()">Reload</button></div>
       <div class="modal-body">
-        <p style="font-size:0.84rem;color:var(--ink-2);margin-bottom:12px">ConsultTrack has been updated from GitHub.</p>
+        <p style="font-size:0.84rem;color:var(--ink-2);margin-bottom:12px">HUMAC has been updated from GitHub.</p>
         <div style="background:var(--surface-2);border-radius:8px;padding:12px 14px;font-family:monospace;font-size:0.8rem;white-space:pre-wrap;color:var(--ink-2);max-height:140px;overflow-y:auto">${d.message}</div>
         ${d.backup?`<p style="font-size:0.75rem;color:var(--ink-3);margin-top:10px">Backup saved: ${d.backup.split('/').pop()}</p>`:''}
       </div>
