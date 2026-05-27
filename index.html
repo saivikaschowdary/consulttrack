@@ -808,26 +808,21 @@ function rUsers(){
 function openAddManager(){
   showModal(`<div class="modal-header"><h3>Add Manager</h3><button class="btn btn-ghost btn-sm" onclick="closeModal()">&#x2715;</button></div>
   <div class="modal-body">
-    <p style="font-size:0.83rem;color:var(--ink-3);margin-bottom:18px">Managers get full access to the HR dashboard — employees, reviews, visa tracker, project tracker and settings.</p>
+    <p style="font-size:0.83rem;color:var(--ink-3);margin-bottom:18px">A username and temporary password will be auto-generated and sent to the manager's email. They must set a new password on first login.</p>
     <div class="form-grid">
       <div class="form-group full"><label>Full Name</label><input id="mgr-name" placeholder="e.g. Priya Sharma"></div>
-      <div class="form-group full"><label>Email</label><input id="mgr-email" type="email" placeholder="priya@company.com"></div>
-      <div class="form-group"><label>Username</label><input id="mgr-username" placeholder="e.g. priya.sharma"></div>
-      <div class="form-group"><label>Password</label><input id="mgr-password" placeholder="Min. 6 characters" type="text"></div>
+      <div class="form-group full"><label>Work Email</label><input id="mgr-email" type="email" placeholder="priya@company.com"></div>
+      <div class="form-group"><label>Job Title</label><input id="mgr-title" placeholder="e.g. Senior Manager"></div>
+      <div class="form-group"><label>Department</label><select id="mgr-dept">${['Strategy','Technology','Finance','Operations'].map(d=>`<option>${d}</option>`).join('')}</select></div>
     </div>
   </div>
   <div class="modal-footer">
     <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-    <button class="btn btn-primary" onclick="saveManager(0)">
+    <button class="btn btn-primary" id="mgr-save-btn" onclick="saveManager(0)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M20 6 9 17l-5-5"/></svg>
-      Add Manager
+      Add Manager & Send Email
     </button>
   </div>`);
-  // Auto-fill username from name
-  document.getElementById('mgr-name').addEventListener('input', function(){
-    const parts=this.value.trim().toLowerCase().split(' ');
-    if(parts.length>=2) document.getElementById('mgr-username').value=parts[0]+'.'+parts[parts.length-1];
-  });
 }
 function openEditManager(id){
   const m=managers.find(x=>x.id===id);
@@ -836,10 +831,13 @@ function openEditManager(id){
   <div class="modal-body">
     <div class="form-grid">
       <div class="form-group full"><label>Full Name</label><input id="mgr-name" value="${m.name}"></div>
-      <div class="form-group full"><label>Email</label><input id="mgr-email" type="email" value="${m.email}"></div>
+      <div class="form-group full"><label>Work Email</label><input id="mgr-email" type="email" value="${m.email}"></div>
+      <div class="form-group"><label>Job Title</label><input id="mgr-title" value="${m.title||'Manager'}"></div>
+      <div class="form-group"><label>Department</label><select id="mgr-dept">${['Strategy','Technology','Finance','Operations'].map(d=>`<option ${m.dept===d?'selected':''}>${d}</option>`).join('')}</select></div>
       <div class="form-group"><label>Username</label><input id="mgr-username" value="${m.username}"></div>
-      <div class="form-group"><label>Password</label><input id="mgr-password" value="${m.password}" type="text"></div>
+      <div class="form-group"><label>Reset Password</label><input id="mgr-password" value="${m.userPassword||m.password}" type="text" placeholder="Leave unchanged if needed"></div>
     </div>
+    ${m.mustChange?'<div style="margin-top:12px;font-size:0.8rem;padding:9px 12px;background:var(--amber-light);border-radius:8px;color:var(--amber)">⚠ Manager has not yet changed their temporary password.</div>':''}
   </div>
   <div class="modal-footer">
     <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
@@ -852,26 +850,89 @@ function openEditManager(id){
 function saveManager(id){
   const name=document.getElementById('mgr-name').value.trim();
   const email=document.getElementById('mgr-email').value.trim();
-  const username=document.getElementById('mgr-username').value.trim().toLowerCase();
-  const password=document.getElementById('mgr-password').value.trim();
-  if(!name||!username||!password){ alert('Name, username and password are required.'); return; }
-  if(password.length<6){ alert('Password must be at least 6 characters.'); return; }
+  if(!name||!email){ alert('Name and email are required.'); return; }
+
   if(id){
+    // Edit existing manager
+    const username=document.getElementById('mgr-username').value.trim().toLowerCase();
+    const password=document.getElementById('mgr-password').value.trim();
+    if(!username||!password){ alert('Username and password are required.'); return; }
     const m=managers.find(x=>x.id===id);
-    if(m){ m.name=name; m.email=email; m.username=username; m.password=password; }
+    if(m){
+      const title=document.getElementById('mgr-title')?document.getElementById('mgr-title').value.trim():m.title||'Manager';
+      const dept=document.getElementById('mgr-dept')?document.getElementById('mgr-dept').value:m.dept||'';
+      m.name=name; m.email=email; m.username=username; m.password=password;
+      if(title) m.title=title; if(dept) m.dept=dept;
+    }
+    saveManagersToStorage();
+    closeModal();
+    navigate('team');
   } else {
+    // New manager — auto-generate credentials
+    const title=(document.getElementById('mgr-title')||{value:'Manager'}).value.trim()||'Manager';
+    const dept=(document.getElementById('mgr-dept')||{value:''}).value;
+    const btn=document.getElementById('mgr-save-btn');
+    if(btn){btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Saving...';}
+    const creds=generateCredentials({name, email});
     const newId=Math.max(0,...managers.map(m=>m.id))+1;
-    managers.push({id:newId, name, email, username, password, role:'Manager'});
+    const newMgr={id:newId, name, email, title, dept, username:creds.username, password:creds.tempPassword, mustChange:true, userPassword:'', profileComplete:false, role:'Manager', createdAt:new Date().toISOString().split('T')[0]};
+    managers.push(newMgr);
+    saveManagersToStorage();
+    showManagerEmailComposer(newMgr, creds);
   }
-  saveManagersToStorage();
-  closeModal();
-  navigate('team');
 }
 function removeManager(id){
   if(!confirm('Remove this manager? They will lose access to the HR dashboard.')) return;
   managers=managers.filter(m=>m.id!==id);
   saveManagersToStorage();
   navigate('team');
+}
+function showManagerEmailComposer(mgr, creds){
+  const subject=`Welcome to HUMAC — your HR dashboard login details`;
+  const body=`Dear ${mgr.name.split(' ')[0]},
+
+Welcome to the HUMAC HR team! Your manager account has been created with full access to the HR dashboard.
+
+Your login details:
+
+  Dashboard URL:      http://localhost:3000
+  Username:           ${creds.username}
+  Temporary Password: ${creds.tempPassword}
+
+IMPORTANT: You will be required to set a new password and complete your profile on first login. Please do not share these credentials with anyone.
+
+If you have any issues logging in, contact the admin at ${hrEmail}.
+
+Welcome aboard!
+
+The HUMAC Admin Team`;
+  const mailto=`mailto:${encodeURIComponent(mgr.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  showModal(`<div class="modal-header"><h3>Manager Welcome Email</h3><button class="btn btn-ghost btn-sm" onclick="closeModal();navigate('team')">&#x2715;</button></div>
+  <div class="modal-body">
+    <p style="font-size:0.83rem;color:var(--ink-3);margin-bottom:16px">Manager profile created for <strong style="color:var(--ink)">${mgr.name}</strong>. Send them their login credentials.</p>
+    <div style="background:var(--accent-light);border:1px solid rgba(45,74,62,0.2);border-radius:var(--radius);padding:14px 16px;margin-bottom:14px">
+      <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:10px">Generated Login Details</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><div style="font-size:0.7rem;color:var(--accent);font-weight:600;margin-bottom:3px">USERNAME</div><div style="font-family:monospace;font-size:0.9rem;font-weight:600;color:var(--ink);background:#fff;padding:6px 10px;border-radius:6px;border:1px solid rgba(45,74,62,0.2)">${creds.username}</div></div>
+        <div><div style="font-size:0.7rem;color:var(--accent);font-weight:600;margin-bottom:3px">TEMP PASSWORD</div><div style="font-family:monospace;font-size:0.9rem;font-weight:600;color:var(--ink);background:#fff;padding:6px 10px;border-radius:6px;border:1px solid rgba(45,74,62,0.2)">${creds.tempPassword}</div></div>
+      </div>
+      <div style="margin-top:8px;font-size:0.75rem;color:var(--accent);display:flex;align-items:center;gap:5px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Manager must set a new password on first login.</div>
+    </div>
+    <div class="email-meta">
+      <div class="email-meta-row"><label>From:</label><span>${hrEmail}</span></div>
+      <div class="email-meta-row"><label>To:</label><span>${mgr.email}</span></div>
+      <div class="email-meta-row"><label>Subject:</label><span>${subject}</span></div>
+    </div>
+    <div class="email-body-preview">${body}</div>
+    <div id="mgr-sent-confirm"></div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-ghost" onclick="closeModal();navigate('team')">Skip</button>
+    <a class="btn btn-green" href="${mailto}" onclick="setTimeout(()=>{const c=document.getElementById('mgr-sent-confirm');if(c)c.innerHTML='<div class=\\'success-banner\\'><svg viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'2\\'><path d=\\'M22 11.08V12a10 10 0 1 1-5.93-9.14\\'/><polyline points=\\'22 4 12 14.01 9 11.01\\'/></svg>Email client opened. Manager can now log in at localhost:3000.</div>'},600)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      Send Login Details
+    </a>
+  </div>`);
 }
 function removeEmployee(id){
   if(!confirm('Remove this employee from the system?')) return;
@@ -2133,17 +2194,31 @@ function doHRLogin(){
 
   // Check admin credentials
   const isAdmin = (u === hrAdminCredentials.username.toLowerCase() && p === hrAdminCredentials.password);
-  // Check manager credentials
-  const managerMatch = managers.find(m => m.username.toLowerCase() === u && m.password === p);
+  // Check manager credentials — match temp password or set password
+  const managerMatch = managers.find(m =>
+    m.username.toLowerCase() === u &&
+    (p === m.password || p === (m.userPassword||''))
+  );
 
   if(isAdmin || managerMatch){
     hrLoggedIn = true;
-    hrCurrentUser = isAdmin ? {name:'Admin', role:'admin'} : {name: managerMatch.name, role:'manager', id: managerMatch.id};
+    hrCurrentUser = isAdmin
+      ? {name:'Admin', role:'admin'}
+      : {name: managerMatch.name, role:'manager', id: managerMatch.id};
+    const lbl = document.getElementById('hr-user-label');
+    if(lbl) lbl.textContent = hrCurrentUser.name;
+
+    // Manager first login — must change password and complete profile
+    if(managerMatch && managerMatch.mustChange && !managerMatch.userPassword){
+      document.getElementById('hr-login-screen').classList.remove('visible');
+      showManagerFirstLogin(managerMatch);
+      return;
+    }
+
+    // Normal login
     document.getElementById('hr-login-screen').classList.remove('visible');
     document.getElementById('hr-topnav').style.display='flex';
     document.querySelector('.layout').style.display='flex';
-    const lbl = document.getElementById('hr-user-label');
-    if(lbl) lbl.textContent = hrCurrentUser.name;
     navigate('dashboard');
   } else {
     err.textContent='Incorrect username or password. Default admin: admin / admin123';
@@ -2153,6 +2228,56 @@ function doHRLogin(){
   }
 }
 
+function showManagerFirstLogin(mgr){
+  // Show the portal shell but customised for manager first-login
+  document.getElementById('portal-shell').classList.add('visible');
+  // Step 1: Set password
+  showPortalStep('portal-setpw');
+  // Override the set password button action to handle manager
+  window._mgrFirstLogin = mgr;
+}
+// Override doSetPassword to handle both employee and manager
+const _origDoSetPassword = typeof doSetPassword === 'function' ? doSetPassword : null;
+function doSetPassword(){
+  const pw = document.getElementById('new-pw').value;
+  const cpw = document.getElementById('confirm-pw').value;
+  const errEl = document.getElementById('pw-error');
+  errEl.classList.remove('visible');
+  const rules={len:pw.length>=8,upper:/[A-Z]/.test(pw),num:/[0-9]/.test(pw),special:/[!@#$%^&*]/.test(pw)};
+  if(!Object.values(rules).every(Boolean)){errEl.textContent='Password does not meet all requirements.';errEl.classList.add('visible');return;}
+  if(pw!==cpw){errEl.textContent='Passwords do not match. Please try again.';errEl.classList.add('visible');return;}
+
+  if(window._mgrFirstLogin){
+    // Manager first login
+    const mgr = managers.find(m=>m.id===window._mgrFirstLogin.id);
+    if(mgr){mgr.userPassword=pw;mgr.mustChange=false;mgr.password=pw;saveManagersToStorage();}
+    // Go to manager profile completion
+    showManagerProfileStep(mgr);
+  } else {
+    // Regular employee
+    portalUser.credentials.userPassword=pw;
+    portalUser.credentials.mustChange=false;
+    portalUser.credentials.tempPassword='[changed]';
+    persistCredentials(portalUser);
+    showPortalStep('portal-profile');
+    prefillProfile(portalUser);
+  }
+}
+function showManagerProfileStep(mgr){
+  // Use the same portal-profile step but for manager
+  showPortalStep('portal-profile');
+  // Pre-fill known fields
+  setTimeout(()=>{
+    if(mgr.profile){
+      const p=mgr.profile;
+      if(p.nickname) document.getElementById('pp-nickname').value=p.nickname;
+      if(p.bio) document.getElementById('pp-bio').value=p.bio;
+      if(p.ecname) document.getElementById('pp-ecname').value=p.ecname;
+      if(p.ecrel) document.getElementById('pp-ecrel').value=p.ecrel;
+      if(p.ecphone) document.getElementById('pp-ecphone').value=p.ecphone;
+    }
+  },50);
+}
 function hrLogout(showLogin=true){
   hrLoggedIn = false;
   document.getElementById('hr-topnav').style.display='none';
