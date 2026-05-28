@@ -353,10 +353,14 @@ select:focus{outline:none;border-color:var(--accent)}
     <div id="update-badge" style="display:none">
       <button onclick="applyUpdate()" style="padding:5px 12px;border-radius:6px;border:1px solid #f59e0b;background:#fef3c7;color:#92400e;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px">⚡ Update available</button>
     </div>
-    <button class="btn btn-white btn-sm" onclick="switchToPortal()" title="Switch to Employee Portal view">
+    <a href="#manager" class="btn btn-white btn-sm" style="text-decoration:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Manager Portal ↗
+    </a>
+    <a href="#portal" class="btn btn-white btn-sm" style="text-decoration:none">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      Employee Portal
-    </button>
+      Employee Portal ↗
+    </a>
     <button class="btn btn-white btn-sm" onclick="navigate('employees')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       Search
@@ -1541,6 +1545,17 @@ function rSettings(){
       <div id="admin-pw-msg" style="display:none;margin-top:10px;font-size:0.81rem;border-radius:8px;padding:9px 12px"></div>
       <div style="margin-top:16px;display:flex;justify-content:flex-end"><button class="btn btn-primary btn-sm" onclick="saveAdminCredentials()">Update Credentials</button></div>
     </div>
+    <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">Admin Accounts</div>
+    <div class="card" style="margin-bottom:22px">
+      ${adminAccounts.map((a,i)=>`<div style="padding:12px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+        <div class="emp-cell">${mkAv(a.name.split(' ').map(w=>w[0]).join(''),i)}<div><span class="emp-cell-name">${a.name}</span><span class="emp-cell-sub">Username: <span style="font-family:monospace">${a.username}</span></span></div></div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="badge badge-ink">Admin</span>
+          ${a.username!==hrAdminCredentials.username?`<button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:rgba(163,48,48,0.2);font-size:0.75rem" onclick="removeAdminAccount('${a.username}')">Remove</button>`:'<span style="font-size:0.73rem;color:var(--ink-3)">Primary</span>'}
+        </div>
+      </div>`).join('')}
+      <div style="padding:12px 18px"><button class="btn btn-ghost btn-sm" onclick="openAddAdmin()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>Add Admin Account</button></div>
+    </div>
     <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-3);margin-bottom:12px">Company</div>
     <div class="card card-padded" style="margin-bottom:22px"><div class="form-grid">
       <div class="form-group full"><label>Company Name</label><input value="HUMAC"></div>
@@ -2328,6 +2343,56 @@ function persistEmployee(emp){
   } catch(e){}
 }
 // ── HR Admin Credentials ──────────────────────────────────────
+// ── Admin Accounts (multiple admins support) ──────────────────
+let adminAccounts = (()=>{
+  try {
+    const stored = JSON.parse(localStorage.getItem('ct_admin_accounts'));
+    if(stored && stored.length) return stored;
+  } catch(e){}
+  return [{name:'Admin', username:'admin', password:'admin123'}];
+})();
+function saveAdminAccounts(){
+  try{ localStorage.setItem('ct_admin_accounts', JSON.stringify(adminAccounts)); } catch(e){}
+}
+function openAddAdmin(){
+  showModal(`<div class="modal-header"><h3>Add Admin Account</h3><button class="btn btn-ghost btn-sm" onclick="closeModal()">&#x2715;</button></div>
+  <div class="modal-body">
+    <p style="font-size:0.83rem;color:var(--ink-3);margin-bottom:16px">Admin accounts have full access to the HR dashboard including settings and manager management.</p>
+    <div class="form-grid">
+      <div class="form-group full"><label>Full Name</label><input id="new-admin-name" placeholder="e.g. Jane Smith"></div>
+      <div class="form-group"><label>Username</label><input id="new-admin-username" placeholder="e.g. jane.smith" oninput="this.value=this.value.toLowerCase()"></div>
+      <div class="form-group"><label>Password</label><input type="text" id="new-admin-password" placeholder="Min. 6 characters"></div>
+    </div>
+    <div id="new-admin-msg" style="display:none;margin-top:10px;font-size:0.81rem;border-radius:8px;padding:9px 12px"></div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-primary" onclick="saveNewAdmin()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M20 6 9 17l-5-5"/></svg>
+      Add Admin
+    </button>
+  </div>`);
+}
+function saveNewAdmin(){
+  const name=document.getElementById('new-admin-name').value.trim();
+  const username=document.getElementById('new-admin-username').value.trim().toLowerCase();
+  const password=document.getElementById('new-admin-password').value.trim();
+  const msg=document.getElementById('new-admin-msg');
+  const showMsg=(t,ok)=>{ msg.textContent=t; msg.style.cssText=`display:block;font-size:0.81rem;border-radius:8px;padding:9px 12px;background:${ok?'var(--accent-light)':'var(--red-light)'};color:${ok?'var(--accent)':'var(--red)'}`; };
+  if(!name||!username||!password){ showMsg('All fields are required.',false); return; }
+  if(password.length<6){ showMsg('Password must be at least 6 characters.',false); return; }
+  if(adminAccounts.find(a=>a.username===username)){ showMsg('Username already exists.',false); return; }
+  adminAccounts.push({name, username, password});
+  saveAdminAccounts();
+  closeModal();
+  navigate('settings');
+}
+function removeAdminAccount(username){
+  if(!confirm(`Remove admin account "${username}"? This cannot be undone.`)) return;
+  adminAccounts=adminAccounts.filter(a=>a.username!==username);
+  saveAdminAccounts();
+  navigate('settings');
+}
 const DEFAULT_ADMIN = {username:'admin', password:'admin123'};
 let hrAdminCredentials = (()=>{
   try { return JSON.parse(localStorage.getItem('ct_admin_creds')) || {...DEFAULT_ADMIN}; }
@@ -2399,7 +2464,7 @@ function applyRoleUI(){
   });
   // Show role badge in topnav
   const lbl=document.getElementById('hr-user-label');
-  if(lbl) lbl.textContent=hrCurrentUser.name+(isAdmin()?' (Admin)':'');
+  if(lbl) lbl.textContent=hrCurrentUser.name;
 }
 function doHRLogin(){
   const u=document.getElementById('hr-username').value.trim().toLowerCase();
@@ -2408,15 +2473,15 @@ function doHRLogin(){
   err.classList.remove('visible');
   if(!u||!p){err.textContent='Please enter both username and password.';err.classList.add('visible');return;}
 
-  const isAdminUser=(u===hrAdminCredentials.username.toLowerCase()&&p===hrAdminCredentials.password);
+  const isAdminUser = adminAccounts.find(a=>a.username.toLowerCase()===u && a.password===p);
   if(isAdminUser){
     hrLoggedIn=true;
-    hrCurrentUser={name:'Admin',role:'admin'};
+    hrCurrentUser={name:isAdminUser.name,role:'admin'};
     document.getElementById('hr-login-screen').classList.remove('visible');
     document.getElementById('hr-topnav').style.display='flex';
     document.querySelector('.layout').style.display='flex';
     const lbl=document.getElementById('hr-user-label');
-    if(lbl) lbl.textContent='Admin';
+    if(lbl) lbl.textContent=isAdminUser.name;
     applyRoleUI();
     navigate('dashboard');
   } else {
@@ -2562,6 +2627,9 @@ function saveAdminCredentials(){
   hrAdminCredentials.username = newUser;
   if(newPw) hrAdminCredentials.password = newPw;
   try{ localStorage.setItem('ct_admin_creds', JSON.stringify(hrAdminCredentials)); } catch(e){}
+  // Sync to adminAccounts
+  const primary = adminAccounts.find(a=>a.username===hrAdminCredentials.username)||adminAccounts[0];
+  if(primary){ primary.username=newUser; if(newPw) primary.password=newPw; saveAdminAccounts(); }
   showMsg('✓ Credentials updated. You will need to use the new credentials next time you log in.', true);
   document.getElementById('admin-current-pw').value='';
   document.getElementById('admin-new-pw').value='';
