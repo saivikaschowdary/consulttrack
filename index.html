@@ -327,10 +327,6 @@ select:focus{outline:none;border-color:var(--accent)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       Search
     </button>
-    <button class="btn btn-primary btn-sm" onclick="openAddEmployee()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>
-      Add Employee
-    </button>
     <button class="btn btn-ghost btn-sm" onclick="hrLogout(true)" title="Sign out" style="color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.15)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
       <span id="hr-user-label">Admin</span> · Sign Out
@@ -776,7 +772,7 @@ function saveManagersToStorage(){
 }
 function rUsers(){
   return`<div class="page-header"><div class="page-header-left"><h2>User Management</h2><p>Add and manage employee and manager accounts</p></div>
-  <button class="btn btn-primary btn-sm" onclick="openInvite()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>+ Add User</button></div>
+  <button class="btn btn-primary btn-sm" onclick="openAddEmployee()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>Add Employee</button></div>
   <div class="page-body">
     <div class="card" style="margin-bottom:20px">
       <div style="padding:16px 20px;border-bottom:1px solid var(--border);font-weight:600;font-size:0.9rem">Employees (${employees.length})</div>
@@ -1090,7 +1086,7 @@ function rDash(){
     const avg=(Object.values(r.scores).reduce((a,b)=>a+b,0)/4).toFixed(1);
     return`<tr><td><div class="emp-cell">${mkAv(emp.initials,emp.id)}<div><span class="emp-cell-name">${emp.name}</span><span class="emp-cell-sub">${emp.dept}</span></div></div></td><td><span class="badge badge-ink">${r.period}</span></td><td>${r.date}</td><td><strong>${avg}/5</strong></td><td>${r.status==='Approved'?'<span class="badge badge-green">Approved</span>':'<span class="badge badge-amber">Pending</span>'}</td></tr>`;
   }).join('');
-  return`<div class="page-header"><div class="page-header-left"><h2>Overview</h2><p>Consulting workforce at a glance</p></div><button class="btn btn-primary btn-sm" onclick="openAddEmployee()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>Add Employee</button></div>
+  return`<div class="page-header"><div class="page-header-left"><h2>Overview</h2><p>Consulting workforce at a glance</p></div></div>
   <div class="page-body">
     <div class="metric-grid">
       <div class="metric-card mc-green" onclick="showMetricModal('all')"><div class="metric-label">Total Employees</div><div class="metric-val">${employees.length}</div><div class="metric-sub">All departments</div><div style="font-size:0.7rem;color:var(--ink-3);margin-top:6px">Click to view all →</div></div>
@@ -1121,7 +1117,7 @@ function rEmp(filter='',dept='All'){
   let list=employees;
   if(filter)list=list.filter(e=>e.name.toLowerCase().includes(filter.toLowerCase())||e.client.toLowerCase().includes(filter.toLowerCase())||e.project.toLowerCase().includes(filter.toLowerCase()));
   if(dept!=='All')list=list.filter(e=>e.dept===dept);
-  return`<div class="page-header"><div class="page-header-left"><h2>Employees</h2><p>${employees.length} total · ${employees.filter(e=>e.status==='Active').length} active</p></div><button class="btn btn-primary btn-sm" onclick="openAddEmployee()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>Add Employee</button></div>
+  return`<div class="page-header"><div class="page-header-left"><h2>Employees</h2><p>${employees.length} total · ${employees.filter(e=>e.status==='Active').length} active</p></div></div>
   <div class="page-body">
     <div class="toolbar">
       <div class="search-wrap"><svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input id="emp-search" placeholder="Search name, client, project..." value="${filter}" oninput="femp(this.value)"></div>
