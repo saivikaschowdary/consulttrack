@@ -968,6 +968,10 @@ function showMetricModal(type){
     title='All Employees';
     list=employees.map((e,i)=>({e,i,extra:''}));
     cols='Employee,Department,Title,Client,Status,Visa';
+  } else if(type==='bench'){
+    title='Employees on Bench';
+    list=employees.filter(e=>e.status==='Bench').map((e,i)=>({e,i}));
+    cols='Employee,Department,Title,Last Project,Last Client,Visa';
   } else if(type==='active'){
     title='Active on Projects';
     list=employees.filter(e=>e.status==='Active').map((e,i)=>({e,i,extra:e.project||'—'}));
@@ -998,6 +1002,13 @@ function showMetricModal(type){
       cells=`<td><div class="emp-cell">${mkAv(e.initials,i)}<div><span class="emp-cell-name">${e.name}</span><span class="emp-cell-sub">${e.email}</span></div></div></td>
         <td>${e.dept||'—'}</td><td>${e.title||'—'}</td><td>${e.client||'—'}</td>
         <td>${sBadge(e.status)}</td><td>${vBadge(e.visa)}</td>`;
+    } else if(type==='bench'){
+      cells=`<td><div class="emp-cell">${mkAv(e.initials,i)}<div><span class="emp-cell-name">${e.name}</span><span class="emp-cell-sub">${e.email}</span></div></div></td>
+        <td>${e.dept||'—'}</td>
+        <td>${e.title||'—'}</td>
+        <td style="color:var(--ink-3)">${e.project||'—'}</td>
+        <td style="color:var(--ink-3)">${e.client||'—'}</td>
+        <td>${vBadge(e.visa)}</td>`;
     } else if(type==='active'){
       cells=`<td><div class="emp-cell">${mkAv(e.initials,i)}<div><span class="emp-cell-name">${e.name}</span><span class="emp-cell-sub">${e.dept}</span></div></div></td>
         <td>${e.dept||'—'}</td><td>${e.client||'—'}</td>
@@ -1072,7 +1083,7 @@ function rDash(){
   <div class="page-body">
     <div class="metric-grid">
       <div class="metric-card mc-green" onclick="showMetricModal('all')"><div class="metric-label">Total Employees</div><div class="metric-val">${employees.length}</div><div class="metric-sub">All departments</div><div style="font-size:0.7rem;color:var(--ink-3);margin-top:6px">Click to view all →</div></div>
-      <div class="metric-card mc-blue" onclick="showMetricModal('active')"><div class="metric-label">Active on Projects</div><div class="metric-val cv-blue">${active}</div><div class="metric-sub">${bench} on bench</div><div style="font-size:0.7rem;color:var(--ink-3);margin-top:6px">Click to view →</div></div>
+      <div class="metric-card mc-blue" onclick="showMetricModal('bench')"><div class="metric-label">On Bench</div><div class="metric-val cv-blue">${bench}</div><div class="metric-sub">${active} active on projects</div><div style="font-size:0.7rem;color:var(--ink-3);margin-top:6px">Click to view →</div></div>
       <div class="metric-card mc-red" onclick="showMetricModal('visa')"><div class="metric-label">Visa Expiring</div><div class="metric-val cv-red">${exp}</div><div class="metric-sub">Within 90 days</div><div style="font-size:0.7rem;color:var(--ink-3);margin-top:6px">Click to view →</div></div>
       <div class="metric-card mc-amber" onclick="showMetricModal('projects')"><div class="metric-label">Projects Ending Soon</div><div class="metric-val cv-amber">${projEndingSoon.length}</div><div class="metric-sub">${projOverdue.length>0?projOverdue.length+' overdue · ':''}Within 60 days</div><div style="font-size:0.7rem;color:var(--ink-3);margin-top:6px">Click to view →</div></div>
     </div>
