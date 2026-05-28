@@ -72,7 +72,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--ink)
 .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
 .card-padded{padding:20px 22px}
 .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
-.metric-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;position:relative;overflow:hidden}
+.metric-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;position:relative;overflow:hidden;cursor:pointer;transition:box-shadow 0.15s,transform 0.1s}
+.metric-card:hover{box-shadow:0 4px 20px rgba(15,14,12,0.1);transform:translateY(-1px)}
 .metric-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .metric-card.mc-green::before{background:var(--accent)}
 .metric-card.mc-amber::before{background:var(--amber)}
@@ -959,6 +960,92 @@ function sendInvite(){
   closeModal();
   showEmailComposer(newEmp);
 }
+function showMetricModal(type){
+  const today=new Date();
+  let title='', list=[], cols='';
+
+  if(type==='all'){
+    title='All Employees';
+    list=employees.map((e,i)=>({e,i,extra:''}));
+    cols='Employee,Department,Title,Client,Status,Visa';
+  } else if(type==='active'){
+    title='Active on Projects';
+    list=employees.filter(e=>e.status==='Active').map((e,i)=>({e,i,extra:e.project||'—'}));
+    cols='Employee,Department,Client,Project,Status,Project End';
+  } else if(type==='visa'){
+    title='Visa Expiring Within 90 Days';
+    list=employees.filter(e=>{
+      if(e.visa.expiry==='N/A'||!e.visa.expiry)return false;
+      return Math.ceil((new Date(e.visa.expiry)-today)/86400000)<90;
+    }).map((e,i)=>({e,i,days:Math.ceil((new Date(e.visa.expiry)-today)/86400000)}))
+      .sort((a,b)=>a.days-b.days);
+    cols='Employee,Visa Type,Country,Expiry Date,Days Left,Action';
+  } else if(type==='projects'){
+    title='Projects Ending Within 60 Days';
+    list=employees.filter(e=>{
+      if(!e.projectEnd)return false;
+      const d=Math.ceil((new Date(e.projectEnd)-today)/86400000);
+      return d<=60;
+    }).map((e,i)=>({e,i,days:Math.ceil((new Date(e.projectEnd)-today)/86400000)}))
+      .sort((a,b)=>a.days-b.days);
+    cols='Employee,Project,Client,End Date,Days Left,Status';
+  }
+
+  const fields=cols.split(',');
+  const rows=list.map(({e,i,days,extra})=>{
+    let cells='';
+    if(type==='all'){
+      cells=`<td><div class="emp-cell">${mkAv(e.initials,i)}<div><span class="emp-cell-name">${e.name}</span><span class="emp-cell-sub">${e.email}</span></div></div></td>
+        <td>${e.dept||'—'}</td><td>${e.title||'—'}</td><td>${e.client||'—'}</td>
+        <td>${sBadge(e.status)}</td><td>${vBadge(e.visa)}</td>`;
+    } else if(type==='active'){
+      cells=`<td><div class="emp-cell">${mkAv(e.initials,i)}<div><span class="emp-cell-name">${e.name}</span><span class="emp-cell-sub">${e.dept}</span></div></div></td>
+        <td>${e.dept||'—'}</td><td>${e.client||'—'}</td>
+        <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.project||'—'}</td>
+        <td>${sBadge(e.status)}</td>
+        <td style="color:${e.projectEnd&&new Date(e.projectEnd)<today?'var(--red)':'var(--ink)'}">${e.projectEnd||'—'}</td>`;
+    } else if(type==='visa'){
+      const urgent=days<0,warn=days<30;
+      cells=`<td><div class="emp-cell">${mkAv(e.initials,i)}<div><span class="emp-cell-name">${e.name}</span><span class="emp-cell-sub">${e.email}</span></div></div></td>
+        <td><span class="badge badge-gray">${e.visa.type}</span></td>
+        <td>${e.visa.country||'—'}</td>
+        <td style="font-weight:600;color:${urgent?'var(--red)':warn?'var(--amber)':'var(--ink)'}">${e.visa.expiry}</td>
+        <td style="font-weight:700;color:${urgent?'var(--red)':warn?'var(--amber)':'var(--ink)'}">${days<0?'Expired':`${days}d`}</td>
+        <td>${days<0?'<span class="badge badge-red">Expired</span>':days<30?'<span class="badge badge-red">Urgent</span>':days<60?'<span class="badge badge-amber">Soon</span>':'<span class="badge badge-amber">Renew</span>'}</td>`;
+    } else if(type==='projects'){
+      const overdue=days<0;
+      cells=`<td><div class="emp-cell">${mkAv(e.initials,i)}<div><span class="emp-cell-name">${e.name}</span><span class="emp-cell-sub">${e.dept}</span></div></div></td>
+        <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500">${e.project||'—'}</td>
+        <td>${e.client||'—'}</td>
+        <td style="font-weight:600;color:${overdue?'var(--red)':'var(--amber)'}">${e.projectEnd}</td>
+        <td style="font-weight:700;color:${overdue?'var(--red)':'var(--amber)'}">${overdue?`${Math.abs(days)}d overdue`:`${days}d left`}</td>
+        <td>${overdue?'<span class="badge badge-red">Overdue</span>':'<span class="badge badge-amber">Ending soon</span>'}</td>`;
+    }
+    return`<tr onclick="closeModal();viewEmp(${e.id})" style="cursor:pointer">${cells}</tr>`;
+  }).join('');
+
+  const emptyMsg=list.length===0?`<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--ink-3)">No employees in this category.</td></tr>`:'';
+
+  showModal(`<div class="modal-header">
+    <h3>${title} <span style="font-size:0.8rem;font-weight:400;color:var(--ink-3)">(${list.length})</span></h3>
+    <button class="btn btn-ghost btn-sm" onclick="closeModal()">&#x2715;</button>
+  </div>
+  <div class="modal-body" style="padding:0">
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:0.83rem">
+        <thead><tr>${fields.map(f=>`<th style="text-align:left;padding:10px 16px;font-size:0.68rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);background:var(--surface-2);border-bottom:1px solid var(--border);white-space:nowrap">${f}</th>`).join('')}</tr></thead>
+        <tbody>${rows||emptyMsg}</tbody>
+      </table>
+    </div>
+    <div style="padding:10px 16px;font-size:0.76rem;color:var(--ink-3);border-top:1px solid var(--border);background:var(--surface)">Click any row to view full employee profile</div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-ghost" onclick="closeModal()">Close</button>
+    <button class="btn btn-primary" onclick="closeModal();navigate('${type==='visa'?'visas':type==='projects'?'projects':'employees'}')">
+      View Full ${type==='visa'?'Visa Tracker':type==='projects'?'Project Tracker':'Employee List'} →
+    </button>
+  </div>`);
+}
 function rDash(){
   const active=employees.filter(e=>e.status==='Active').length;
   const bench=employees.filter(e=>e.status==='Bench').length;
@@ -984,10 +1071,10 @@ function rDash(){
   return`<div class="page-header"><div class="page-header-left"><h2>Overview</h2><p>Consulting workforce at a glance</p></div><button class="btn btn-primary btn-sm" onclick="openAddEmployee()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><path d="M12 5v14M5 12h14"/></svg>Add Employee</button></div>
   <div class="page-body">
     <div class="metric-grid">
-      <div class="metric-card mc-green"><div class="metric-label">Total Employees</div><div class="metric-val">${employees.length}</div><div class="metric-sub">All departments</div></div>
-      <div class="metric-card mc-blue"><div class="metric-label">Active on Projects</div><div class="metric-val cv-blue">${active}</div><div class="metric-sub">${bench} on bench</div></div>
-      <div class="metric-card mc-red"><div class="metric-label">Visa Expiring</div><div class="metric-val cv-red">${exp}</div><div class="metric-sub">Within 90 days</div></div>
-      <div class="metric-card mc-amber"><div class="metric-label">Projects Ending Soon</div><div class="metric-val cv-amber">${projEndingSoon.length}</div><div class="metric-sub">${projOverdue.length>0?projOverdue.length+' overdue · ':''}Within 60 days</div></div>
+      <div class="metric-card mc-green" onclick="showMetricModal('all')"><div class="metric-label">Total Employees</div><div class="metric-val">${employees.length}</div><div class="metric-sub">All departments</div><div style="font-size:0.7rem;color:var(--ink-3);margin-top:6px">Click to view all →</div></div>
+      <div class="metric-card mc-blue" onclick="showMetricModal('active')"><div class="metric-label">Active on Projects</div><div class="metric-val cv-blue">${active}</div><div class="metric-sub">${bench} on bench</div><div style="font-size:0.7rem;color:var(--ink-3);margin-top:6px">Click to view →</div></div>
+      <div class="metric-card mc-red" onclick="showMetricModal('visa')"><div class="metric-label">Visa Expiring</div><div class="metric-val cv-red">${exp}</div><div class="metric-sub">Within 90 days</div><div style="font-size:0.7rem;color:var(--ink-3);margin-top:6px">Click to view →</div></div>
+      <div class="metric-card mc-amber" onclick="showMetricModal('projects')"><div class="metric-label">Projects Ending Soon</div><div class="metric-val cv-amber">${projEndingSoon.length}</div><div class="metric-sub">${projOverdue.length>0?projOverdue.length+' overdue · ':''}Within 60 days</div><div style="font-size:0.7rem;color:var(--ink-3);margin-top:6px">Click to view →</div></div>
     </div>
     ${exp>0?`<div class="alert alert-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span><strong>Visa Alert:</strong> ${exp} employee visa(s) expiring within 90 days. <a onclick="navigate('visas')">Review now →</a></span></div>`:''}
     ${projOverdue.length>0?`<div class="alert alert-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span><strong>Project Overdue:</strong> ${projOverdue.map(e=>`<strong>${e.name}</strong> (${e.project}, ended ${e.projectEnd})`).join(', ')}. Please update their assignment.</span></div>`:``}
