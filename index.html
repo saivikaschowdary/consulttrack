@@ -1537,7 +1537,7 @@ function rSettings(){
     <div class="card card-padded" style="margin-bottom:22px">
       <p style="font-size:0.82rem;color:var(--ink-3);margin-bottom:16px;line-height:1.5">Change the username and password used to access the HR dashboard. You will need to log in again after saving.</p>
       <div class="form-grid">
-        <div class="form-group"><label>Admin Username</label><input id="admin-username-input" value="${hrAdminCredentials.username}" placeholder="admin"></div>
+        <div class="form-group"><label>Admin Username</label><input id="admin-username-input" value="${(adminAccounts.find(a=>a.name===hrCurrentUser.name)||adminAccounts[0]).username}" placeholder="admin"></div>
         <div class="form-group"><label>Current Password</label><input type="password" id="admin-current-pw" placeholder="Enter current password"></div>
         <div class="form-group"><label>New Password</label><input type="password" id="admin-new-pw" placeholder="Min. 6 characters"></div>
         <div class="form-group"><label>Confirm New Password</label><input type="password" id="admin-confirm-pw" placeholder="Re-enter new password"></div>
@@ -2348,6 +2348,11 @@ let adminAccounts = (()=>{
   try {
     const stored = JSON.parse(localStorage.getItem('ct_admin_accounts'));
     if(stored && stored.length) return stored;
+    // First run — seed from existing saved admin credentials
+    const existing = JSON.parse(localStorage.getItem('ct_admin_creds'));
+    if(existing && existing.username){
+      return [{name:'Admin', username:existing.username, password:existing.password}];
+    }
   } catch(e){}
   return [{name:'Admin', username:'admin', password:'admin123'}];
 })();
@@ -2620,17 +2625,32 @@ function saveAdminCredentials(){
 
   if(!newUser){ showMsg('Username cannot be empty.', false); return; }
   if(!currentPw){ showMsg('Please enter your current password to confirm changes.', false); return; }
-  if(currentPw !== hrAdminCredentials.password){ showMsg('Current password is incorrect.', false); return; }
+
+  // Find current logged-in admin account to validate password
+  const currentAdmin = adminAccounts.find(a => a.username.toLowerCase() === hrCurrentUser.name.toLowerCase())
+    || adminAccounts.find(a => a.name === hrCurrentUser.name)
+    || adminAccounts[0];
+
+  if(currentPw !== currentAdmin.password){
+    showMsg('Current password is incorrect.', false); return;
+  }
   if(newPw && newPw.length < 6){ showMsg('New password must be at least 6 characters.', false); return; }
   if(newPw && newPw !== confirmPw){ showMsg('New passwords do not match.', false); return; }
 
-  hrAdminCredentials.username = newUser;
-  if(newPw) hrAdminCredentials.password = newPw;
-  try{ localStorage.setItem('ct_admin_creds', JSON.stringify(hrAdminCredentials)); } catch(e){}
-  // Sync to adminAccounts
-  const primary = adminAccounts.find(a=>a.username===hrAdminCredentials.username)||adminAccounts[0];
-  if(primary){ primary.username=newUser; if(newPw) primary.password=newPw; saveAdminAccounts(); }
-  showMsg('✓ Credentials updated. You will need to use the new credentials next time you log in.', true);
+  // Update the current admin's record in adminAccounts
+  currentAdmin.username = newUser;
+  currentAdmin.name = hrCurrentUser.name;
+  if(newPw) currentAdmin.password = newPw;
+  saveAdminAccounts();
+
+  // Also keep hrAdminCredentials in sync if this is the primary admin
+  if(adminAccounts.indexOf(currentAdmin) === 0){
+    hrAdminCredentials.username = newUser;
+    if(newPw) hrAdminCredentials.password = newPw;
+    try{ localStorage.setItem('ct_admin_creds', JSON.stringify(hrAdminCredentials)); } catch(e){}
+  }
+
+  showMsg('✓ Credentials updated. Use the new credentials next time you log in.', true);
   document.getElementById('admin-current-pw').value='';
   document.getElementById('admin-new-pw').value='';
   document.getElementById('admin-confirm-pw').value='';
