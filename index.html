@@ -2330,6 +2330,8 @@ function doHRLogin(){
     m.username.toLowerCase() === u &&
     (p === m.password || p === (m.userPassword||''))
   );
+  // Check if manager logged in using temp password (needs to change it)
+  const managerUsedTempPw = managerMatch && p === m.password && !managerMatch.userPassword;
 
   if(isAdmin || managerMatch){
     hrLoggedIn = true;
@@ -2340,8 +2342,9 @@ function doHRLogin(){
     if(lbl) lbl.textContent = hrCurrentUser.name;
     applyRoleUI();
 
-    // Manager first login — must change password and complete profile
-    if(managerMatch && managerMatch.mustChange && !managerMatch.userPassword){
+    // Manager first login — force password change if using temp password
+    const usedTempPw = managerMatch && p === managerMatch.password && !managerMatch.userPassword;
+    if(usedTempPw || (managerMatch && managerMatch.mustChange && !managerMatch.userPassword)){
       document.getElementById('hr-login-screen').classList.remove('visible');
       showManagerFirstLogin(managerMatch);
       return;
@@ -2382,7 +2385,12 @@ function doSetPassword(){
   if(window._mgrFirstLogin){
     // Manager first login
     const mgr = managers.find(m=>m.id===window._mgrFirstLogin.id);
-    if(mgr){mgr.userPassword=pw;mgr.mustChange=false;mgr.password=pw;saveManagersToStorage();}
+    if(mgr){
+      mgr.userPassword=pw;
+      mgr.mustChange=false;
+      // Keep old temp password separate, new password is userPassword
+      saveManagersToStorage();
+    }
     // Go to manager profile completion
     showManagerProfileStep(mgr);
   } else {
@@ -2488,6 +2496,10 @@ function saveAdminCredentials(){
 
 loadPersistedCredentials();
 loadReviewsFromStorage();
+
+// Ensure all managers without a userPassword are flagged to change on first login
+managers.forEach(m=>{ if(!m.userPassword) m.mustChange=true; });
+saveManagersToStorage();
 
 // Show HR login screen on startup (hide dashboard)
 document.getElementById('hr-topnav').style.display='none';
