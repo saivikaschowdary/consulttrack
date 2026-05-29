@@ -2405,6 +2405,8 @@ let hrAdminCredentials = (()=>{
   catch { return {...DEFAULT_ADMIN}; }
 })();
 let hrLoggedIn = false;
+let hrCurrentUser = {name:'Admin', role:'admin'};
+function isAdmin(){ return hrCurrentUser.role === 'admin'; }
 
 // ── Session persistence — survive page refresh ─────────────────
 function saveSession(){
@@ -2420,9 +2422,6 @@ function loadSession(){
   } catch(e){}
   return false;
 }
-let hrCurrentUser = {name:'Admin', role:'admin'};
-let hrLoggedIn = false;
-function isAdmin(){ return hrCurrentUser.role === 'admin'; }
 // ── Single source of truth for screen visibility ──────────────
 function hideAllScreens(){
   document.getElementById('hr-login-screen').classList.remove('visible');
