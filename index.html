@@ -353,14 +353,14 @@ select:focus{outline:none;border-color:var(--accent)}
     <div id="update-badge" style="display:none">
       <button onclick="applyUpdate()" style="padding:5px 12px;border-radius:6px;border:1px solid #f59e0b;background:#fef3c7;color:#92400e;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px">⚡ Update available</button>
     </div>
-    <a href="#manager" class="btn btn-white btn-sm" style="text-decoration:none">
+    <button class="btn btn-white btn-sm" onclick="showManagerPortalLogin()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      Manager Portal ↗
-    </a>
-    <a href="#portal" class="btn btn-white btn-sm" style="text-decoration:none">
+      Manager Portal
+    </button>
+    <button class="btn btn-white btn-sm" onclick="switchToPortal()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      Employee Portal ↗
-    </a>
+      Employee Portal
+    </button>
     <button class="btn btn-white btn-sm" onclick="navigate('employees')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       Search
@@ -2409,6 +2409,9 @@ let hrCurrentUser = {name:'Admin', role:'admin'};
 function isAdmin(){ return hrCurrentUser.role === 'admin'; }
 function showManagerPortalLogin(){
   document.getElementById('hr-login-screen').classList.remove('visible');
+  document.getElementById('hr-topnav').style.display='none';
+  document.querySelector('.layout').style.display='none';
+  document.getElementById('portal-shell').classList.remove('visible');
   document.getElementById('mgr-portal-screen').classList.add('visible');
   setTimeout(()=>{const el=document.getElementById('mgr-username-inp');if(el)el.focus();},100);
 }
@@ -2673,17 +2676,29 @@ if(window.location.hash==='#portal'){
   switchToPortal();
 } else if(window.location.hash==='#manager'){
   document.getElementById('hr-login-screen').classList.remove('visible');
+  document.getElementById('portal-shell').classList.remove('visible');
   document.getElementById('mgr-portal-screen').classList.add('visible');
   setTimeout(()=>{const el=document.getElementById('mgr-username-inp');if(el)el.focus();},150);
 } else {
+  document.getElementById('mgr-portal-screen').classList.remove('visible');
   document.getElementById('hr-login-screen').classList.add('visible');
   setTimeout(()=>{const el=document.getElementById('hr-username');if(el)el.focus();},150);
 }
 
 window.addEventListener('hashchange',()=>{
-  if(window.location.hash==='#portal'){ hrLogout(false); switchToPortal(); }
-  else if(window.location.hash==='#manager'){ hrLogout(false); document.getElementById('mgr-portal-screen').classList.add('visible'); }
-  else if(hrLoggedIn) switchToHR();
+  if(window.location.hash==='#portal'){
+    hrLogout(false);
+    document.getElementById('hr-login-screen').classList.remove('visible');
+    document.getElementById('mgr-portal-screen').classList.remove('visible');
+    switchToPortal();
+  } else if(window.location.hash==='#manager'){
+    document.getElementById('hr-login-screen').classList.remove('visible');
+    document.getElementById('hr-topnav').style.display='none';
+    document.querySelector('.layout').style.display='none';
+    document.getElementById('portal-shell').classList.remove('visible');
+    document.getElementById('mgr-portal-screen').classList.add('visible');
+    setTimeout(()=>{const el=document.getElementById('mgr-username-inp');if(el)el.focus();},100);
+  } else if(hrLoggedIn) switchToHR();
 });
 
 // ── GitHub Auto-Update (only active when running via local server) ──
