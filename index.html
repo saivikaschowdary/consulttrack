@@ -431,7 +431,7 @@ select:focus{outline:none;border-color:var(--accent)}
       </div>
       <div style="background:var(--accent-light);border:1px solid rgba(45,74,62,0.2);border-radius:8px;padding:9px 12px;margin-bottom:20px;display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--accent)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="flex-shrink:0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        You're in the right place. Use the credentials from your HR welcome email.
+        Use the credentials from your HR welcome email.
       </div>
       <h2 class="portal-heading">Employee Sign In</h2>
       <p class="portal-sub">Enter the username and temporary password from your HR welcome email.</p>
@@ -448,8 +448,33 @@ select:focus{outline:none;border-color:var(--accent)}
       <p class="portal-hint">Need help? Contact <a href="#">saivikaschowdary@gmail.com</a></p>
     </div>
     <p style="text-align:center;margin-top:16px;font-size:0.78rem;color:var(--ink-3)">HR admin? <a style="color:var(--accent);cursor:pointer;font-weight:500" onclick="switchToHR()">Back to HR Dashboard →</a></p>
+  </div>
+
+  <!-- Manager Login Step (inside portal-shell) -->
+  <div id="portal-mgr-login" style="display:none;width:100%;max-width:420px">
+    <div class="portal-card">
+      <div class="portal-logo">
+        <h1>HUMAC Inc.</h1>
+        <span>Manager Portal</span>
+      </div>
+      <h2 class="portal-heading">Manager Sign In</h2>
+      <p class="portal-sub">Enter the credentials sent to you by Admin.</p>
+      <div class="portal-error" id="mgr-login-error2">Incorrect username or password.</div>
+      <div class="portal-field">
+        <label>Username</label>
+        <input type="text" id="mgr-username-inp" placeholder="e.g. jane.smith" autocomplete="username" oninput="this.value=this.value.toLowerCase()" onkeydown="if(event.key==='Enter')doManagerLogin()">
+      </div>
+      <div class="portal-field">
+        <label>Password</label>
+        <input type="password" id="mgr-password-inp" placeholder="Enter your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doManagerLogin()">
+      </div>
+      <button class="portal-btn" onclick="doManagerLogin()">Sign In</button>
+      <p class="portal-hint">Need help? Contact <a href="#">saivikaschowdary@gmail.com</a></p>
     </div>
-    <p style="text-align:center;margin-top:16px;font-size:0.78rem;color:var(--ink-3)">HR admin? <a style="color:var(--accent);cursor:pointer;font-weight:500" onclick="switchToHR()">Back to HR Dashboard →</a></p>
+    <div style="text-align:center;margin-top:16px;font-size:0.78rem;color:var(--ink-3);display:flex;flex-direction:column;gap:8px">
+      <span>Admin? <a style="color:var(--accent);cursor:pointer;font-weight:500" onclick="switchToHR()">Back to Admin Dashboard →</a></span>
+      <span>Employee? <a style="color:var(--accent);cursor:pointer;font-weight:500" onclick="showPortalStep('portal-login')">Go to Employee Portal →</a></span>
+    </div>
   </div>
 
   <!-- Step 2: Set new password (first login) -->
@@ -2053,7 +2078,7 @@ function switchToHR(){
   }
 }
 function showPortalStep(step){
-  ['portal-login','portal-setpw','portal-profile','portal-dashboard','portal-edit-profile','portal-changepw','portal-self-review'].forEach(s=>{
+  ['portal-login','portal-mgr-login','portal-setpw','portal-profile','portal-dashboard','portal-edit-profile','portal-changepw','portal-self-review'].forEach(s=>{
     const el=document.getElementById(s);
     if(el) el.style.display=(s===step?'block':'none');
   });
@@ -2415,9 +2440,12 @@ function hideAllScreens(){
 }
 function showManagerPortalLogin(){
   hideAllScreens();
-  document.getElementById('mgr-portal-screen').classList.add('visible');
-  setTimeout(()=>{const el=document.getElementById('mgr-username-inp');if(el){el.focus();el.value='';}},100);
-  document.getElementById('mgr-login-error').classList.remove('visible');
+  document.getElementById('portal-shell').classList.add('visible');
+  showPortalStep('portal-mgr-login');
+  const el=document.getElementById('mgr-username-inp');
+  if(el){el.value='';setTimeout(()=>el.focus(),100);}
+  const err=document.getElementById('mgr-login-error2');
+  if(err) err.classList.remove('visible');
 }
 function showAdminLogin(){
   hideAllScreens();
@@ -2427,32 +2455,31 @@ function showAdminLogin(){
 function doManagerLogin(){
   const u=document.getElementById('mgr-username-inp').value.trim().toLowerCase();
   const p=document.getElementById('mgr-password-inp').value;
-  const err=document.getElementById('mgr-login-error');
-  err.classList.remove('visible');
-  if(!u||!p){err.textContent='Please enter your username and password.';err.classList.add('visible');return;}
+  const err=document.getElementById('mgr-login-error2');
+  if(err) err.classList.remove('visible');
+  if(!u||!p){if(err){err.textContent='Please enter your username and password.';err.classList.add('visible');}return;}
 
   const managerMatch=managers.find(m=>m.username.toLowerCase()===u&&(p===m.password||p===(m.userPassword||'')));
-  if(!managerMatch){err.textContent='Username not found. Contact admin if you need help.';err.classList.add('visible');return;}
-  if(p!==managerMatch.password&&p!==(managerMatch.userPassword||'')){err.textContent='Incorrect password.';err.classList.add('visible');return;}
+  if(!managerMatch){if(err){err.textContent='Username not found. Contact admin for help.';err.classList.add('visible');}return;}
+  if(p!==managerMatch.password&&p!==(managerMatch.userPassword||'')){if(err){err.textContent='Incorrect password.';err.classList.add('visible');}return;}
 
   hrLoggedIn=true;
   hrCurrentUser={name:managerMatch.name,role:'manager',id:managerMatch.id};
-  applyRoleUI();
 
-  // Force password change if manager has no userPassword (always on first login)
-  const needsPasswordChange = !managerMatch.userPassword || managerMatch.userPassword === '';
+  // Force password change if no userPassword set
+  const needsPasswordChange=!managerMatch.userPassword||managerMatch.userPassword==='';
   if(needsPasswordChange){
-    document.getElementById('mgr-portal-screen').classList.remove('visible');
     showManagerFirstLogin(managerMatch);
     return;
   }
 
-  // Normal login — show HR dashboard with manager restrictions
+  // Normal login — show HR dashboard
   hideAllScreens();
   document.getElementById('hr-topnav').style.display='flex';
   document.querySelector('.layout').style.display='flex';
   const lbl=document.getElementById('hr-user-label');
   if(lbl) lbl.textContent=managerMatch.name;
+  applyRoleUI();
   navigate('dashboard');
 }
 function managerLogout(){
@@ -2505,8 +2532,7 @@ function doHRLogin(){
 }
 
 function showManagerFirstLogin(mgr){
-  document.getElementById('hr-login-screen').classList.remove('visible');
-  document.getElementById('mgr-portal-screen').classList.remove('visible');
+  hideAllScreens();
   document.getElementById('portal-shell').classList.add('visible');
   showPortalStep('portal-setpw');
   window._mgrFirstLogin=mgr;
@@ -2566,9 +2592,7 @@ function hrLogout(showLogin=true){
   if(window.location.hash) history.pushState(null,null,window.location.pathname);
   if(showLogin){
     if(wasManager){
-      document.getElementById('mgr-portal-screen').classList.add('visible');
-      setTimeout(()=>{const el=document.getElementById('mgr-username-inp');if(el){el.value='';el.focus();}},100);
-      document.getElementById('mgr-login-error').classList.remove('visible');
+      showManagerPortalLogin();
     } else {
       document.getElementById('hr-login-screen').classList.add('visible');
       setTimeout(()=>{const el=document.getElementById('hr-username');if(el){el.value='';el.focus();}},100);
