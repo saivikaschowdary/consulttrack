@@ -280,11 +280,11 @@ select:focus{outline:none;border-color:var(--accent)}
     <div class="hr-login-error" id="hr-login-error">Incorrect username or password.</div>
     <div class="hr-login-field">
       <label>Username</label>
-      <input type="text" id="hr-username" placeholder="admin" autocomplete="username" onkeydown="if(event.key==='Enter')doHRLogin()" oninput="this.value=this.value.toLowerCase()">
+      <input type="text" id="hr-username" placeholder="admin" autocomplete="off" onkeydown="if(event.key==='Enter')doHRLogin()" oninput="this.value=this.value.toLowerCase()">
     </div>
     <div class="hr-login-field">
       <label>Password</label>
-      <input type="password" id="hr-password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doHRLogin()">
+      <input type="password" id="hr-password" placeholder="••••••••" autocomplete="off" onkeydown="if(event.key==='Enter')doHRLogin()">
     </div>
     <button class="hr-login-btn" onclick="doHRLogin()">Sign In to Dashboard</button>
     <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px">
@@ -2297,19 +2297,25 @@ function doSaveProfile(){
 // Load persisted credentials from localStorage, then generate for any missing
 function saveEmployeesToStorage(){
   try{
-    // Save only dynamically added employees (id > 6 are user-created)
-    const dynamic=employees.filter(e=>e.id>6);
-    localStorage.setItem('ct_employees',JSON.stringify(dynamic));
+    // Save ALL employees so edits to default employees (manager, project etc.) persist
+    localStorage.setItem('ct_employees', JSON.stringify(employees));
   } catch(e){}
 }
 function loadEmployeesFromStorage(){
   try{
     const stored=JSON.parse(localStorage.getItem('ct_employees')||'[]');
-    stored.forEach(emp=>{
-      if(!employees.find(e=>e.id===emp.id)){
-        employees.push(emp);
-      }
-    });
+    if(stored.length){
+      // Restore ALL saved employees — overwrite defaults with saved versions
+      stored.forEach(saved=>{
+        const idx=employees.findIndex(e=>e.id===saved.id);
+        if(idx>-1){
+          // Merge saved changes over default (preserve credentials if set)
+          employees[idx]={...employees[idx],...saved};
+        } else {
+          employees.push(saved);
+        }
+      });
+    }
   } catch(e){}
 }
 function loadPersistedCredentials(){
@@ -2588,7 +2594,10 @@ function hrLogout(showLogin=true){
       showManagerPortalLogin();
     } else {
       document.getElementById('hr-login-screen').classList.add('visible');
-      setTimeout(()=>{const el=document.getElementById('hr-username');if(el){el.value='';el.focus();}},100);
+      const un=document.getElementById('hr-username');
+      const pw=document.getElementById('hr-password');
+      if(un){un.value='';setTimeout(()=>un.focus(),100);}
+      if(pw) pw.value='';
       document.getElementById('hr-login-error').classList.remove('visible');
     }
   }
