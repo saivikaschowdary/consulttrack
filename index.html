@@ -2010,8 +2010,7 @@ function doChangePassword(){
   renderEmpDash();
 }
 function switchToPortal(){
-  document.getElementById('hr-topnav').style.display='none';
-  document.querySelector('.layout').style.display='none';
+  hideAllScreens();
   document.getElementById('portal-shell').classList.add('visible');
   showPortalStep('portal-login');
   if(window.location.hash!=='#portal') history.pushState(null,null,'#portal');
@@ -2040,17 +2039,14 @@ function lookupCreds(){
   result.style.display='block';
 }
 function switchToHR(){
-  document.getElementById('portal-shell').classList.remove('visible');
+  hideAllScreens();
   portalUser=null;
   if(window.location.hash) history.pushState(null,null,window.location.pathname);
   if(hrLoggedIn){
     document.getElementById('hr-topnav').style.display='flex';
     document.querySelector('.layout').style.display='flex';
-    document.getElementById('hr-login-screen').classList.remove('visible');
     render();
   } else {
-    document.getElementById('hr-topnav').style.display='none';
-    document.querySelector('.layout').style.display='none';
     document.getElementById('hr-login-screen').classList.add('visible');
   }
 }
@@ -2407,16 +2403,22 @@ let hrLoggedIn = false;
 
 let hrCurrentUser = {name:'Admin', role:'admin'};
 function isAdmin(){ return hrCurrentUser.role === 'admin'; }
-function showManagerPortalLogin(){
+// ── Single source of truth for screen visibility ──────────────
+function hideAllScreens(){
   document.getElementById('hr-login-screen').classList.remove('visible');
+  document.getElementById('mgr-portal-screen').classList.remove('visible');
+  document.getElementById('portal-shell').classList.remove('visible');
   document.getElementById('hr-topnav').style.display='none';
   document.querySelector('.layout').style.display='none';
-  document.getElementById('portal-shell').classList.remove('visible');
+}
+function showManagerPortalLogin(){
+  hideAllScreens();
   document.getElementById('mgr-portal-screen').classList.add('visible');
-  setTimeout(()=>{const el=document.getElementById('mgr-username-inp');if(el)el.focus();},100);
+  setTimeout(()=>{const el=document.getElementById('mgr-username-inp');if(el){el.focus();el.value='';}},100);
+  document.getElementById('mgr-login-error').classList.remove('visible');
 }
 function showAdminLogin(){
-  document.getElementById('mgr-portal-screen').classList.remove('visible');
+  hideAllScreens();
   document.getElementById('hr-login-screen').classList.add('visible');
   setTimeout(()=>{const el=document.getElementById('hr-username');if(el)el.focus();},100);
 }
@@ -2444,7 +2446,7 @@ function doManagerLogin(){
   }
 
   // Normal login — show HR dashboard with manager restrictions
-  document.getElementById('mgr-portal-screen').classList.remove('visible');
+  hideAllScreens();
   document.getElementById('hr-topnav').style.display='flex';
   document.querySelector('.layout').style.display='flex';
   const lbl=document.getElementById('hr-user-label');
@@ -2485,7 +2487,7 @@ function doHRLogin(){
   if(isAdminUser){
     hrLoggedIn=true;
     hrCurrentUser={name:isAdminUser.name,role:'admin'};
-    document.getElementById('hr-login-screen').classList.remove('visible');
+    hideAllScreens();
     document.getElementById('hr-topnav').style.display='flex';
     document.querySelector('.layout').style.display='flex';
     const lbl=document.getElementById('hr-user-label');
@@ -2558,23 +2560,17 @@ function hrLogout(showLogin=true){
   const wasManager=hrCurrentUser.role==='manager';
   hrLoggedIn=false;
   hrCurrentUser={name:'Admin',role:'admin'};
-  document.getElementById('hr-topnav').style.display='none';
-  document.querySelector('.layout').style.display='none';
-  document.getElementById('portal-shell').classList.remove('visible');
+  hideAllScreens();
   if(window.location.hash) history.pushState(null,null,window.location.pathname);
   if(showLogin){
     if(wasManager){
       document.getElementById('mgr-portal-screen').classList.add('visible');
-      document.getElementById('mgr-username-inp').value='';
-      document.getElementById('mgr-password-inp').value='';
+      setTimeout(()=>{const el=document.getElementById('mgr-username-inp');if(el){el.value='';el.focus();}},100);
       document.getElementById('mgr-login-error').classList.remove('visible');
-      setTimeout(()=>document.getElementById('mgr-username-inp').focus(),100);
     } else {
       document.getElementById('hr-login-screen').classList.add('visible');
-      document.getElementById('hr-username').value='';
-      document.getElementById('hr-password').value='';
+      setTimeout(()=>{const el=document.getElementById('hr-username');if(el){el.value='';el.focus();}},100);
       document.getElementById('hr-login-error').classList.remove('visible');
-      setTimeout(()=>document.getElementById('hr-username').focus(),100);
     }
   }
 }
@@ -2667,38 +2663,22 @@ managers.forEach(m=>{ if(!m.userPassword) m.mustChange=true; });
 saveManagersToStorage();
 
 // Show HR login screen on startup (hide dashboard)
-document.getElementById('hr-topnav').style.display='none';
-document.querySelector('.layout').style.display='none';
+hideAllScreens();
 
 // Hash-based routing
 if(window.location.hash==='#portal'){
-  document.getElementById('hr-login-screen').classList.remove('visible');
   switchToPortal();
 } else if(window.location.hash==='#manager'){
-  document.getElementById('hr-login-screen').classList.remove('visible');
-  document.getElementById('portal-shell').classList.remove('visible');
-  document.getElementById('mgr-portal-screen').classList.add('visible');
-  setTimeout(()=>{const el=document.getElementById('mgr-username-inp');if(el)el.focus();},150);
+  showManagerPortalLogin();
 } else {
-  document.getElementById('mgr-portal-screen').classList.remove('visible');
   document.getElementById('hr-login-screen').classList.add('visible');
   setTimeout(()=>{const el=document.getElementById('hr-username');if(el)el.focus();},150);
 }
 
 window.addEventListener('hashchange',()=>{
-  if(window.location.hash==='#portal'){
-    hrLogout(false);
-    document.getElementById('hr-login-screen').classList.remove('visible');
-    document.getElementById('mgr-portal-screen').classList.remove('visible');
-    switchToPortal();
-  } else if(window.location.hash==='#manager'){
-    document.getElementById('hr-login-screen').classList.remove('visible');
-    document.getElementById('hr-topnav').style.display='none';
-    document.querySelector('.layout').style.display='none';
-    document.getElementById('portal-shell').classList.remove('visible');
-    document.getElementById('mgr-portal-screen').classList.add('visible');
-    setTimeout(()=>{const el=document.getElementById('mgr-username-inp');if(el)el.focus();},100);
-  } else if(hrLoggedIn) switchToHR();
+  if(window.location.hash==='#portal') switchToPortal();
+  else if(window.location.hash==='#manager') showManagerPortalLogin();
+  else if(hrLoggedIn) switchToHR();
 });
 
 // ── GitHub Auto-Update (only active when running via local server) ──
