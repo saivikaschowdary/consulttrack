@@ -2228,22 +2228,6 @@ function checkPwStrength(){
   bar.style.background=colors[score];
 }
 
-function doSetPassword(){
-  const pw=document.getElementById('new-pw').value;
-  const cpw=document.getElementById('confirm-pw').value;
-  const errEl=document.getElementById('pw-error');
-  errEl.classList.remove('visible');
-  const rules={len:pw.length>=8,upper:/[A-Z]/.test(pw),num:/[0-9]/.test(pw),special:/[!@#$%^&*]/.test(pw)};
-  if(!Object.values(rules).every(Boolean)){errEl.textContent='Password does not meet all requirements.';errEl.classList.add('visible');return;}
-  if(pw!==cpw){errEl.textContent='Passwords do not match. Please try again.';errEl.classList.add('visible');return;}
-  portalUser.credentials.userPassword=pw;
-  portalUser.credentials.mustChange=false;
-  portalUser.credentials.tempPassword='[changed]';
-  persistCredentials(portalUser);
-  showPortalStep('portal-profile');
-  prefillProfile(portalUser);
-}
-
 function prefillProfile(emp){
   if(emp.profile){
     const p=emp.profile;
@@ -2261,7 +2245,7 @@ function doSaveProfile(){
   const ecname=document.getElementById('pp-ecname').value.trim();
   const ecphone=document.getElementById('pp-ecphone').value.trim();
   if(!ecname||!ecphone){alert('Emergency contact name and phone are required.');return;}
-  portalUser.profile={
+  const profileData={
     nickname:document.getElementById('pp-nickname').value.trim(),
     bio:document.getElementById('pp-bio').value.trim(),
     ecname,ecrel:document.getElementById('pp-ecrel').value.trim(),ecphone,
@@ -2270,6 +2254,28 @@ function doSaveProfile(){
     certs:document.getElementById('pp-certs').value.trim(),
     skills:document.getElementById('pp-skills').value.trim(),
   };
+
+  if(window._mgrFirstLogin){
+    // Manager first-login profile save → go to HR dashboard
+    const mgr=managers.find(m=>m.id===window._mgrFirstLogin.id);
+    if(mgr){
+      mgr.profile=profileData;
+      mgr.profileComplete=true;
+      saveManagersToStorage();
+    }
+    window._mgrFirstLogin=null;
+    hideAllScreens();
+    document.getElementById('hr-topnav').style.display='flex';
+    document.querySelector('.layout').style.display='flex';
+    const lbl=document.getElementById('hr-user-label');
+    if(lbl) lbl.textContent=mgr?mgr.name:'Manager';
+    applyRoleUI();
+    navigate('dashboard');
+    return;
+  }
+
+  // Employee profile save
+  portalUser.profile=profileData;
   portalUser.profileComplete=true;
   persistCredentials(portalUser);
   saveEmployeesToStorage();
