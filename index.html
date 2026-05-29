@@ -1923,9 +1923,9 @@ function submitSelfReview(){
 }
 function saveReviewsToStorage(){
   try{
-    // Save all self-submitted reviews with full state (including approval status and manager comments)
-    const selfRevs=reviews.filter(r=>r.selfSubmitted);
-    localStorage.setItem('ct_self_reviews',JSON.stringify(selfRevs));
+    // Save ALL reviews with their current status and manager comments
+    // This ensures approvals persist across page refreshes
+    localStorage.setItem('ct_self_reviews', JSON.stringify(reviews));
   } catch(e){}
 }
 function loadReviewsFromStorage(){
@@ -1934,11 +1934,12 @@ function loadReviewsFromStorage(){
     stored.forEach(stored_r=>{
       const existing=reviews.find(x=>x.id===stored_r.id);
       if(existing){
-        // Update existing review with persisted status and manager comment
+        // Restore persisted status and manager comment over the default
         existing.status=stored_r.status;
-        existing.managerComment=stored_r.managerComment;
+        existing.managerComment=stored_r.managerComment||existing.managerComment;
       } else {
-        reviews.push(stored_r);
+        // Add any reviews that were created dynamically (self-submitted)
+        if(stored_r.selfSubmitted) reviews.push(stored_r);
       }
     });
   } catch(e){}
