@@ -418,7 +418,8 @@ select:focus{outline:none;border-color:var(--accent)}
       <button class="portal-btn" onclick="doLogin()">Sign In</button>
       <p class="portal-hint">Need help? Contact <a href="#">saivikaschowdary@gmail.com</a></p>
     </div>
-    <p style="text-align:center;margin-top:16px;font-size:0.78rem;color:var(--ink-3)">HR admin? <a style="color:var(--accent);cursor:pointer;font-weight:500" onclick="switchToHR()">Back to HR Dashboard →</a></p>
+    <p style="text-align:center;margin-top:16px;font-size:0.78rem;color:var(--ink-3)">HR admin? <a style="color:var(--accent);cursor:pointer;font-weight:500" onclick="switchToHRLogin()">Back to HR Dashboard →</a></p>
+    <p style="text-align:center;margin-top:8px;font-size:0.78rem;color:var(--ink-3)">Manager? <a style="color:var(--accent);cursor:pointer;font-weight:500" onclick="showManagerPortalLogin()">Go to Manager Portal →</a></p>
   </div>
 
   <!-- Manager Login Step (inside portal-shell) -->
@@ -443,7 +444,7 @@ select:focus{outline:none;border-color:var(--accent)}
       <p class="portal-hint">Need help? Contact <a href="#">saivikaschowdary@gmail.com</a></p>
     </div>
     <div style="text-align:center;margin-top:16px;font-size:0.78rem;color:var(--ink-3);display:flex;flex-direction:column;gap:8px">
-      <span>Admin? <a style="color:var(--accent);cursor:pointer;font-weight:500" onclick="switchToHR()">Back to Admin Dashboard →</a></span>
+      <span>Admin? <a style="color:var(--accent);cursor:pointer;font-weight:500" onclick="switchToHRLogin()">Back to Admin Dashboard →</a></span>
       <span>Employee? <a style="color:var(--accent);cursor:pointer;font-weight:500" onclick="showPortalStep('portal-login')">Go to Employee Portal →</a></span>
     </div>
   </div>
@@ -2038,16 +2039,10 @@ function lookupCreds(){
   result.style.display='block';
 }
 function switchToHR(){
-  hideAllScreens();
+  // Show HR login — don't auto-login from session when coming from a portal
+  switchToHRLogin();
   portalUser=null;
   if(window.location.hash) history.pushState(null,null,window.location.pathname);
-  if(hrLoggedIn){
-    document.getElementById('hr-topnav').style.display='flex';
-    document.querySelector('.layout').style.display='flex';
-    render();
-  } else {
-    document.getElementById('hr-login-screen').classList.add('visible');
-  }
 }
 function showPortalStep(step){
   ['portal-login','portal-mgr-login','portal-setpw','portal-profile','portal-dashboard','portal-edit-profile','portal-changepw','portal-self-review'].forEach(s=>{
@@ -2428,7 +2423,16 @@ function loadSession(){
   } catch(e){}
   return false;
 }
-// ── Single source of truth for screen visibility ──────────────
+function switchToHRLogin(){
+  // Always show the admin login screen — never auto-login from session
+  hideAllScreens();
+  document.getElementById('hr-login-screen').classList.add('visible');
+  const un=document.getElementById('hr-username');
+  const pw=document.getElementById('hr-password');
+  if(un){un.value='';setTimeout(()=>un.focus(),100);}
+  if(pw) pw.value='';
+  document.getElementById('hr-login-error').classList.remove('visible');
+}
 function hideAllScreens(){
   document.getElementById('hr-login-screen').classList.remove('visible');
   
@@ -2604,8 +2608,14 @@ function hrLogout(showLogin=true){
 }
 
 function showEmpPortalFromLogin(){
-  document.getElementById('hr-login-screen').classList.remove('visible');
-  switchToPortal();
+  hideAllScreens();
+  document.getElementById('portal-shell').classList.add('visible');
+  showPortalStep('portal-login');
+  // Clear any previous login fields
+  const u=document.getElementById('login-username');
+  const p=document.getElementById('login-password');
+  if(u) u.value=''; if(p) p.value='';
+  document.getElementById('login-error').classList.remove('visible');
 }
 
 function reassignManagers(){
