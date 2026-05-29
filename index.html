@@ -170,7 +170,7 @@ select:focus{outline:none;border-color:var(--accent)}
 @media(max-width:880px){.sidebar{display:none}.metric-grid{grid-template-columns:1fr 1fr}}
 
 /* PORTAL (Employee Login) */
-.portal-shell{display:none;min-height:100vh;background:var(--surface-2);align-items:center;justify-content:center;flex-direction:column;padding:24px}
+.portal-shell{display:none;position:fixed;inset:0;z-index:9998;min-height:100vh;background:var(--surface-2);align-items:center;justify-content:center;flex-direction:column;padding:24px;overflow-y:auto}
 .portal-shell.visible{display:flex}
 .portal-card{background:#fff;border-radius:20px;box-shadow:0 4px 32px rgba(15,14,12,0.1),0 1px 4px rgba(15,14,12,0.06);width:100%;max-width:420px;padding:40px 40px 36px;animation:slideUp 0.2s ease}
 .portal-logo{display:flex;align-items:baseline;gap:8px;margin-bottom:32px}
@@ -246,6 +246,8 @@ select:focus{outline:none;border-color:var(--accent)}
 /* ── HR Admin Login Screen ── */
 .hr-login-screen{display:none;position:fixed;inset:0;z-index:9999;background:var(--ink);align-items:center;justify-content:center;flex-direction:column;gap:20px}
 .hr-login-screen.visible{display:flex}
+/* Manager portal screen sits above everything including portal-shell */
+#mgr-portal-screen{z-index:10000!important}
 .hr-login-card{background:#fff;border-radius:20px;width:100%;max-width:400px;padding:40px;box-shadow:0 24px 80px rgba(0,0,0,0.5);animation:slideUp 0.25s ease}
 .hr-login-brand{display:flex;align-items:baseline;gap:10px;margin-bottom:32px}
 .hr-login-brand h1{font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.4rem;font-weight:400;color:var(--ink)}
@@ -2437,9 +2439,9 @@ function doManagerLogin(){
   hrCurrentUser={name:managerMatch.name,role:'manager',id:managerMatch.id};
   applyRoleUI();
 
-  // Force password change on first login
-  const usedTempPw=p===managerMatch.password&&!managerMatch.userPassword;
-  if(usedTempPw||managerMatch.mustChange&&!managerMatch.userPassword){
+  // Force password change if manager has no userPassword (always on first login)
+  const needsPasswordChange = !managerMatch.userPassword || managerMatch.userPassword === '';
+  if(needsPasswordChange){
     document.getElementById('mgr-portal-screen').classList.remove('visible');
     showManagerFirstLogin(managerMatch);
     return;
