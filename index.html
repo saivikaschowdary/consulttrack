@@ -298,35 +298,6 @@ select:focus{outline:none;border-color:var(--accent)}
   </div>
 </div>
 
-<!-- Manager Portal Login Screen -->
-<div class="hr-login-screen" id="mgr-portal-screen">
-  <div class="hr-login-card">
-    <div class="hr-login-brand">
-      <h1>HUMAC Inc.</h1>
-      <span>Manager Portal</span>
-    </div>
-    <h2 class="hr-login-heading">Manager Sign In</h2>
-    <p class="hr-login-sub">Enter the credentials sent to you by Admin.</p>
-    <div class="hr-login-error" id="mgr-login-error">Incorrect username or password.</div>
-    <div class="hr-login-field">
-      <label>Username</label>
-      <input type="text" id="mgr-username-inp" placeholder="e.g. jane.smith" autocomplete="username" onkeydown="if(event.key==='Enter')doManagerLogin()" oninput="this.value=this.value.toLowerCase()">
-    </div>
-    <div class="hr-login-field">
-      <label>Password</label>
-      <input type="password" id="mgr-password-inp" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doManagerLogin()">
-    </div>
-    <button class="hr-login-btn" onclick="doManagerLogin()">Sign In</button>
-    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px">
-      <p style="font-size:0.74rem;color:var(--ink-3);text-align:center">
-        Admin? <span style="color:var(--accent);cursor:pointer;font-weight:500" onclick="showAdminLogin()">Go to Admin Login →</span>
-      </p>
-      <p style="font-size:0.74rem;color:var(--ink-3);text-align:center">
-        Employee? <span style="color:var(--accent);cursor:pointer;font-weight:500" onclick="showEmpPortalFromLogin()">Go to Employee Portal →</span>
-      </p>
-    </div>
-  </div>
-</div>
 
 <nav class="topnav" id="hr-topnav">
   <div class="topnav-brand">
@@ -2433,7 +2404,7 @@ function isAdmin(){ return hrCurrentUser.role === 'admin'; }
 // ── Single source of truth for screen visibility ──────────────
 function hideAllScreens(){
   document.getElementById('hr-login-screen').classList.remove('visible');
-  document.getElementById('mgr-portal-screen').classList.remove('visible');
+  
   document.getElementById('portal-shell').classList.remove('visible');
   document.getElementById('hr-topnav').style.display='none';
   document.querySelector('.layout').style.display='none';
@@ -2488,10 +2459,10 @@ function managerLogout(){
   document.getElementById('hr-topnav').style.display='none';
   document.querySelector('.layout').style.display='none';
   document.getElementById('portal-shell').classList.remove('visible');
-  document.getElementById('mgr-portal-screen').classList.add('visible');
+  
   document.getElementById('mgr-username-inp').value='';
   document.getElementById('mgr-password-inp').value='';
-  document.getElementById('mgr-login-error').classList.remove('visible');
+  
 }
 
 function applyRoleUI(){
